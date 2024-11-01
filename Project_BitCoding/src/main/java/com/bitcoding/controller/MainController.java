@@ -49,6 +49,8 @@ public class MainController extends HttpServlet {
 				System.out.println("여기까진옴");
 				response.sendRedirect(nextPage.replace("redirect:/", ""));
 			}
+			
 		}
+		
 	}
 }
