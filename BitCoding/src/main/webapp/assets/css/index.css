@@ -127,8 +127,9 @@ header {
 }
 
 .signup-btn {
-    background-color: #333;
-    color: #fff;
+    background-color: #f8f9fa;;
+    color : #333; 
+    
 }
 
 .header-right .signup-btn:hover, .header-right .login-btn:hover {
