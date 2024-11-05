@@ -12,12 +12,13 @@ public class Member {
 //	@Data // 기본 메소드(Getter/Setter)자동완성\\\
 	
 	private String email;
+	private String pw;
 	private String name;
-	private String password;
-	private String nickname;
+	private String nick;
+	private String birthdate;
+	private String phone;
 	private String gender;
-	private String birth;
-	private String phoneNumber;
-	private String tf;
-	private String j_date;
+	private String mem_type;
+	private String create_at;
+	private String profile;
 }

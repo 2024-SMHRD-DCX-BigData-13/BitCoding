@@ -24,7 +24,7 @@ public class LoginDBController implements iController {
 		
 		Member data = new Member();
 		data.setEmail(email);
-		data.setPassword(password);
+		data.setPw(password);
 
 		MemberDAO dao = new MemberDAO();
 

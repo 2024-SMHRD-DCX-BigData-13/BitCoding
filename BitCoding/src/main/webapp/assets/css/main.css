@@ -28,7 +28,7 @@ body {
     padding: 20px;
     padding-top: 0;
     display: flex;
-    gap: 10px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
@@ -226,12 +226,11 @@ header {
 	object-fit: cover;
 }
 .trophy-icon{
-		display: flex;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	border-radius: 50%;
 	object-fit: cover;
 }
 
@@ -298,6 +297,41 @@ main {
     background-color: #ccc;
     object-fit: cover;
 }
+/* 카테고리 필터 */
+.category-filter {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	padding: 10px;
+	max-width: 800px; /* 입력창과 너비를 동일하게 조정 */
+	margin: 0 auto;
+}
+
+/* 카테고리 버튼 스타일 */
+.category-button {
+	padding: 8px 15px; /* 패딩을 줄여서 줄바꿈 방지 */
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 25px;
+	background-color: #ffffff;
+	color: #333;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+	white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+	box-sizing: border-box; /* 패딩 포함하여 버튼 크기 설정 */
+}
+
+.category-button:hover {
+	background-color: #e0e0e0;
+	color: #333;
+}
+
+.category-button.active {
+	background-color: #007bff;
+	color: #ffffff;
+	border-color: #007bff;
+}
+
 
 .post-info {
 	display: flex;
@@ -348,6 +382,11 @@ main {
 	display: flex;
 	gap: 2px;
 }
+.post-tags {
+	margin-top: 10px;
+	font-size: 0.9em;
+	color: #7a7c88;
+}
 
 .edit-button, .delete-button {
 	display: inline-flex;
@@ -388,20 +427,12 @@ main {
     align-items: center;
     gap: 5px;
     padding: 6px 12px;
-    border-radius: 8px;
-    background-color: #f5f5f5; /* 밝은 회색 배경 */
     color: #555; /* 짙은 회색 텍스트 */
-    border: 1px solid #ddd; /* 연한 회색 경계선 */
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 1.0em;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
 }
 
-.reaction-button:hover {
-	background-color: #ddd; /* 중간 회색 호버 효과 */
-    color: #333; /* 텍스트를 더 짙게 */
-}
 
 /* 댓글 섹션 */
 .comment-section {
@@ -426,7 +457,7 @@ main {
 
 .comments {
 	display: none;
-	padding-top: 10px;
+	padding-top: 5px;
 	border-top: 1px solid #ccc; /* 연한 회색 경계선 */
 	margin-top: 10px;
 }
@@ -524,39 +555,6 @@ main {
     background-color: #222; /* 클릭할 때 더 진한 색 */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 클릭 시 그림자 축소 */
 }
-/* Q&A Section */
-.qna-section {
-	padding: 15px 0;
-	border-top: 1px solid #e5e5e5;
-}
-
-.qna-section h3 {
-	font-size: 16px;
-	font-weight: 700;
-	color: #333;
-	margin-bottom: 10px;
-}
-
-.qna-list {
-	list-style: none;
-	padding: 0;
-}
-
-.qna-list li {
-	margin-bottom: 8px;
-	font-size: 14px;
-}
-
-.qna-list li a {
-	color: #0073e6;
-	text-decoration: none;
-}
-
-.qna-list li a:hover {
-	color: #005bb5;
-	text-decoration: underline;
-}
-
 /* Sidebar */
 .sidebar {
 	flex: 1;
@@ -566,15 +564,15 @@ main {
 .sidebar h3 {
 	font-size: 18px;
 	font-weight: bold;
-	color: #333;
-	margin-bottom: 8px;
+	color: #333;	
+	margin-left: 5px;
+	margin-bottom: 15px;
 }
 
-/* TOP 10 List */
 .top10-list {
-    list-style: none; /* 기본 리스트 스타일 제거 */
-    padding: 0;
-    margin: 0;
+    list-style-type: none !important;
+    margin-left:0 !important;
+    padding:0 !important;
 }
 
 .top10-list li {
@@ -582,6 +580,8 @@ main {
     align-items: flex-start; /* 번호와 이미지, 텍스트를 맨 위로 정렬 */
     gap: 5px; /* 번호와 이미지, 텍스트 사이 간격 */
     margin-bottom: 15px;
+    margin-left:0 !important;
+    padding:0 !important;
 }
 
 .list-number {
@@ -599,6 +599,15 @@ main {
     background-color: #ddd;
     object-fit: cover;
     margin-top: 5px; /* 번호와 수평을 맞추기 위한 마진 */
+}
+
+.comments-img{
+	width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #ddd;
+    object-fit: cover;
+    margin-right: 5px;
 }
 
 .content {
@@ -636,110 +645,4 @@ main {
 .top10-list .content a:hover {
     color: #005bb5;
     text-decoration: underline;
-}
-
-/* 기본 레이아웃 조정 */
-@media (max-width: 1600px) {
-    .header-center {
-        padding: 0 50px;
-    }
-    .container {
-        max-width: 1100px; /* 더 작은 화면을 위해 최대 너비 감소 */
-        min-width: 800px; /* 축소 시 최소 너비 고정 */
-        gap: 15px;
-    }
-}
-
-@media (max-width: 1400px) {
-    .header-center {
-        padding: 0 40px;
-    }
-    .container {
-        max-width: 1000px;
-        min-width: 800px; /* 축소 시 최소 너비 고정 */
-        gap: 10px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .header-center {
-        padding: 0 30px;
-    }
-    .container {
-        max-width: 900px;
-        min-width: 700px; /* 축소 시 최소 너비 고정 */
-    }
-}
-
-@media (max-width: 1024px) {
-    .header-center {
-        padding: 0 20px;
-        gap: 10px;
-    }
-    .container {
-        max-width: 800px;
-        min-width: 700px; /* 최소 너비를 유지하여 스크롤 발생 */
-        padding: 10px;
-        gap: 5px;
-    }
-    .post-title {
-        font-size: 18px;
-    }
-    .post-content {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 900px) {
-    .header-center {
-        padding: 0 15px;
-    }
-    .container {
-        max-width: 800px; /* 최대 너비 유지 */
-        min-width: 700px;
-    }
-    .post-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .post-title {
-        font-size: 16px;
-    }
-    .post-content {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 800px) {
-    .header-center {
-        padding: 0 10px;
-    }
-    .container {
-        max-width: 800px;
-        min-width: 700px;
-    }
-    .profile-img, .profile-image {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-@media (max-width: 700px) {
-    .header-center {
-        padding: 0 5px;
-    }
-    .container {
-        max-width: 700px;
-        min-width: 600px; /* 축소 시 최소 너비 고정 */
-    }
-    .post-title {
-        font-size: 14px;
-    }
-    .post-content {
-        font-size: 12px;
-    }
-    .reaction-button {
-        font-size: 0.8em;
-        padding: 4px 8px;
-    }
 }

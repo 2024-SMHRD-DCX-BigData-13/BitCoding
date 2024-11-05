@@ -7,7 +7,30 @@ $(document).ready(function() {
 	$('#logoButton').on('click', function() {
 		window.location.href = '/BitCoding/home.bit';
 	});
-	
+	// 프사 미리보기
+	$('#profilePicture').on('change', function(event) {
+		const file = event.target.files[0];
+
+		if (file && file.type.startsWith('image/')) {
+			const reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#previewImage').attr('src', e.target.result).show(); // jQuery로 이미지 미리보기 설정 및 표시
+			};
+
+			reader.readAsDataURL(file); // 파일 내용을 Data URL로 변환하여 미리보기 설정
+		} else {
+			Swal.fire({
+				title: 'warning',
+				text: 'Please upload a valid image file.',
+				icon: 'warning',
+				confirmButtonText: '확인'
+			});
+			$('#profilePicture').val('');
+		}
+	});
+
+
 	// 이메일 가입 폼을 처음에는 숨긴 상태로 설정
 	$("#email-form").hide();
 
@@ -103,7 +126,7 @@ $(document).ready(function() {
 							'margin': '0',
 							'padding': '0',
 							'font-weight': '500'
-					});
+						});
 				}
 			}
 		});
@@ -143,9 +166,18 @@ $(document).ready(function() {
 			user_info.gender = $('select[name="join_gender"]').val(); // select 요소로 수정
 			user_info.birth = $('input[name="join_birth"]').val(); // date 요소 확인
 			user_info.phoneNumber = $('input[name="join_phoneNumber"]').val();
+
+			// 파일 데이터 추가 (프로필 사진)
+			const file = $('#profilePicture')[0].files[0];
+			if (file) {
+				user_info.file = file;
+			}
+			else{
+				user_info.file = 'assets/images/profiles/profile.jpg';
+			}
+			
 			$(".modal-backdrop").fadeIn(300);
 			$("#join-modal2").fadeIn(300);
-			console.log(user_info.gender);
 		}
 		else if ($('#result').text() === '중복된 이메일 입니다.') {
 			showShakeEffect();
@@ -170,24 +202,25 @@ $(document).ready(function() {
 				'gender': user_info.gender,
 				'birth': user_info.birth,
 				'phoneNumber': user_info.phoneNumber,
-				'tf': user_info.tf
+				'tf': user_info.tf,
+				'file': user_info.file
 			},
 			success: function(res) {
 				// 요청이 성공해서, 응답이 이루어진 후에 실행되는 함수
 				// 응답 받은 데이터가 자동으로 res에 담김 
-				if(res == "true"){
+				if (res == "true") {
 					window.location.href = "/BitCoding/home.bit"
 					console.log("성공");
 				}
-				else{
+				else {
 				}
 			},
-			error : function(request, errorcode, error){
-               console.log("실패입니다!");
-               console.log(request);
-               console.log(errorcode);
-               console.log(error);
-            }
+			error: function(request, errorcode, error) {
+				console.log("실패입니다!");
+				console.log(request);
+				console.log(errorcode);
+				console.log(error);
+			}
 		});
 	}
 
@@ -258,11 +291,11 @@ $(document).ready(function() {
 	});
 
 });
-function kakaoalert(){
+function kakaoalert() {
 	Swal.fire({
-  title: 'infomation',
-  text: '준비중인 서비스입니다.',
-  icon: 'info',
-  confirmButtonText: '확인'
-});
+		title: 'infomation',
+		text: '준비중인 서비스입니다.',
+		icon: 'info',
+		confirmButtonText: '확인'
+	});
 }

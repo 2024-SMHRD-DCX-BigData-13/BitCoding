@@ -66,6 +66,12 @@
                             <input type="text" id="birth" name="join_birth" placeholder="연도-월-일">
                             <label for="phoneNumber">전화번호</label>
                             <input type="tel" name="join_phoneNumber" placeholder="000-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
+                            <label for="profilePicture">프로필 사진</label>
+    						<input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+    						<!-- 이미지 미리보기 -->
+    						<div id="preview">
+        					<img id="previewImage" src="#" alt="Image Preview" style="display: none; width: 150px; height: 150px;">
+    						</div>
                             <button type="submit" id="join">제출하기</button>
                         </form>
                     </div>

@@ -57,7 +57,16 @@
                     <path d="M21.7 7.3l-5-5a1 1 0 00-1.4 0L2 15.6V20a1 1 0 001 1h4.4L21.7 8.7a1 1 0 000-1.4zm-14.8 12H4v-2.9l10.3-10.3 2.9 2.9L6.9 19.3z" />
                 </svg>
             </div>
-            <div class="post">
+            <!-- 카테고리 필터 -->
+        	<section class="category-filter">
+            	<button class="category-button active" data-category="all">전체</button>
+           	 	<button class="category-button" data-category="연애">❤️ 연애</button>
+            	<button class="category-button" data-category="취업/진로">🛂 취업/진로</button>
+            	<button class="category-button" data-category="가족">👨‍👩‍👦 가족</button>
+            	<button class="category-button" data-category="결혼/육아">👰 결혼/육아</button>
+            	<button class="category-button" data-category="학업/고시">📚 학업/고시</button>
+        	</section>
+            <div class="post" data-category="취업/진로">
                 <div class="post-header">
                     <img src="assets/images/profile.jpg" alt="Profile" class="profile-image">
                     <div class="post-info">
@@ -66,41 +75,26 @@
                         <div class="post-date">작성일: 2024년 11월 1일</div>
                     </div>
                     <div class="post-actions2">
-                        <span class="edit-button"><i class="fas fa-edit"></i> 수정</span>
-                        <span class="delete-button"><i class="fas fa-trash-alt"></i> 삭제</span>
+                        <span class="edit-button"><i class="fas fa-edit"></i> Update</span>
+                        <span class="delete-button"><i class="fas fa-trash-alt"></i> Delete</span>
                     </div>
                 </div>
                 <div class="post-title">이 고민에 대한 솔루션이 필요해요</div>
                 <div class="post-content">저는 현재 진로에 대해 고민이 많습니다. T/F 테스트를 통해 진로를 결정하는 데 도움이 되는 팁을 얻고 싶어요. 어떤 방향으로 가야 할지 모르겠어요...</div>
+                <div class="post-tags"><span>#취업/진로&nbsp;</span><span>#T&nbsp;</span>#프로그래밍 #커리어 #개발자 #고민</div>
                 <div class="comment-section">
                     <div class="reaction-container">
-                        <button class="comment-toggle">💬댓글<span class="comment-count"> 1 </span>보기</button>
+                        <button class="comment-toggle">💬Comments<span>&nbsp;</span><span class="comment-count"> 0 </span></button>
                         <div class="reaction-buttons">
-                            <button class="reaction-button increase-count-button" data-count-type="like">👍공감 <span class="like-count">0</span></button>
-                            <button class="reaction-button increase-count-button" data-count-type="comfort">💪위로 <span class="comfort-count">0</span></button>
+                            <span class="reaction-button increase-count-button" data-count-type="like">❤️Like<span class="like-count">0</span></span>
                         </div>
                     </div>
-                    <div class="comments" style="display: none;">
-                        <div class="comment">
-                            <span class="comment-author">유저1:</span>
-                            <p class="comment-text">초보라면 Python이나 JavaScript를 추천해요!</p>
-                            <div class="like-chat-buttons">
-                                <button class="chat-button">
-                                    <svg width="20" height="20" viewBox="0 0 24 24">
-                                        <path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path>
-                                    </svg>
-                                </button>
-                                <button class="like-button">
-                                    <svg width="20" height="20" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="comments">
+                    <!-- 여기에 댓글 동적 생성 -->
                     </div>
                     <div class="comment-form">
                         <input type="text" class="new-comment" placeholder="댓글을 입력하세요.">
-                        <button class="add-comment-button">댓글 작성</button>
+                        <button class="add-comment-button">Submit</button>
                     </div>
                 </div>
             </div>
@@ -111,7 +105,6 @@
             <h3>주간 인기 TOP 10</h3>
             <ol class="top10-list">
                 <li>
-                    <span class="list-number"></span>
                     <img src="assets/images/gold.png" alt="금메달" class="trophy-icon">
                     <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
                     <div class="content">
@@ -120,7 +113,6 @@
                     </div>
                 </li>
                 <li>
-                    <span class="list-number"></span>
                      <img src="assets/images/silver.png" alt="은메달" class="trophy-icon">
                     <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
                     <div class="content">
@@ -129,7 +121,6 @@
                     </div>
                 </li>
                 <li>
-                    <span class="list-number"></span>
                      <img src="assets/images/bronze.png" alt="동메달" class="trophy-icon">
                     <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
                     <div class="content">
