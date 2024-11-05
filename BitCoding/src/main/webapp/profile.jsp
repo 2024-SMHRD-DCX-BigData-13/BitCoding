@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TOF</title>
 <link rel="stylesheet" href="assets/css/profile.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/js/profile.js"></script>
 </head>
 <body>
 
@@ -41,7 +43,6 @@
 						<img src="assets/images/profile.jpg" alt="Profile">
 					</a>
 					<div class="dropdown-menu" id="dropdownMenu">
-						<button class="dropdown-item">마이페이지</button>
 						<button class="dropdown-item" id="logout">로그아웃</button>
 					</div>
 				</div>
@@ -52,7 +53,7 @@
 	<div class="main-container">
 		<!-- 왼쪽: 게시물 및 댓글 피드 -->
 		<section class="left-section">
-			<h2>Post</h2>
+			<h2>Post 📌</h2>
 			<div class="feed">
 				<article class="post">
 					<h3>윈터!</h3>
@@ -67,7 +68,7 @@
 			</div>
 			<!-- 댓글 섹션 -->
 			<div class="comments-section">
-				<h2>Comment</h2>
+				<h2>Comment 💬</h2>
 				<div class="comments">
 					<div class="comment">
 						<p>
@@ -91,32 +92,52 @@
 
 		<!-- 오른쪽: 개인정보 수정 -->
 		<section class="right-section">
-			<h2>Info</h2>
+			<h2>Infomation 🔒</h2>
 			<form class="user-info">
-				<label>ID <span>dydgus2510</span></label> <label>NAME <span>조용현</span></label>
-				<label>GENDER <span>남</span></label>
-				<label><input type="password" placeholder="현재 비밀번호 입력"></label> 
-				<label><input type="password" placeholder="새 비밀번호 입력"></label> 
-				<label><input type="password" placeholder="새 비밀번호 확인"></label> 
-				<div class="buttons">
-					<button type="submit" class="update-button">회원정보 수정</button>
-					<button type="button" class="delete-button">회원탈퇴</button>
+				<label class="info-label"> <span class="label-text">ID</span>
+					<span class="label-value">dydgus2510</span>
+				</label> <label class="info-label"> <span class="label-text">NICK</span>
+					<span class="label-value">Quiet현</span>
+				</label> <label class="info-label"> <span class="label-text">T/F</span>
+					<span class="label-value">F</span>
+				</label>
+				<!-- Toggleable section -->
+				<div class="pwchange">
+					<span class="toggle-header">비밀번호 변경 🔽</span>
+					<!-- 클릭 가능한 제목 -->
+					<div class="toggle-content">
+						<!-- 슬라이드로 보여줄 내용 -->
+						<label> <input type="password" placeholder="현재 비밀번호 입력">
+						</label> <label> <input type="password" placeholder="새 비밀번호 입력">
+						</label> <label class="last-label"> <input type="password"
+							placeholder="새 비밀번호 확인">
+						</label>
+						<div class="buttons">
+							<button type="submit" class="update-button">회원정보 수정</button>
+							<button type="button" class="delete-button">회원탈퇴</button>
+						</div>
+					</div>
 				</div>
 			</form>
+
 			<div class="ranking-section">
-				<h2>Ranking</h2>
-				<p>좋아요 수 : <strong>20</strong></p>
-				<p> 상위 : <strong>15%</strong></p>
+				<h2>Ranking 👑</h2>
+				<p>
+					좋아요 수 : <strong>20</strong>
+				</p>
+				<p>
+					상위 : <strong>15%</strong>
+				</p>
 				<div class="progress-bar">
-        			<div class="progress" style="width: 15%;">상위 15%</div>
-   			    </div>
+					<div class="progress" style="width: 15%;">상위 15%</div>
+				</div>
 			</div>
 		</section>
 	</div>
 	<div class="footer">
-						TEAM BitCoding | 스마트인재개발원 | DCX기반 빅데이터 분석서비스 개발자과정 | <br> 목포시
-						산정로212번길 13 | 010 9547 1598<br> Copyright 2024. BitCoding All
-						rights reserved.
+		TEAM BitCoding | 스마트인재개발원 | DCX기반 빅데이터 분석서비스 개발자과정 | <br> 목포시
+		산정로212번길 13 | 010 9547 1598<br> Copyright 2024. BitCoding All
+		rights reserved.
 	</div>
 </body>
 </html>
