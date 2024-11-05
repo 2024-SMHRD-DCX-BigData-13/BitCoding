@@ -8,16 +8,28 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+/* 반응웹 */
+@media ( max-width : 768px) {
+	.main-container {
+		flex-direction: column; /* 세로로 배치 */
+		padding: 0 10px;
+	}
+	.left-section, .right-section {
+		min-width: auto; /* 최소 너비 제한 제거 */
+		width: 100%; /* 100% 너비로 확장 */
+	}
+}
 
 body {
-	overflow-x: auto; /* 축소 시 가로 스크롤바 자동 생성 */
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh; /* 전체 뷰포트 높이를 사용 */
 	background-color: #ffffff;
 	font-family: 'Noto Sans KR', sans-serif;
 	color: #333;
-	padding-top: 85px; /* 헤더 높이만큼 상단 여백 추가 */
+	padding-top: 85px;
 	line-height: 1.6;
 }
-
 /* 헤더 스타일 */
 header {
 	display: flex;
@@ -104,12 +116,13 @@ header {
 	align-items: center;
 	gap: 10px;
 }
+
 .header-right .profile-icon img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #ccc;
-    object-fit: cover;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: #ccc;
+	object-fit: cover;
 }
 /* 프로필 아이콘 스타일 */
 .profile-icon {
@@ -123,58 +136,61 @@ header {
 }
 
 .profile-container {
-    position: relative;
-    display: inline-block;
+	position: relative;
+	display: inline-block;
 }
+
 .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 10;
-    min-width: 120px;
+	display: none;
+	position: absolute;
+	top: 50px;
+	right: 0;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 10;
+	min-width: 120px;
 }
 
 .dropdown-item {
-    display: flex;
-    justify-content: center; /* 글씨를 가운데 정렬 */
-    align-items: center;     /* 글씨를 수직 가운데 정렬 */
-    padding: 10px 0; /* 위아래 간격만 두고, 좌우 여백 제거 */
-    color: #000; /* 블랙 텍스트 */
-    font-size: 0.8em;
-    font-weight: bold;
-    text-align: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    width: 100%;
+	display: flex;
+	justify-content: center; /* 글씨를 가운데 정렬 */
+	align-items: center; /* 글씨를 수직 가운데 정렬 */
+	padding: 10px 0; /* 위아래 간격만 두고, 좌우 여백 제거 */
+	color: #000; /* 블랙 텍스트 */
+	font-size: 0.8em;
+	font-weight: bold;
+	text-align: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+	width: 100%;
 }
 
 .dropdown-item:hover {
-    background-color: #000; /* 호버 시 배경을 검정색으로 */
-    color: #fff; /* 호버 시 텍스트를 흰색으로 */
+	background-color: #000; /* 호버 시 배경을 검정색으로 */
+	color: #fff; /* 호버 시 텍스트를 흰색으로 */
 }
+
 .dropdown-item:active {
-    background-color: #333; /* 액티브 시 어두운 회색 배경 */
-    color: #fff; /* 액티브 시 흰색 텍스트 */
+	background-color: #333; /* 액티브 시 어두운 회색 배경 */
+	color: #fff; /* 액티브 시 흰색 텍스트 */
 }
 
 .dropdown-item.active {
-    background-color: #ddd; /* 선택된 상태를 회색 배경으로 강조 */
-    color: #000; /* 선택된 상태에서 텍스트는 검정색 */
+	background-color: #ddd; /* 선택된 상태를 회색 배경으로 강조 */
+	color: #000; /* 선택된 상태에서 텍스트는 검정색 */
 }
+
 .dropdown-item:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .dropdown-item:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
 
 /* Icon styling */
@@ -202,21 +218,27 @@ header {
 	color: #007bff;
 }
 
-
 /* 메인 컨테이너 */
 .main-container {
 	display: flex;
+	width: 100%;
 	max-width: 1200px;
 	margin: 20px auto;
 	gap: 20px;
+	padding: 0 20px; /* 좌우 여백 추가 */
+	padding-bottom: 10vh; /* 푸터와 겹치지 않도록 아래쪽 여백 추가 */
+	box-sizing: border-box;
 }
 
 /* 왼쪽 섹션 */
 .left-section {
 	flex: 3;
+	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* 연한 그림자 */
+	background-color: #fff;
+	min-width: 300px; /* 최소 너비 설정으로 너무 작아지지 않도록 방지 */
 }
 
 .left-section h2 {
@@ -233,6 +255,15 @@ header {
 
 .post:last-child {
 	border-bottom: none; /* 마지막 게시물에는 구분선 제거 */
+}
+.post img {
+    width: 100%;            /* 이미지가 부모 요소의 너비를 가득 채움 */
+    max-width: 200px;       /* 최대 너비를 400px로 제한 */
+    height: auto;           /* 이미지의 비율을 유지하면서 크기를 조정 */
+    display: block;         /* 이미지를 블록 요소로 설정하여 아래 여백이 생기지 않도록 */
+    margin-bottom: 10px;    /* 이미지와 텍스트 사이에 여백 추가 */
+    border-radius: 8px;     /* 이미지 모서리를 둥글게 처리 */
+    object-fit: cover;      /* 이미지가 잘려도 중앙을 유지 */
 }
 
 .post h3 {
@@ -253,7 +284,7 @@ header {
 .comment {
 	padding: 10px;
 	border-bottom: 1px solid #e0e0e0; /* 댓글 사이 구분선 */
-	margin-bottom: 15px; 
+	margin-bottom: 15px;
 }
 
 .comment:last-child {
@@ -268,11 +299,13 @@ header {
 /* 오른쪽 섹션 - 개인정보 */
 .right-section {
 	flex: 2;
+	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
 	padding: 20px;
-	font-family: 'Noto Sans', Arial, sans-serif;
 	text-align: center;
 	border-left: 1px solid #ddd; /* 왼쪽에 구분선 추가 */
 	box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.05); /* 오른쪽에 부드러운 그림자 */
+	background-color: #fff;
+	min-width: 250px; /* 최소 너비 설정 */
 }
 
 .right-section h2 {
@@ -312,6 +345,8 @@ header {
 	border-radius: 5px;
 	text-align: center;
 	transition: border-color 0.2s;
+	align-items: center;
+	margin: 0 auto;
 }
 
 .user-info input:focus {
@@ -319,6 +354,10 @@ header {
 	outline: none;
 }
 
+.user-info label:last-of-type {
+	border-bottom: none; /* 마지막 label 아래의 선을 제거 */
+	margin-bottom: 0;
+}
 /* 버튼 스타일 */
 .buttons {
 	display: flex;
@@ -336,7 +375,6 @@ header {
 	cursor: pointer;
 	transition: background-color 0.3s;
 	color: white;
-	
 }
 
 .update-button {
@@ -379,4 +417,42 @@ header {
 .ranking-section strong {
 	color: #1e90ff;
 	font-weight: bold;
+}
+/* 진행 바 스타일 */
+.progress-bar {
+	width: 100%;
+	background-color: #e0e0e0;
+	border-radius: 8px;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.progress {
+	height: 20px;
+	background-color: #1e90ff;
+	text-align: center;
+	color: #fff;
+	line-height: 20px;
+	font-size: 14px;
+}
+
+/* 푸터 스타일 */
+.footer {
+	width: 100%;
+	background-color: #f8f9fa;
+	text-align: center;
+	border-top: 0.5px solid #ccc;
+	height: 10vh;
+	position: sticky; /* 푸터를 하단에 고정 */
+	bottom: 0;
+	left: 0;
+	padding: 15px;
+	font-size: 12px;
+	color: #a0a5b0;
+	line-height: 1.6;
+	z-index: 10;
+}
+
+.content-wrapper {
+	padding-bottom: 10vh; /* 푸터 아래 내용이 가려지지 않도록 설정 */
 }

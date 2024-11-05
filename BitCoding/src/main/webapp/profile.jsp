@@ -55,7 +55,8 @@
 			<h2>Post</h2>
 			<div class="feed">
 				<article class="post">
-					<h3>게시물 제목 1</h3>
+					<h3>윈터!</h3>
+					<img src="assets/images/example.jpg" alt="Example Image">
 					<p>이곳에 게시물 내용이 표시됩니다...</p>
 				</article>
 				<article class="post">
@@ -90,27 +91,32 @@
 
 		<!-- 오른쪽: 개인정보 수정 -->
 		<section class="right-section">
-			<h2>내 정보</h2>
+			<h2>Info</h2>
 			<form class="user-info">
-				<label>ID <span>user123</span></label> <label>NAME <span>홍길동</span></label>
-				<label>GENDER <span>남</span></label> <label>PW <input
-					type="password" placeholder="비밀번호 변경"></label> <label>TEL <input
-					type="tel" placeholder="'-'를 빼고 입력해주세요"></label>
+				<label>ID <span>dydgus2510</span></label> <label>NAME <span>조용현</span></label>
+				<label>GENDER <span>남</span></label>
+				<label><input type="password" placeholder="현재 비밀번호 입력"></label> 
+				<label><input type="password" placeholder="새 비밀번호 입력"></label> 
+				<label><input type="password" placeholder="새 비밀번호 확인"></label> 
 				<div class="buttons">
 					<button type="submit" class="update-button">회원정보 수정</button>
 					<button type="button" class="delete-button">회원탈퇴</button>
 				</div>
 			</form>
 			<div class="ranking-section">
-				<h2>나의 랭킹</h2>
-				<p>
-					현재 랭킹: <strong>#5</strong>
-				</p>
-				<p>
-					총 포인트: <strong>1500점</strong>
-				</p>
+				<h2>Ranking</h2>
+				<p>좋아요 수 : <strong>20</strong></p>
+				<p> 상위 : <strong>15%</strong></p>
+				<div class="progress-bar">
+        			<div class="progress" style="width: 15%;">상위 15%</div>
+   			    </div>
 			</div>
 		</section>
+	</div>
+	<div class="footer">
+						TEAM BitCoding | 스마트인재개발원 | DCX기반 빅데이터 분석서비스 개발자과정 | <br> 목포시
+						산정로212번길 13 | 010 9547 1598<br> Copyright 2024. BitCoding All
+						rights reserved.
 	</div>
 </body>
 </html>
