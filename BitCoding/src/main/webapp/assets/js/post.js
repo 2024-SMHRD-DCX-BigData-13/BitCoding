@@ -3,6 +3,33 @@ $(document).ready(function() {
 	$(document).on('click', '.category-button', function() {
 		selectCategory(this, $(this).data('category'));
 	});
+	 // 이미지 업로드 시 미리보기
+    $('#image-upload').on('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#preview-img').attr('src', e.target.result);
+                $('#image-preview').show();
+            };
+            reader.readAsDataURL(file);
+        } else {
+            $('#image-preview').hide();
+        }
+    });
+
+    // 이미지 삭제 버튼 클릭 시 미리보기 제거
+    $('#remove-image').on('click', function() {
+        $('#image-upload').val(''); // 파일 인풋 초기화
+        $('#image-preview').hide();
+        $('#preview-img').attr('src', '');
+    });
+
+    // 모달 닫기 버튼
+    $('.modal-close').on('click', function() {
+        $('.modal').removeClass('active');
+        $('.modal-overlay').removeClass('active');
+    });
 
 	// 공감 및 위로 버튼 기능
 	$(".increase-count-button").on("click", function() {
@@ -24,6 +51,16 @@ $(document).ready(function() {
 			inputComment();
 		}
 	});
+	
+	$(".share-thoughts-button").on('click', function(){
+		$('.modal').addClass('active');
+        $('.modal-overlay').addClass('active');
+	});
+   // 모달 외부 영역 클릭 시 모달 닫기
+    $('.modal-overlay').on('click', function() {
+        $('.modal').removeClass('active');
+        $(this).removeClass('active');
+    });
 });
 
 function selectCategory(button, category) {

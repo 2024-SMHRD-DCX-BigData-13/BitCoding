@@ -1,4 +1,7 @@
 // join.js
+// FormData 객체 생성
+var formData = new FormData();
+
 let user_info = {};
 let isCheck = true;
 let nextPage = null;
@@ -159,23 +162,22 @@ $(document).ready(function() {
 	function setData(event) {
 		if ($('#result').text() === '사용가능한 이메일 입니다.') {
 			isCheck = false;
-			user_info.email = $('input[name="join_email"]').val();
-			user_info.name = $('input[name="join_name"]').val();
-			user_info.password = $('input[name="join_password"]').val();
-			user_info.nickname = $('input[name="join_nick"]').val();
-			user_info.gender = $('select[name="join_gender"]').val(); // select 요소로 수정
-			user_info.birth = $('input[name="join_birth"]').val(); // date 요소 확인
-			user_info.phoneNumber = $('input[name="join_phoneNumber"]').val();
-
-			// 파일 데이터 추가 (프로필 사진)
+			formData.append('email', $('input[name="join_email"]').val());
+			formData.append('name', $('input[name="join_name"]').val());
+			formData.append('password', $('input[name="join_password"]').val());
+			formData.append('nickname', $('input[name="join_nick"]').val());
+			formData.append('gender', $('select[name="join_gender"]').val());
+			formData.append('birth', $('input[name="join_birth"]').val());
+			formData.append('phoneNumber', $('input[name="join_phoneNumber"]').val());
+			// 파일 데이터 추가 (프로필 사진)       
 			const file = $('#profilePicture')[0].files[0];
 			if (file) {
-				user_info.file = file;
+				formData.append('file', file);
 			}
-			else{
-				user_info.file = 'assets/images/profiles/profile.jpg';
+			else {
+				formData.append('file', 'assets/images/profiles/profile.jpg');
 			}
-			
+
 			$(".modal-backdrop").fadeIn(300);
 			$("#join-modal2").fadeIn(300);
 		}
@@ -194,17 +196,9 @@ $(document).ready(function() {
 		$.ajax({
 			url: 'joindb.bit',// 요청 URL주소
 			type: 'post',// GET POST
-			data: {
-				'email': user_info.email,
-				'name': user_info.name,
-				'password': user_info.password,
-				'nickname': user_info.nickname,
-				'gender': user_info.gender,
-				'birth': user_info.birth,
-				'phoneNumber': user_info.phoneNumber,
-				'tf': user_info.tf,
-				'file': user_info.file
-			},
+			data: formData,
+			processData: false, // 파일 데이터 전송 시 필수 설정
+			contentType: false, // 파일 데이터 전송 시 필수 설정
 			success: function(res) {
 				// 요청이 성공해서, 응답이 이루어진 후에 실행되는 함수
 				// 응답 받은 데이터가 자동으로 res에 담김 
@@ -253,11 +247,11 @@ $(document).ready(function() {
 
 		// T와 F 점수를 비교하여 결과 표시
 		if (T_score > F_score) {
-			user_info.tf = 'T';
+			formData.append('tf', 'T');
 		} else if (F_score > T_score) {
-			user_info.tf = 'F';
+			formData.append('tf', 'F');
 		} else {
-			user_info.tf = 'F';
+			formData.append('tf', 'F');
 		}
 	}
 

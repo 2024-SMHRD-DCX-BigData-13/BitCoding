@@ -42,7 +42,7 @@
                     </a>
                     <div class="dropdown-menu" id="dropdownMenu">
                         <button class="dropdown-item">마이페이지</button>
-                        <button class="dropdown-item">로그아웃</button>
+                        <button class="dropdown-item" id = "logout">로그아웃</button>
                     </div>
                 </div>
             </div>
@@ -100,6 +100,43 @@
             </div>
             <!-- 추가게시물 -->
         </main>
+               <!-- 글작성 모달 오버레이 -->
+        <div class="modal-overlay"></div>
+<div class="modal">
+	<div class="modal-header">
+		<h2>Post</h2>
+		<button class="modal-close">&times;</button>
+	</div>
+	<form id="post-form">
+		<label for="category">Category</label>
+		<select id="category">
+			<option value="love">❤️ 연애</option>
+			<option value="career">💼 취업/진로</option>
+			<option value="hobby">🎨 취미</option>
+			<option value="study">📚 학업/고시</option>
+		</select>
+
+		<label for="title">Title</label>
+		<input type="text" id="title" placeholder="제목을 입력하세요">
+
+		<label for="content">Content</label>
+		<textarea id="content" placeholder="내용을 입력하세요"></textarea>
+
+		<!-- 이미지 업로드 및 미리보기 -->
+		<label for="image-upload">Image Upload</label>
+		<input type="file" id="image-upload" accept="image/*">
+		<div id="image-preview" class="image-preview">
+			<img src="" alt="이미지 미리보기" id="preview-img">
+			<button type="button" id="remove-image">Delete</button>
+		</div>
+
+		<label for="tags">Tags (separated by #):</label>
+		<input type="text" id="tags" placeholder="#태그를 입력하세요">
+
+		<button type="submit" class="submit-btn">게시글 작성</button>
+	</form>
+</div>
+
         <div class="spacer"></div>
         <div class="sidebar">
             <h3>주간 인기 TOP 10</h3>

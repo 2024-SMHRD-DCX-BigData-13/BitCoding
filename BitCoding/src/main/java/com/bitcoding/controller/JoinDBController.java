@@ -30,17 +30,19 @@ public class JoinDBController implements iController {
 		DefaultFileRenamePolicy rename = new DefaultFileRenamePolicy();
 
 		MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, encoding, rename);
-		// file 이름 가져오기 + 지정된 폴더에 파일 저장
-		String filename = multi.getFilesystemName("filename");
-
-		String email = request.getParameter("email");
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		String nickname = request.getParameter("nickname");
-		String gender = request.getParameter("gender");
-		String birth = request.getParameter("birth");
-		String phoneNumber = request.getParameter("phoneNumber");
-		String tf = request.getParameter("tf");
+		// 4. FormData로 전달된 데이터 받기
+        String filename = multi.getFilesystemName("file"); // 파일 이름
+        String email = multi.getParameter("email");
+        String name = multi.getParameter("name");
+        String password = multi.getParameter("password");
+        String nickname = multi.getParameter("nickname");
+        String gender = multi.getParameter("gender");
+        String ori_birth = multi.getParameter("birth");
+        String birth = ori_birth.replace("-", "");
+        String phoneNumber = multi.getParameter("phoneNumber");
+        String tf = multi.getParameter("tf");
+        
+        
 
 		Member data = new Member(email, password, name, nickname, birth, phoneNumber, gender, tf, null, filename);
 

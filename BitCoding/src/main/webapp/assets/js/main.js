@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	let hideTimeout;
-
 	$('.profile-container').on('mouseover', function() {
 		clearTimeout(hideTimeout); // 숨기기 딜레이 취소
 		$('#dropdownMenu').stop(true, true).slideDown(200); // 메뉴 표시

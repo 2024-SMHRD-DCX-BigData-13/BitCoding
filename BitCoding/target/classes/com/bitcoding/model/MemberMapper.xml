@@ -32,7 +32,7 @@
 	<!-- 로그인 -->
 	<select id="login" parameterType="com.bitcoding.model.Member"
 		resultType="com.bitcoding.model.Member">
-		select * from members where email=#{email} and password =
+		select * from members where email=#{email} and pw =
 		#{pw}
 	</select>
 
