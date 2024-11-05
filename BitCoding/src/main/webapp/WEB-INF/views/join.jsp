@@ -29,7 +29,7 @@
             <div class="login-form">
                 <div class="content-wrapper">
                     <h2>프리미엄 고민 상담소</h2>
-                    <p class="description">지금 TOF에 가입하세요</p>
+                    <p class="description">지금 TF에 가입하세요</p>
 
                     <button class="kakao-button">
                         <svg class="kakao-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
