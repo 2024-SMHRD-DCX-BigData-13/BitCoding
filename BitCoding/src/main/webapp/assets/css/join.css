@@ -213,11 +213,12 @@ h2 {
 }
 
 .kakao-icon {
-	width: 18px;
-	height: 18px;
+	width: 30px;
+	height: 30px;
 	margin-right: 8px;
 	vertical-align: middle;
 }
+
 
 /* 섹션 구분선 스타일 */
 .divider {
@@ -252,7 +253,8 @@ h2 {
 	padding: 14px;
 	border: none;
 	border-radius: 4px;
-	font-size: 16px;
+	font-size: 18px;
+	font-weight: 600;
 	cursor: pointer;
 	width: 100%;
 	margin-bottom: 20px;
