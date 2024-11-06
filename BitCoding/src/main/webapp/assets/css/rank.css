@@ -207,148 +207,109 @@ header {
 }
 /* header 라인------------------------------------------------------------------------------------------------------------*/
 
+/* 헤더와 아래 랭킹바디 맞추기*/
+.ranking-container {
+    padding: 0 350px; /* 좌우 여백 추가 */
+}
 
-/* 랭킹 섹션 스타일 */
-.ranking-page {
+/* 탭 버튼 스타일 */
+.tab-buttons {
     display: flex;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-/* 개별 랭킹 섹션 스타일 */
-.ranking-section {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
-    max-width: 500px;
-}
-
-.ranking-section h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-/* 랭킹 리스트 스타일 */
-.ranking-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* 개별 랭킹 아이템 스타일 */
-.ranking-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.ranking-item:last-child {
-    border-bottom: none;
-}
-
-.rank {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #ff8c00;
-    width: 30px;
-    text-align: center;
-}
-
-.profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.nickname {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.userid {
-    font-size: 0.9em;
-    color: #666;
-    margin-left: 5px;
-}
-
-.likes {
-    margin-left: auto;
-    font-size: 1em;
-    color: #e63946;
-    font-weight: bold;
-}
-
-.post-title, .comment-snippet {
-    font-size: 0.9em;
-    color: #555;
-    margin-top: 3px;
-    max-width: 250px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-
-/* 랭킹 페이지 스타일 */
-.ranking-page {
-    display: flex;
-    position: relative;  /* 부모 요소를 상대 위치로 설정 */
-    width: 100%;
-    height: auto;
-    align-items: center;
     justify-content: center;
-    overflow: hidden;
+    margin-bottom: 20px;
 }
-
-/* 기본 스타일 설정 */
-.ranking-section {
-    background-color: #fff;
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #333; /* 비활성화된 버튼 배경색 */
+    color: #fff; /* 흰색 텍스트 */
+    border: none;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
-    max-width: 500px;
-    transition: transform 0.5s ease;
-    opacity: 1; /* 기본 opacity 설정 */
+    font-weight: bold;
+    margin-right: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
 }
-
-/* 처음에는 하나의 섹션만 보이도록 설정 */
-.ranking-section:first-child {
-    transform: translateX(-15%); /* 100%에서 20%로 변경 */
+.tab-button:last-child {
+    margin-right: 0;
 }
-
-.ranking-section:last-child {
-    transform: translateX(15%); /* 100%에서 20%로 변경 */
+.tab-button.active {
+    background-color: #007bff; /* 활성화된 버튼 색상 */
+    color: #fff;
 }
-
-/* 클릭 후 슬라이드 전환 */
-.ranking-section.active:first-child {
-    transform: translateX(120%); /* 100%에서 20%로 변경 */
-}
-
-.ranking-section.active:last-child {
-    transform: translateX(-120%); /* 100%에서 20%로 변경 */
+.tab-button:hover {
+    background-color: #555; /* 호버 시 색상 */
 }
 
 
+/* 랭킹 컨테이너 */
+.ranking-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;         /* 컬럼 간격 */
+    flex-wrap: nowrap; /* 줄바꿈 방지 */
+    width:100%;
+}
+
+/* 랭킹 컬럼 스타일 */
+.ranking-column {
+    flex: 1;           /* 각 컬럼을 균등한 너비로 설정 */
+    min-width: 0;      /* 컬럼이 공간 부족으로 줄어들지 않도록 설정 */
+    text-align: center;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+}
+.ranking-column:last-child {
+    border-right: none;
+}
+/* 카테고리 제목 스타일 */
+.category-title {
+    font-size: 30px; /* 30px로 설정 */
+    color: inherit;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+/* 개별 타이틀 색상 */
+.tf-all-title {
+    color: black;
+}
+
+.thinking-title {
+    color: #1E90FF; /* 파란색 */
+}
+
+.feeling-title {
+    color: #f56b6b; /* 밝은 빨간색 */
+}
 
 
 
+/* 1등 게시물 스타일 */
+.top-ranking {
+    font-size: 24px; /* 큰 글씨 */
+    color: #333; /* 강조 색상 */
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* 1등 게시물 추가 정보 스타일 */
+.top-ranking-info {
+    font-size: 14px; /* 작은 글씨로 정보 표시 */
+    color: #666; /* 보조적인 색상 */
+    margin-bottom: 10px; /* 아래 요소와 간격 */
+    font-style: italic; /* 기울임으로 부드러운 느낌 */
+}
 
 
-
-
-
-
+/* 순위 리스트 */
+.ranking-list { list-style-type: none; padding: 0; text-align: left; }
+.ranking-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 12px;
+}
 
 
 

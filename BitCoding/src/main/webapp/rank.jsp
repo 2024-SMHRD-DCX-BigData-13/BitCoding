@@ -51,41 +51,103 @@
 		</div>
 	</header>
 
-	 <section class="ranking-page">
-        <!-- 게시물 좋아요 랭킹 -->
-        <div class="ranking-section">
-            <h2>📄 게시물 좋아요 TOP 10</h2>
-            <div class="ranking-list">
-                <div class="ranking-item">
-                    <span class="rank">1</span>
-                    <img src="user1-profile.jpg" alt="User Profile" class="profile-pic">
-                    <span class="nickname">조용현 <span class="userid">(Feeling)</span></span>
-                    <span class="likes">👍 2500</span>
-                    <p class="post-title">"Next.js 꼭 써야할까?"</p>
-                </div>
-                
-                <!-- 다른 게시물 좋아요 랭킹 아이템들 -->
-            </div>
-        </div>
+	<!-- 탭 버튼 섹션 -->
+	<div class="tab-buttons">
+		<button class="tab-button active" data-tab="posts-likes">Post
+			Likes</button>
+		<button class="tab-button" data-tab="comments-likes">Comment
+			Likes</button>
+	</div>
+	<!-- 랭킹 섹션 -->
 
-        <!-- 댓글 좋아요 랭킹 -->
-        <div class="ranking-section">
-            <h2>💬 댓글 좋아요 TOP 10</h2>
-            <div class="ranking-list">
-                <div class="ranking-item">
-                    <span class="rank">1</span>
-                    <img src="user2-profile.jpg" alt="User Profile" class="profile-pic">
-                    <span class="nickname">최지한 <span class="userid">(Thinking)</span></span>
-                    <span class="likes">👍 1800</span>
-                    <p class="comment-snippet">"Next.js는 서버사이드 렌더링에 좋습니다."</p>
-                </div>
-                
-                <!-- 다른 댓글 좋아요 랭킹 아이템들 -->
-            </div>
-        </div>
-    </section>
-    
-    <!-- footer ! -->
+	<div class="ranking-container">
+		<!-- 통합 카테고리 - Post Likes 관련 콘텐츠 -->
+		<div class="ranking-column posts-likes">
+			<div class="category-title">
+				<span class="tf-all-title">T/F All</span>
+			</div>
+			<div class="top-ranking">고민상담</div>
+			<div class="top-ranking-info">좋아요 1,234회 | 작성자: User123</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">고민상담</a></li>
+				<li><span>2</span> <a href="#">Alex Pereira</a></li>
+				<li><span>3</span> <a href="#">Jon Jones</a></li>
+			</ul>
+		</div>
+
+		<!-- Thinking 카테고리 - Post Likes 관련 콘텐츠 -->
+		<div class="ranking-column posts-likes">
+			<div class="category-title">
+				<span class="thinking-title">Thinking</span>
+			</div>
+			<div class="top-ranking">Islam Makhachev</div>
+			<div class="top-ranking-info">좋아요 982회 | 작성자: User456</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">Islam Makhachev</a></li>
+				<li><span>2</span> <a href="#">Alex Pereira</a></li>
+				<li><span>3</span> <a href="#">Jon Jones</a></li>
+			</ul>
+		</div>
+
+		<!-- Feeling 카테고리 - Post Likes 관련 콘텐츠 -->
+		<div class="ranking-column posts-likes">
+			<div class="category-title">
+				<span class="feeling-title">Feeling</span>
+			</div>
+			<div class="top-ranking">Alexandre Pantoja</div>
+			<div class="top-ranking-info">좋아요 1,560회 | 작성자: User789</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">Brandon Royval</a></li>
+				<li><span>2</span> <a href="#">Brandon Moreno</a></li>
+				<li><span>3</span> <a href="#">Amir Albazi</a></li>
+			</ul>
+		</div>
+
+		<!-- 통합카테고리 Comment Likes 관련 콘텐츠 -->
+		<div class="ranking-column comments-likes">
+			<div class="category-title">
+				<span class="tf-all-title">T/F All - Comments</span>
+			</div>
+			<div class="top-ranking">댓글 상담</div>
+			<div class="top-ranking-info">좋아요 1,110회 | 작성자: CommentUser</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">댓글 상담</a></li>
+				<li><span>2</span> <a href="#">Comment User 2</a></li>
+				<li><span>3</span> <a href="#">Comment User 3</a></li>
+			</ul>
+		</div>
+		<!-- Thinking 카테고리 - Comment Likes 관련 콘텐츠 -->
+		<div class="ranking-column comments-likes">
+			<div class="category-title">
+				<span class="thinking-title">Thinking</span>
+			</div>
+			<div class="top-ranking">화이팅</div>
+			<div class="top-ranking-info">좋아요 982회 | 작성자: User456</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">화이팅</a></li>
+				<li><span>2</span> <a href="#">힘내</a></li>
+				<li><span>3</span> <a href="#">으샤으샤</a></li>
+			</ul>
+		</div>
+
+		<!-- Feeling 카테고리 - Comment Likes 관련 콘텐츠 -->
+		<div class="ranking-column comments-likes">
+			<div class="category-title">
+				<span class="feeling-title">Feeling</span>
+			</div>
+			<div class="top-ranking">굿</div>
+			<div class="top-ranking-info">좋아요 1,560회 | 작성자: User789</div>
+			<ul class="ranking-list">
+				<li><span>1</span> <a href="#">굿</a></li>
+				<li><span>2</span> <a href="#">좋아요</a></li>
+				<li><span>3</span> <a href="#">힘내</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+
+	<!-- footer ! -->
 	<div class="footer">
 		TEAM BitCoding | 스마트인재개발원 | DCX기반 빅데이터 분석서비스 개발자과정 | <br> 목포시
 		산정로212번길 13 | 010 9547 1598<br> Copyright 2024. BitCoding All
