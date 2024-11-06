@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitcoding.model.MemberDAO">
-
-
 	<!-- <멤버 필드 변수> email, pw, name, nick, birthdate, phone, gender, mem_type, create_at -->
 
 	<!-- 회원가입 -->
@@ -32,8 +30,7 @@
 	<!-- 로그인 -->
 	<select id="login" parameterType="com.bitcoding.model.Member"
 		resultType="com.bitcoding.model.Member">
-		select * from members where email=#{email} and pw =
-		#{pw}
+		select * from members where email=#{email} and pw =#{pw}
 	</select>
 
 	<!-- 회원정보수정 -->

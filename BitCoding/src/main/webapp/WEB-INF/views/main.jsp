@@ -66,39 +66,10 @@
             	<button class="category-button" data-category="결혼/육아">👰 결혼/육아</button>
             	<button class="category-button" data-category="학업/고시">📚 학업/고시</button>
         	</section>
-            <div class="post" data-category="취업/진로">
-                <div class="post-header">
-                    <img src="assets/images/profile.jpg" alt="Profile" class="profile-image">
-                    <div class="post-info">
-                        <div class="post-author">최지한</div>
-                        <div class="post-role">Thinking</div>
-                        <div class="post-date">작성일: 2024년 11월 1일</div>
-                    </div>
-                    <div class="post-actions2">
-                        <span class="edit-button"><i class="fas fa-edit"></i> Update</span>
-                        <span class="delete-button"><i class="fas fa-trash-alt"></i> Delete</span>
-                    </div>
-                </div>
-                <div class="post-title">이 고민에 대한 솔루션이 필요해요</div>
-                <div class="post-content">저는 현재 진로에 대해 고민이 많습니다. T/F 테스트를 통해 진로를 결정하는 데 도움이 되는 팁을 얻고 싶어요. 어떤 방향으로 가야 할지 모르겠어요...</div>
-                <div class="post-tags"><span>#취업/진로&nbsp;</span><span>#T&nbsp;</span>#프로그래밍 #커리어 #개발자 #고민</div>
-                <div class="comment-section">
-                    <div class="reaction-container">
-                        <button class="comment-toggle">💬Comments<span>&nbsp;</span><span class="comment-count"> 0 </span></button>
-                        <div class="reaction-buttons">
-                            <span class="reaction-button increase-count-button" data-count-type="like">❤️Like<span class="like-count">0</span></span>
-                        </div>
-                    </div>
-                    <div class="comments">
-                    <!-- 여기에 댓글 동적 생성 -->
-                    </div>
-                    <div class="comment-form">
-                        <input type="text" class="new-comment" placeholder="댓글을 입력하세요.">
-                        <button class="add-comment-button">Submit</button>
-                    </div>
-                </div>
-            </div>
+        	<div class = postbox>
+            
             <!-- 추가게시물 -->
+            </div>
         </main>
                <!-- 글작성 모달 오버레이 -->
         <div class="modal-overlay"></div>
@@ -109,29 +80,36 @@
 	</div>
 	<form id="post-form">
 		<label for="category">Category</label>
-		<select id="category">
-			<option value="love">❤️ 연애</option>
-			<option value="career">💼 취업/진로</option>
-			<option value="hobby">🎨 취미</option>
-			<option value="study">📚 학업/고시</option>
+		<select id="category" name = "np_category">
+			<option value="연애">❤️ 연애</option>
+			<option value="취업/진로">💼 취업/진로</option>
+			<option value="가족">👨‍👩‍👦 가족</option>
+			<option value="결혼/육아">👰 결혼/육아</option>
+			<option value="학업/고시">📚 학업/고시</option>
+		</select>
+		<label for="tf">T/F</label>
+		<select id="tf" name = "np_tf">
+			<option value="Thinking">Thinking</option>
+			<option value="Feeling">Feeling</option>
+			<option value="ALL">Thinking&Feeling</option>
 		</select>
 
 		<label for="title">Title</label>
-		<input type="text" id="title" placeholder="제목을 입력하세요">
+		<input type="text" id="title" name = "np_title" placeholder="제목을 입력하세요">
 
 		<label for="content">Content</label>
-		<textarea id="content" placeholder="내용을 입력하세요"></textarea>
+		<textarea id="content" placeholder="내용을 입력하세요" name = "np_content"></textarea>
 
 		<!-- 이미지 업로드 및 미리보기 -->
 		<label for="image-upload">Image Upload</label>
-		<input type="file" id="image-upload" accept="image/*">
+		<input type="file" id="image-upload" name = "np_file" accept="image/*">
 		<div id="image-preview" class="image-preview">
 			<img src="" alt="이미지 미리보기" id="preview-img">
 			<button type="button" id="remove-image">Delete</button>
 		</div>
 
 		<label for="tags">Tags (separated by #):</label>
-		<input type="text" id="tags" placeholder="#태그를 입력하세요">
+		<input type="text" id="tags" name = "np_tag"placeholder="#태그를 입력하세요">
 
 		<button type="submit" class="submit-btn">게시글 작성</button>
 	</form>

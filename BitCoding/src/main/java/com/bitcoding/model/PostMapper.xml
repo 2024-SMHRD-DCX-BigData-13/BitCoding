@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bitcoding.model.PostMapper"></mapper>
+<mapper namespace="com.bitcoding.model.PostDAO">
+<!-- post_idx, post_title, post_content, post_file, create_at, email, nick, 
+	post_type, profile, category, post_tag -->
+
+<!-- 게시물 생성 -->
+<insert id="create" parameterType="com.bitcoding.model.Post">
+	insert into posts
+	values(
+	posts_seq.nextval,
+	#{post_title},
+	#{post_content},
+	#{post_file},
+	sysdate,
+	#{email},
+	#{nick},
+	#{post_type},
+	#{profile},
+	#{category},
+	#{post_tag}
+	)
+</insert>
+</mapper>

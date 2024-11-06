@@ -22,6 +22,9 @@ public class LoginDBController implements iController {
 		String email = request.getParameter("login_email");
 		String password = request.getParameter("login_password");
 		
+		if (email == null) email = "";
+	    if (password == null) password = "";
+		
 		Member data = new Member();
 		data.setEmail(email);
 		data.setPw(password);

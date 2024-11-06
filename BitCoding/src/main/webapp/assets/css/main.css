@@ -537,16 +537,22 @@ main {
 
 .post-date {
 	font-size: 13px;
-	color: #999;
+	color: #333;
 }
 
 .post-title {
 	font-size: 18px;
 	font-weight: 700;
-	color: #333;
+	color: #444;
 	margin: 10px 0;
 }
-
+.post-image {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 100%;  /* 이미지의 최대 너비를 부모 요소의 100%로 제한 */
+    height: auto;     /* 비율을 유지하면서 높이를 자동으로 조정 */
+}
 .post-content {
 	font-size: 15px;
 	color: #444;
@@ -634,7 +640,11 @@ main {
 	display: flex;
 	align-items: center;
 }
-
+.like-count{
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+}
 .comment-toggle:hover {
 	color: #333; /* 진한 회색 호버 효과 */
 }
@@ -802,7 +812,8 @@ main {
 
 .author {
     font-size: 13px;
-    color: #666;
+    font-weight: bold;
+    color: #000;
     margin-top: 6px;
     margin-bottom: 5px;
 }

@@ -18,17 +18,13 @@ $(document).ready(function() {
 	});
 	$('#logout').on('click', logout);
 
-	// JavaScript로 슬라이드 효과 추가
-	document.addEventListener("DOMContentLoaded", function() {
-		const toggleHeader = document.querySelector(".toggle-header");
-		const pwchangeSection = document.querySelector(".pwchange");
-
-		toggleHeader.addEventListener("click", function() {
-			pwchangeSection.classList.toggle("active"); // .pwchange에 active 클래스 추가/제거
-			toggleHeader.textContent = pwchangeSection.classList.contains("active")
-				? "비밀번호 변경 🔼" // 열렸을 때
-				: "비밀번호 변경 🔽"; // 닫혔을 때
-		});
+	$('.toggle-header').on("click", function() {
+		console.log("이벤트 들어옴");
+		$('.pwchange').toggleClass("active"); // .pwchange에 active 클래스 추가/제거
+		$(this).text($('.pwchange').hasClass("active")
+			? "비밀번호 변경 🔼" // 열렸을 때
+			: "비밀번호 변경 🔽" // 닫혔을 때
+		);
 	});
 });
 function logout() {

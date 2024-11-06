@@ -26,6 +26,10 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/login.bit", new PageLoginController());
 		pageHandler.put("/logindb.bit", new LoginDBController());
 		pageHandler.put("/logout.bit", new LogoutController());
+		pageHandler.put("/getData.bit", new GetDataController());
+		
+		pageHandler.put("/createPost.bit", new CreatePostController());
+		
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
