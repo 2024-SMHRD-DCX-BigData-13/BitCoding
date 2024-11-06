@@ -298,6 +298,52 @@ header {
 }
 
 
+/* 랭킹 페이지 스타일 */
+.ranking-page {
+    display: flex;
+    position: relative;  /* 부모 요소를 상대 위치로 설정 */
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* 기본 스타일 설정 */
+.ranking-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    transition: transform 0.5s ease;
+    opacity: 1; /* 기본 opacity 설정 */
+}
+
+/* 처음에는 하나의 섹션만 보이도록 설정 */
+.ranking-section:first-child {
+    transform: translateX(-15%); /* 100%에서 20%로 변경 */
+}
+
+.ranking-section:last-child {
+    transform: translateX(15%); /* 100%에서 20%로 변경 */
+}
+
+/* 클릭 후 슬라이드 전환 */
+.ranking-section.active:first-child {
+    transform: translateX(120%); /* 100%에서 20%로 변경 */
+}
+
+.ranking-section.active:last-child {
+    transform: translateX(-120%); /* 100%에서 20%로 변경 */
+}
+
+
+
+
+
+
 
 
 

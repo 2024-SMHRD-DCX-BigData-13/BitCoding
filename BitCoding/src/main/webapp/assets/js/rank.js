@@ -33,3 +33,16 @@ function logout() {
 		},
 	});
 }
+
+
+
+
+
+
+
+$(document).ready(function() {
+    // 랭킹 섹션 클릭 시 active 클래스 토글
+    $('.ranking-section').click(function() {
+        $('.ranking-section').toggleClass('active');
+    });
+});
