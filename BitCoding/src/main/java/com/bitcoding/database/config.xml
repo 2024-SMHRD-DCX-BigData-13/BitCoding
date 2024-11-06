@@ -22,5 +22,6 @@
 	<mappers>
 		<mapper resource="com/bitcoding/model/MemberMapper.xml" />
 		<mapper resource="com/bitcoding/model/PostMapper.xml" />
+		<mapper resource="com/bitcoding/model/CommentMapper.xml" />
 	</mappers>
 </configuration>

@@ -1,5 +1,7 @@
 package com.bitcoding.model;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -9,7 +11,8 @@ public class PostDAO {
 
 	private SqlSessionFactory server = ServerManager.getSqlSessionFactory();
 
-	// post_idx, post_title, post_content, post_file, create_at, email, nick, post_type, profile, category, post_tag
+	// post_idx, post_title, post_content, post_file, create_at, email, nick,
+	// post_type, profile, category, post_tag
 	// 1. 게시물 생성
 	public int create(Post post) {
 		SqlSession session = server.openSession(true);
@@ -19,6 +22,17 @@ public class PostDAO {
 		session.close();
 
 		return cnt;
+	}
+	
+	// 2. 전체 정보 조회
+	public List<Post> searchall() {
+		SqlSession session = server.openSession(true);
+
+		List<Post> result = session.selectList("searchall");
+
+		session.close();
+
+		return result;
 	}
 
 	/*
@@ -53,15 +67,6 @@ public class PostDAO {
 	 * server.openSession(true);
 	 * 
 	 * Member result = session.selectOne("check", email);
-	 * 
-	 * session.close();
-	 * 
-	 * return result; }
-	 * 
-	 * // 6. 전체 정보 조회 public List<Member> search() { SqlSession session =
-	 * server.openSession(true);
-	 * 
-	 * List<Member> result = session.selectList("search");
 	 * 
 	 * session.close();
 	 * 

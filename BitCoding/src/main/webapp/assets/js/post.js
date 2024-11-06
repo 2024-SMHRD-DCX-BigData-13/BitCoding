@@ -1,21 +1,8 @@
 let user_info = {};
 $(document).ready(function() {
-	// js가 로드되었을때 유저 데이터 정보 받기
-	$.ajax({
-		url: 'getData.bit', // 서블릿 URL
-		type: 'GET',  // HTTP 요청 방식
-		dataType: 'json', // 응답 데이터 형식
-		success: function(data) {
-			// 서블릿에서 받은 데이터를 사용
+	// js가 로드되었을때 유저 데이터 및 게시물 정보 받기
+	prepare();
 
-			user_info.email = data.email;
-			user_info.nickname = data.nick;
-			user_info.gender = data.gender;
-			user_info.profile = data.profile;
-			console.log('이메일' + user_info.email);
-			console.log('프로필' + user_info.profile);
-		}
-	});
 	$(document).on('click', '.comment-toggle', toggleComments);
 	$(document).on('click', '.category-button', function() {
 		selectCategory(this, $(this).data('category'));
@@ -81,17 +68,35 @@ $(document).ready(function() {
 		}
 	});
 
+	// 좋아요 버튼 클릭 시 색상 변경
+	$(document).on("click", ".like-button", function() {
+		$(this).toggleClass("active"); // .active 클래스 토글
+	});
+
+	// 메시지 버튼 클릭 시 색상 변경
+	$(document).on("click", ".chat-button", function() {
+		$(this).toggleClass("active"); // .active 클래스 토글
+	});
+
 
 	// 댓글 작성 버튼 클릭 시
 	$(document).on("click", ".add-comment-button", function() {
-		inputComment(this);
+		const postContainer = $(this).closest(".post"); // 현재 게시물 컨테이너 찾기
+		const postId = $(this).closest(".post").data("id"); // 게시물 고유 아이디값
+		const inputField = postContainer.find(".new-comment"); // 해당 게시물의 댓글 입력 필드
+		const commentContainer = postContainer.find(".comments"); // 해당 게시물의 댓글 목록
+		inputComment(inputField, commentContainer, postId); // 특정 게시물의 필드와 목록에만 적용
 	});
 
-	// Enter 키 이벤트도 비슷하게 수정
+	// Enter 키 이벤트로 댓글 추가
 	$(document).on("keypress", ".new-comment", function(event) {
 		if (event.key === "Enter") {
 			event.preventDefault();
-			inputComment(this);
+			const postContainer = $(this).closest(".post"); // 현재 게시물 컨테이너 찾기
+			const postId = $(this).closest(".post").data("id"); // 게시물 고유 아이디값
+			const inputField = $(this); // 현재 댓글 입력 필드
+			const commentContainer = postContainer.find(".comments"); // 해당 게시물의 댓글 목록
+			inputComment(inputField, commentContainer, postId);
 		}
 	});
 
@@ -175,44 +180,8 @@ function addPost(imageDataUrl) {
 		profile: encodedFileName
 	};
 
-	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
-	const newPostHTML = `
-        <div class="post" data-category="${postData.category}">
-            <div class="post-header">
-                <img src="assets/images/profile.jpg" alt="Profile" class="profile-image">
-                <div class="post-info">
-                    <div class="post-author">${postData.author}</div>
-                    <div class="post-role">${postData.tf}</div>
-                    <div class="post-date">작성일: ${new Date().toLocaleDateString()}</div>
-                </div>
-                <div class="post-actions2">
-                    <span class="edit-button"><i class="fas fa-edit"></i> Update</span>
-                    <span class="delete-button"><i class="fas fa-trash-alt"></i> Delete</span>
-                </div>
-            </div>
-            <div class="post-title">${postData.title}</div>
-            <div class="post-content">${postData.content}</div>
-            <img class="post-image" src="${imageDataUrl}" alt="">
-            <div class="post-tags"><span>#${postData.category}&nbsp;</span><span>#${postData.tf}&nbsp;</span>${postData.tags}</div>
-            <div class="comment-section">
-                <div class="reaction-container">
-                    <button class="comment-toggle">💬Comments<span class="comment-count"></span></button>
-                    <div class="reaction-buttons">
-                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = like-icon>${icon}</span><span class="like-count">0</span></span>
-                    </div>
-                </div>
-                <div class="comments"></div>
-                <div class="comment-form">
-                    <input type="text" class="new-comment" placeholder="댓글을 입력하세요.">
-                    <button class="add-comment-button">Submit</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-	// `postbox`에 새로운 게시물 추가
-	$(".postbox").append(newPostHTML);
-
+	// 여기에 게시물 생성 함수
+	getPost(0, postData.profile, postData.category, postData.author, postData.tf, postData.title, postData.content, postData.image, postData.tags, new Date().toLocaleDateString());
 	// DB에 게시물 저장
 	// post_idx, post_title, post_content, post_file, create_at, email, nick, post_type, profile, category, post_tag
 	$.ajax({
@@ -234,9 +203,12 @@ function addPost(imageDataUrl) {
 	$('#content').val(''); // 내용 초기화
 	$('#image-upload').val(''); // 파일 인풋 초기화
 	$('#tags').val(''); // 태그 초기화
+
+	// 게시물 작성시 서버에 있는 게시물 고유키값을 가져오기 위해 다시 초기화
+	prepare();
 }
-function inputComment() {
-	const newCommentText = $(".new-comment").val();
+function inputComment(inputField, commentContainer, postId) {
+	const newCommentText = $(inputField).val();
 	const chatIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
 	const likeIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
 	const userNick = user_info.nickname;
@@ -248,15 +220,146 @@ function inputComment() {
                 <div class="comment">
                 	<img src="assets/images/profiles/${encodedFileName}" class="comments-img">
                     <span class="comment-author">${userNick} :&nbsp;</span>
-                <p class="comment-text">${newCommentText}</p>
-                <div class="like-chat-buttons">
-                    <button class="chat-button">${chatIcon}</button>
-                    <button class="like-button">${likeIcon}</button>
-                     </div>
+                    <p class="comment-text">${newCommentText}</p>
+                    <div class="like-chat-buttons">
+                        <button class="chat-button">${chatIcon}</button>
+                        <button class="like-button">${likeIcon}</button>
+                    </div>
                 </div>
             `;
-		$(".comments").append(newComment).show();
-		$(".new-comment").val("");
-		updateCommentCount($('.comment-section'));
+		$(commentContainer).append(newComment).show();
+		updateCommentCount($(commentContainer).closest('.comment-section'));
+		
+		$.ajax({
+		url: 'createComment.bit', // 서블릿 URL
+		type: 'post',  // HTTP 요청 방식
+		data: {
+			'post_id': postId,
+			'cmt_content': newCommentText
+		},
+		success: function(res) {
+			if (res == 'true') {
+				console.log('DB 댓글 생성 성공')
+			}
+		}
+	});
+		$(inputField).val("");
 	}
+}
+
+function getData() {
+	$.ajax({
+		url: 'getData.bit', // 서블릿 URL
+		type: 'post',  // HTTP 요청 방식
+		dataType: 'json', // 응답 데이터 형식
+		success: function(data) {
+			// 서블릿에서 받은 데이터를 사용
+
+			user_info.email = data.email;
+			user_info.nickname = data.nick;
+			user_info.gender = data.gender;
+			user_info.profile = data.profile;
+		}
+	});
+}
+function prepare() {
+	getData();
+
+	$.ajax({
+		url: 'getPost.bit', // 서블릿 URL
+		type: 'GET',  // HTTP 요청 방식
+		dataType: 'json', // 응답 데이터 형식
+		success: function(data) {
+			// 서블릿에서 받은 데이터를 사용
+			if (data) {
+				data.forEach(item => {
+					getPost(item.post_idx, item.profile, item.category, item.nick, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at);
+				});
+			}
+			// 게시물 로딩이 완료된 후 댓글 로딩
+			loadComments();
+		}
+	});
+}
+function getPost(idx, profile, category, author, tf, title, content, postimage, tags, date) {
+	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+	const newPostHTML = `
+        <div class="post" data-category="${category}" data-id =${idx}>
+            <div class="post-header">
+                <img src="assets/images/profiles/${profile}" alt="Profile" class="profile-image">
+                <div class="post-info">
+                    <div class="post-author">${author}</div>
+                    <div class="post-role">${tf}</div>
+                    <div class="post-date">작성일: ${date}</div>
+                </div>
+                <div class="post-actions2">
+                    <span class="edit-button"><i class="fas fa-edit"></i> Update</span>
+                    <span class="delete-button"><i class="fas fa-trash-alt"></i> Delete</span>
+                </div>
+            </div>
+            <div class="post-title">${title}</div>
+            <div class="post-content">${content}</div>
+            <img class="post-image" src="${postimage}" alt="">
+            <div class="post-tags"><span>#${category}&nbsp;</span><span>#${tf}&nbsp;</span>${tags}</div>
+            <div class="comment-section">
+                <div class="reaction-container">
+                    <button class="comment-toggle">💬Comments<span class="comment-count"></span></button>
+                    <div class="reaction-buttons">
+                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = like-icon>${icon}</span><span class="like-count">0</span></span>
+                    </div>
+                </div>
+                <div class="comments"></div>
+                <div class="comment-form">
+                    <input type="text" class="new-comment" placeholder="댓글을 입력하세요.">
+                    <button class="add-comment-button">Submit</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+	// `postbox`에 새로운 게시물 추가
+	$(".postbox").append(newPostHTML);
+}
+
+function getComment(post_idx, profile, nick, content) {
+	// post_idx로 해당 게시물의 commentContainer 찾기
+	const commentContainer = $(`.post[data-id='${post_idx}']`).find(".comments");
+
+	const chatIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
+	const likeIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
+
+	const newComment = `
+        <div class="comment">
+            <img src="assets/images/profiles/${profile}" class="comments-img">
+            <span class="comment-author">${nick} :&nbsp;</span>
+            <p class="comment-text">${content}</p>
+            <div class="like-chat-buttons">
+                <button class="chat-button">${chatIcon}</button>
+                <button class="like-button">${likeIcon}</button>
+            </div>
+        </div>
+    `;
+
+	// 댓글 추가 및 표시
+	$(commentContainer).append(newComment).show();
+
+	// 댓글 수 업데이트
+	updateCommentCount($(commentContainer).closest('.comment-section'));
+}
+
+function loadComments() {
+		$.ajax({
+		url: 'getComment.bit', // 서블릿 URL
+		type: 'GET',  // HTTP 요청 방식
+		dataType: 'json', // 응답 데이터 형식
+		success: function(data) {
+			// 서블릿에서 받은 데이터를 사용
+			if (data) {
+				data.forEach(item => {
+					/*post_idx, profile, nick, content*/
+					getComment(item.post_idx, item.profile, item.nick, item.cmt_content);
+				});
+			}
+		}
+	});
 }

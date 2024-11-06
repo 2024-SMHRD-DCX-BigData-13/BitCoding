@@ -21,4 +21,9 @@
 	#{post_tag}
 	)
 </insert>
+
+<!-- 게시물 전체 조회 -->
+	<select id="searchall" resultType="com.bitcoding.model.Post">
+		select * from posts
+	</select>
 </mapper>

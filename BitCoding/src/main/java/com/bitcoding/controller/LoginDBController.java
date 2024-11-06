@@ -38,7 +38,7 @@ public class LoginDBController implements iController {
 		if(result != null ) {
 			System.out.println("로그인 성공");
 			session.setAttribute("member", result);
-			return "main";
+			return "redirect:/main.bit";
 		}else {
 			System.out.println("로그인 실패");
 			return "login";
