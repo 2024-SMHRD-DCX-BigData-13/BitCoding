@@ -1,7 +1,7 @@
 @import
 	url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
 	;
-
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
 /* Reset */
 * {
 	margin: 0;
@@ -76,17 +76,21 @@ header {
 	color: #1E90FF !important; /* Thinking? 텍스트 색상 */
 	margin-right: 5px;
 	font-size: 28px;
-	font-weight: bold;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	transition: transform 0.2s ease;
+	font-family: 'DynaPuff', sans-serif;
+    font-weight: 500; /* 원하는 굵기로 설정 */
+    font-variation-settings: "wght" 500;
 }
 
 #feelingText {
 	color: #f56b6b !important; /* Feeling! 텍스트 색상 */
 	font-size: 28px;
-	font-weight: bold;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	transition: transform 0.2s ease;
+	font-family: 'DynaPuff', sans-serif;
+    font-weight: 500; /* 원하는 굵기로 설정 */
+    font-variation-settings: "wght" 500;
 }
 
 #thinkingText:hover, #feelingText:hover {
@@ -228,6 +232,9 @@ header {
 	padding: 0 20px; /* 좌우 여백 추가 */
 	padding-bottom: 10vh; /* 푸터와 겹치지 않도록 아래쪽 여백 추가 */
 	box-sizing: border-box;
+	font-family: 'DynaPuff', sans-serif;
+    font-weight: 500; /* 원하는 굵기로 설정 */
+    font-variation-settings: "wght" 500;
 }
 
 /* 왼쪽 섹션 */
