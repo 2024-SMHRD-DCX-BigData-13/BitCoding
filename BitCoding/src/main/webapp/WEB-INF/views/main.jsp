@@ -22,7 +22,7 @@
                     <span id="feelingText" class="clickable-text">Feeling!</span>
                 </div>
                 <div class="header-links">
-                    <a href="#">랭킹</a>
+                    <a href="pageRanking.bit">랭킹</a>
                     <a href="#">자유게시판</a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         <img src="assets/images/profiles/${member.profile}" alt="Profile">
                     </a>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <button class="dropdown-item">마이페이지</button>
+                        <button class="dropdown-item" id = "myPage">마이페이지</button>
                         <button class="dropdown-item" id = "logout">로그아웃</button>
                     </div>
                 </div>

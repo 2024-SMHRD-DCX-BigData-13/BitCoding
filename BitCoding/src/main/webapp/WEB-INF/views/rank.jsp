@@ -21,7 +21,7 @@
 					<span id="thinkingText">Thinking?</span> <span id="feelingText">Feeling!</span>
 				</h1>
 				<div class="header-links">
-					<a href="#" class="active">랭킹</a> <a href="#">자유게시판</a>
+					<a href="pageRanking.bit" class="active">랭킹</a> <a href="#">자유게시판</a>
 				</div>
 			</div>
 			<div class="header-right">
@@ -43,7 +43,7 @@
 						<img src="assets/images/profile.jpg" alt="Profile">
 					</a>
 					<div class="dropdown-menu" id="dropdownMenu">
-						<button class="dropdown-item">마이페이지</button>
+						<button class="dropdown-item" id= myPage>마이페이지</button>
 						<button class="dropdown-item" id="logout">로그아웃</button>
 					</div>
 				</div>

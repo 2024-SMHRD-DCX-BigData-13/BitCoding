@@ -1,4 +1,5 @@
 let user_info = {};
+let isCheck = true;
 $(document).ready(function() {
 	// js가 로드되었을때 유저 데이터 및 게시물 정보 받기
 	prepare();
@@ -14,7 +15,10 @@ $(document).ready(function() {
 			title: 'information',
 			text: '구현예정입니다.',
 			icon: 'info',
-			confirmButtonText: '확인'
+			confirmButtonText: '확인',
+			didOpen: function() {
+				$('body').css('overflow-y', 'scroll'); // 스크롤바 강제 유지
+			}
 		});
 	});
 	$('.postbox').on('click', '.delete-button', deletePost);
@@ -64,8 +68,7 @@ $(document).ready(function() {
 
 	// 게시물 좋아요 버튼 (동적 요소에 대한 이벤트 위임)
 	$(document).on('click', '.increase-count-button', function() {
-		const like = $(this);
-		postLike(like);
+		postLike($(this));
 	});
 
 	// 좋아요 버튼 클릭 시 색상 변경
@@ -197,25 +200,28 @@ function addPost(imageDataUrl) {
 }
 function inputComment(inputField, commentContainer, postId) {
 	const newCommentText = $(inputField).val();
-	const chatIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
-	const likeIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
+	const chatIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
+	const likeIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
 	const userNick = user_info.nickname;
 	const userIcon = user_info.profile;
 	const encodedFileName = encodeURIComponent(userIcon);
-
+	const currentTime = getCurrentFormattedTime();
 	if (newCommentText) {
 		const newComment = `
                 <div class="comment">
                 	<img src="assets/images/profiles/${encodedFileName}" class="comments-img">
                     <span class="comment-author">${userNick} :&nbsp;</span>
                     <p class="comment-text">${newCommentText}</p>
+                    
                     <div class="like-chat-buttons">
+                   		<div class="comment-date">${currentTime}</div>
                         <button class="chat-button">${chatIcon}</button>
                         <button class="like-button">${likeIcon}</button>
                     </div>
                 </div>
             `;
 		$(commentContainer).append(newComment).show();
+		commentContainer.scrollTop(commentContainer.prop("scrollHeight"));
 		updateCommentCount($(commentContainer).closest('.comment-section'));
 
 		$.ajax({
@@ -264,7 +270,9 @@ function prepare() {
 			if (data) {
 				data.forEach(item => {
 					console.log(item.post_idx);
-					getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at);
+					getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+					updateLike(item.post_idx);
+					console.log(item.post_idx, "전달완료");
 				});
 			}
 			// 게시물 로딩이 완료된 후 댓글 로딩
@@ -272,7 +280,15 @@ function prepare() {
 		}
 	});
 }
-function getPost(idx, profile, category, author, user_type, tf, title, content, postimage, tags, date) {
+function getPost(idx, profile, category, author, user_type, tf, title, content, postimage, tags, date, count) {
+	let color;
+	console.log(user_type)
+	if (user_type === "Feeling") {
+		color = 'color: #f56b6b;'
+	}
+	else {
+		color = 'color: #1E90FF;'
+	}
 	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
 	const newPostHTML = `
         <div class="post" data-category="${category}" data-id =${idx}>
@@ -280,7 +296,7 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
                 <img src="assets/images/profiles/${profile}" alt="Profile" class="profile-image">
                 <div class="post-info">
                     <div class="post-author">${author}</div>
-                    <div class="post-role">${user_type}</div>
+                    <div class="post-role" style = "${color}">${user_type}</div>
                     <div class="post-date">작성일: ${date}</div>
                 </div>
                 <div class="post-actions2">
@@ -291,12 +307,12 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
             <div class="post-title">${title}</div>
             <div class="post-content">${content}</div>
             <img class="post-image" src="assets/images/profiles/${postimage}" alt="">
-            <div class="post-tags"><span>#${category}&nbsp;</span><span>#${tf}&nbsp;</span>${tags}</div>
+            <div class="post-tags"><span style="font-weight: bold;">#${category}&nbsp;</span><span style="font-weight: bold;">#${tf}&nbsp;</span>${tags}</div>
             <div class="comment-section">
                 <div class="reaction-container">
                     <button class="comment-toggle">💬Comments<span class="comment-count"></span></button>
                     <div class="reaction-buttons">
-                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = like-icon>${icon}</span><span class="like-count">0</span></span>
+                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = like-icon>${icon}</span><span class="like-count">${count}</span></span>
                     </div>
                 </div>
                 <div class="comments"></div>
@@ -329,25 +345,32 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
 	}
 }
 
-function getComment(post_idx, profile, nick, content) {
+function getComment(post_idx, profile, nick, content, date) {
 	// post_idx로 해당 게시물의 commentContainer 찾기
-	const commentContainer = $(`.post[data-id='${post_idx}']`).find(".comments");
+	const postElement = $(`.post[data-id='${post_idx}']`);
+	const author = postElement.find(".post-author").text().trim(); // .post 내 .post-author에서 텍스트 가져오기
 
-	const chatIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
-	const likeIcon = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
+	const chatIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
+	const likeIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
 
-	const newComment = `
+	const newComment = $(`
         <div class="comment">
             <img src="assets/images/profiles/${profile}" class="comments-img">
             <span class="comment-author">${nick} :&nbsp;</span>
             <p class="comment-text">${content}</p>
             <div class="like-chat-buttons">
+                <div class="comment-date">${date}</div>
                 <button class="chat-button">${chatIcon}</button>
                 <button class="like-button">${likeIcon}</button>
             </div>
         </div>
-    `;
+    `);
 
+	if (author !== user_info.nickname) {
+		newComment.find(".like-button, .chat-button").css("display", "none");
+	}
+
+	const commentContainer = $(`.post[data-id='${post_idx}']`).find(".comments");
 	// 댓글 추가 및 표시
 	$(commentContainer).append(newComment).show();
 
@@ -365,7 +388,7 @@ function loadComments() {
 			if (data) {
 				data.forEach(item => {
 					/*post_idx, profile, nick, content*/
-					getComment(item.post_idx, item.profile, item.nick, item.cmt_content);
+					getComment(item.post_idx, item.profile, item.nick, item.cmt_content, item.create_at);
 				});
 			}
 			$('.comments').hide();
@@ -420,14 +443,65 @@ function deletePost() {
 		}
 	});
 }
-
 function postLike(like) {
-	const countType = like.data('count-type'); // 예: like
-	const $countSpan = like.find(`.${countType}-count`); // 예: like-count
-	let currentCount = parseInt($countSpan.text(), 10); // 현재 좋아요 수 가져오기
+	like.prop('disabled', true); // 클릭 방지
 
-	// `post`라는 클래스의 부모 요소에서 `data-id` 속성 가져오기
+	const countType = like.data('count-type');
+	const $countSpan = like.find(`.${countType}-count`);
+	let currentCount = parseInt($countSpan.text(), 10);
+
 	const postId = like.closest('.post').data('id');
+	console.log('클릭이벤트 진입', isCheck, "현상태");
+	prepare();
+	if (!isCheck) { // 데이터가 있을 때
+		let sendCount = currentCount - 1;
+		$countSpan.text(currentCount - 1); // 좋아요 수 증가
+		console.log('마이너스');
+		$.ajax({
+			url: 'deleteLike.bit',
+			type: 'GET',
+			data: {
+				'post_id': postId,
+				'user_id': user_info.email,
+				'post_like': sendCount
+			},
+			success: function(res) {
+				if (res == "true") {
+					like.removeClass('active');
+					like.find('.like-icon').css('color', 'gray');
+					like.prop('disabled', false);
+					isCheck = true; // 상태 변경
+				}
+			}
+		});
+	} else { // 데이터가 없을 때
+		let sendCount = currentCount + 1;
+		$countSpan.text(currentCount + 1); // 좋아요 수 증가
+		console.log('플러스');
+		$.ajax({
+			url: 'createLike.bit',
+			type: 'GET',
+			data: {
+				'post_id': postId,
+				'user_id': user_info.email,
+				'post_like': sendCount
+			},
+			success: function(res) {
+				if (res == "true") {
+					like.addClass('active');
+					like.find('.like-icon').css('color', 'red');
+					like.prop('disabled', false);
+					isCheck = false; // 상태 변경
+				}
+
+			}
+		});
+	}
+}
+function updateLike(postId) {
+	//.post[data-id="postId"]의 자식 요소 중 .increase-count-button을 선택
+	console.log(postId, "받아서 업데이트");
+	const $button = $('.post').filter(`[data-id="${postId}"]`).find('.increase-count-button');
 	$.ajax({
 		url: 'checkLike.bit', // 서블릿 URL
 		type: 'GET',  // HTTP 요청 방식
@@ -436,35 +510,29 @@ function postLike(like) {
 			'user_id': user_info.email
 		},
 		success: function(data) {
-			// 서블릿에서 받은 데이터를 사용
-			if (data == 'true') {
-				$countSpan.text(currentCount - 1); // 좋아요 수 감소
-				like.removeClass('active'); // 활성화 클래스 제거
-				like.find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
-
-				$.ajax({
-					url: 'deleteLike.bit', // 서블릿 URL
-					type: 'GET',  // HTTP 요청 방식
-					data: {
-						'post_id': postId,
-						'user_id': user_info.email
-					}
-				});
+			if (data == "true") {
+				$button.find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
+				isCheck = false;
+				console.log(isCheck, "로 변경");
 			}
 			else {
-				$countSpan.text(currentCount + 1); // 좋아요 수 증가
-				like.addClass('active'); // 활성화 클래스 추가
-				like.find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
-				
-				$.ajax({
-					url: 'createLike.bit', // 서블릿 URL
-					type: 'GET',  // HTTP 요청 방식
-					data: {
-						'post_id': postId,
-						'user_id': user_info.email
-					}
-				});
+				$button.find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
+				isCheck = true;
+				console.log(isCheck, "로 변경");
 			}
 		}
 	});
+}
+
+function getCurrentFormattedTime() {
+	const now = new Date();
+
+	const year = now.getFullYear();
+	const month = String(now.getMonth() + 1).padStart(2, '0');
+	const day = String(now.getDate()).padStart(2, '0');
+	const hours = String(now.getHours()).padStart(2, '0');
+	const minutes = String(now.getMinutes()).padStart(2, '0');
+	const seconds = String(now.getSeconds()).padStart(2, '0');
+
+	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

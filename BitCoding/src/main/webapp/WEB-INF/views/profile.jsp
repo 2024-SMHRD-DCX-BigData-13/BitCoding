@@ -21,7 +21,7 @@
 					<span id="thinkingText">Thinking?</span> <span id="feelingText">Feeling!</span>
 				</h1>
 				<div class="header-links">
-					<a href="#">랭킹</a> <a href="#">자유게시판</a>
+					<a href="pageRanking.bit">랭킹</a> <a href="#">자유게시판</a>
 				</div>
 			</div>
 			<div class="header-right">

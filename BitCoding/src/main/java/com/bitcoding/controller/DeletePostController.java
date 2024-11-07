@@ -22,7 +22,7 @@ public class DeletePostController implements iController {
 		System.out.println(post_id+"값 전달받음");
 		
 		
-		  Post post = new Post(post_id, null, null, null, null, null, null, null, null, null, null, null);
+		  Post post = new Post(post_id, null, null, null, null, null, null, null, null, null, null, null, 0);
 		  Comment cmt = new Comment(0, post_id, null, null, null, null, null);
 		  PostDAO dao = new PostDAO();
 		  CommentDAO dao2 = new CommentDAO();

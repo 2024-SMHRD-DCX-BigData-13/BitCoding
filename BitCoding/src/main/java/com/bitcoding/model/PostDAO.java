@@ -44,6 +44,16 @@ public class PostDAO {
 
 		return cnt;
 	}
+	
+	public int updateLike(Post post) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.update("updateLike", post);
+
+		session.close();
+
+		return cnt;
+	}
 
 	/*
 	 * // 2. 회원탈퇴 public int delete(Member member) { SqlSession session =

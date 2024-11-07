@@ -14,17 +14,8 @@ $(document).ready(function() {
 	$('#logoButton').on('click', function() {
 		location.reload(); // 페이지 새로고침
 	});
+	$('#myPage').on('click', myPage);
 	$('#logout').on('click', logout);
-
-	$('.increase-count-button').on('click', function() {
-		// 버튼 클릭 시 애니메이션 클래스 추가
-		$(this).addClass('animate');
-
-		// 애니메이션이 끝난 후 클래스 제거
-		setTimeout(() => {
-			$(this).removeClass('animate');
-		}, 300); // 애니메이션 지속 시간과 동일
-	});
 });
 function logout() {
 	$.ajax({
@@ -37,6 +28,22 @@ function logout() {
 			if (res == "true") {
 				console.log("로그아웃");
 				window.location.href = '/BitCoding/home.bit';
+			}
+		},
+	});
+}
+function myPage() {
+	console.log("들어옴");
+	$.ajax({
+		url: 'pagemy.bit',// 요청 URL주소
+		type: 'get',// GET POST
+		data: {
+		},
+		success: function(res) {
+
+			if (res == "true") {
+				console.log("마이페이지 이동");
+				window.location.href = '/BitCoding/pageprofile.bit';
 			}
 		},
 	});

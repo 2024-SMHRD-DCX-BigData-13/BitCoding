@@ -11,6 +11,6 @@ public class Likes {
 //	@AllArgsConstructor // 모든 필드를 초기화 하는 생성자
 //	@Data // 기본 메소드(Getter/Setter)자동완성\\\
 	
-	private String post_id;
+	private int post_id;
 	private String user_id;
 }

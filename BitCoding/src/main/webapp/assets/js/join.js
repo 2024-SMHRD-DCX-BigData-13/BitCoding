@@ -134,147 +134,6 @@ $(document).ready(function() {
 			}
 		});
 	}
-
-	function check(event) {
-		if (isCheck === true) {
-			event.preventDefault();
-			setData(event);
-		}
-		else {
-			event.preventDefault();
-			calculateTFScore();
-			sendData(event);
-		}
-
-	}
-	function showShakeEffect() {
-		const messageElement = $('#result');
-		// 떨림 효과 클래스 추가
-		messageElement.removeClass('shake');
-
-		// 애니메이션이 끝난 후 떨림 효과 클래스 제거
-		setTimeout(() => {
-			messageElement.addClass('shake');
-		}, 100); // 애니메이션 지속 시간과 동일하게 설정
-	}
-
-	/* 첫 페이지 제출이 완료 됐을 때*/
-	function setData(event) {
-		if ($('#result').text() === '사용가능한 이메일 입니다.') {
-			isCheck = false;
-			formData.append('email', $('input[name="join_email"]').val());
-			formData.append('name', $('input[name="join_name"]').val());
-			formData.append('password', $('input[name="join_password"]').val());
-			formData.append('nickname', $('input[name="join_nick"]').val());
-			formData.append('gender', $('select[name="join_gender"]').val());
-			formData.append('birth', $('input[name="join_birth"]').val());
-			formData.append('phoneNumber', $('input[name="join_phoneNumber"]').val());
-			// 파일 데이터 추가 (프로필 사진)       
-			const file = $('#profilePicture')[0].files[0];
-			if (file) {
-				// 유저가 이미지를 선택한 경우
-				formData.append('file', file);
-			} else {
-				// 유저가 이미지를 선택하지 않은 경우, 기본 이미지를 추가
-				const filePath = "/assets/images/nomal.webp";
-
-				fetch(filePath)
-					.then(response => {
-						if (response.ok) {
-							// 파일이 존재하는 경우 Blob 객체로 변환
-							return response.blob();
-						} else {
-							throw new Error('기본 이미지 파일이 존재하지 않음');
-						}
-					})
-					.then(blob => {
-						// Blob 객체를 File 객체로 변환
-						const defaultFile = new File([blob], "nomal.webp", { type: blob.type });
-						formData.append('file', defaultFile);
-						console.log('기본 이미지를 formData에 추가했습니다.');
-					})
-					.catch(error => {
-						console.error('Error:', error.message);
-					});
-			}
-
-			$(".modal-backdrop").fadeIn(300);
-			$("#join-modal2").fadeIn(300);
-		}
-		else if ($('#result').text() === '중복된 이메일 입니다.') {
-			showShakeEffect();
-			event.preventDefault();
-			console.log('중복된 아이디가 감지되었습니다.');
-		}
-		else {
-			showShakeEffect();
-			event.preventDefault();
-			console.log('옳바른 양식이 아닙니다.');
-		}
-	}
-	function sendData(event) {
-		$.ajax({
-			url: 'joindb.bit',// 요청 URL주소
-			type: 'post',// GET POST
-			data: formData,
-			processData: false, // 파일 데이터 전송 시 필수 설정
-			contentType: false, // 파일 데이터 전송 시 필수 설정
-			success: function(res) {
-				// 요청이 성공해서, 응답이 이루어진 후에 실행되는 함수
-				// 응답 받은 데이터가 자동으로 res에 담김 
-				if (res == "true") {
-					window.location.href = "/BitCoding/home.bit"
-					console.log("성공");
-				}
-				else {
-				}
-			},
-			error: function(request, errorcode, error) {
-				console.log("실패입니다!");
-				console.log(request);
-				console.log(errorcode);
-				console.log(error);
-			}
-		});
-	}
-
-	/* TF 검사표 계산 로직*/
-	function calculateTFScore() {
-
-		// T와 F 문항을 구분하여 인덱스 배열 정의
-		const T_questions = [0, 2, 4, 6, 8]; // T 성향 문항 (index 0부터 시작)
-		const F_questions = [1, 3, 5, 7, 9]; // F 성향 문항
-
-		console.log("tf검사로직");
-		let T_score = 0; // T 성향 점수
-		let F_score = 0; // F 성향 점수
-
-		// T 성향 문항 점수 계산
-		T_questions.forEach(function(index) {
-			const score = parseInt($(`input[name="q${index}"]:checked`).val()) || 0;
-			T_score += score;
-		});
-
-		// F 성향 문항 점수 계산
-		F_questions.forEach(function(index) {
-			const score = parseInt($(`input[name="q${index}"]:checked`).val()) || 0;
-			F_score += score;
-		});
-
-		// 결과 출력
-		console.log("T 점수:", T_score);
-		console.log("F 점수:", F_score);
-
-		// T와 F 점수를 비교하여 결과 표시
-		if (T_score > F_score) {
-			formData.append('tf', 'Thinking');
-		} else if (F_score > T_score) {
-			formData.append('tf', 'Feeeling');
-		} else {
-			formData.append('tf', 'Feeeling');
-		}
-	}
-
 	const questions = [
 		"나는 결정을 내릴 때 논리적이고 객관적인 판단을 중시한다.",     // T
 		"나는 타인의 감정을 고려하여 결정을 내린다.",                 // F
@@ -312,4 +171,141 @@ function kakaoalert() {
 		icon: 'info',
 		confirmButtonText: '확인'
 	});
+}
+/* TF 검사표 계산 로직*/
+function calculateTFScore() {
+
+	// T와 F 문항을 구분하여 인덱스 배열 정의
+	const T_questions = [0, 2, 4, 6, 8]; // T 성향 문항 (index 0부터 시작)
+	const F_questions = [1, 3, 5, 7, 9]; // F 성향 문항
+
+	console.log("tf검사로직");
+	let T_score = 0; // T 성향 점수
+	let F_score = 0; // F 성향 점수
+
+	// T 성향 문항 점수 계산
+	T_questions.forEach(function(index) {
+		const score = parseInt($(`input[name="q${index}"]:checked`).val()) || 0;
+		T_score += score;
+	});
+
+	// F 성향 문항 점수 계산
+	F_questions.forEach(function(index) {
+		const score = parseInt($(`input[name="q${index}"]:checked`).val()) || 0;
+		F_score += score;
+	});
+
+	// 결과 출력
+	console.log("T 점수:", T_score);
+	console.log("F 점수:", F_score);
+
+	// T와 F 점수를 비교하여 결과 표시
+	if (T_score > F_score) {
+		formData.append('tf', 'Thinking');
+	} else if (F_score > T_score) {
+		formData.append('tf', 'Feeling');
+	} else {
+		formData.append('tf', 'Feeling');
+	}
+}
+function sendData(event) {
+	$.ajax({
+		url: 'joindb.bit',// 요청 URL주소
+		type: 'post',// GET POST
+		data: formData,
+		processData: false, // 파일 데이터 전송 시 필수 설정
+		contentType: false, // 파일 데이터 전송 시 필수 설정
+		success: function(res) {
+			// 요청이 성공해서, 응답이 이루어진 후에 실행되는 함수
+			// 응답 받은 데이터가 자동으로 res에 담김 
+			if (res == "true") {
+				window.location.href = "/BitCoding/home.bit"
+				console.log("성공");
+			}
+			else {
+			}
+		},
+		error: function(request, errorcode, error) {
+			console.log("실패입니다!");
+			console.log(request);
+			console.log(errorcode);
+			console.log(error);
+		}
+	});
+}
+
+/* 첫 페이지 제출이 완료 됐을 때*/
+function setData(event) {
+	if ($('#result').text() === '사용가능한 이메일 입니다.') {
+		isCheck = false;
+		formData.append('email', $('input[name="join_email"]').val());
+		formData.append('name', $('input[name="join_name"]').val());
+		formData.append('password', $('input[name="join_password"]').val());
+		formData.append('nickname', $('input[name="join_nick"]').val());
+		formData.append('gender', $('select[name="join_gender"]').val());
+		formData.append('birth', $('input[name="join_birth"]').val());
+		formData.append('phoneNumber', $('input[name="join_phoneNumber"]').val());
+		// 파일 데이터 추가 (프로필 사진)       
+		const file = $('#profilePicture')[0].files[0];
+		if (file) {
+			// 유저가 이미지를 선택한 경우
+			formData.append('file', file);
+		} else {
+			// 유저가 이미지를 선택하지 않은 경우, 기본 이미지를 추가
+			const filePath = "/assets/images/nomal.webp";
+
+			fetch(filePath)
+				.then(response => {
+					if (response.ok) {
+						// 파일이 존재하는 경우 Blob 객체로 변환
+						return response.blob();
+					} else {
+						throw new Error('기본 이미지 파일이 존재하지 않음');
+					}
+				})
+				.then(blob => {
+					// Blob 객체를 File 객체로 변환
+					const defaultFile = new File([blob], "nomal.webp", { type: blob.type });
+					formData.append('file', defaultFile);
+					console.log('기본 이미지를 formData에 추가했습니다.');
+				})
+				.catch(error => {
+					console.error('Error:', error.message);
+				});
+		}
+
+		$(".modal-backdrop").fadeIn(300);
+		$("#join-modal2").fadeIn(300);
+	}
+	else if ($('#result').text() === '중복된 이메일 입니다.') {
+		showShakeEffect();
+		event.preventDefault();
+		console.log('중복된 아이디가 감지되었습니다.');
+	}
+	else {
+		showShakeEffect();
+		event.preventDefault();
+		console.log('옳바른 양식이 아닙니다.');
+	}
+}
+function showShakeEffect() {
+	const messageElement = $('#result');
+	// 떨림 효과 클래스 추가
+	messageElement.removeClass('shake');
+
+	// 애니메이션이 끝난 후 떨림 효과 클래스 제거
+	setTimeout(() => {
+		messageElement.addClass('shake');
+	}, 100); // 애니메이션 지속 시간과 동일하게 설정
+}
+function check(event) {
+	if (isCheck === true) {
+		event.preventDefault();
+		setData(event);
+	}
+	else {
+		event.preventDefault();
+		calculateTFScore();
+		sendData(event);
+	}
 }

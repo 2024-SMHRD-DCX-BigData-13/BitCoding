@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	let hideTimeout;
-
+	$('.logo').on('click', function(){
+		console.log('클릭');
+		window.location.href = '/BitCoding/main.bit';
+	})
 	$('.profile-container').on('mouseover', function() {
 		console.log("gg");
 		clearTimeout(hideTimeout); // 숨기기 딜레이 취소

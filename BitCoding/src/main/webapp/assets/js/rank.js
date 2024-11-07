@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	let hideTimeout;
-
+	$('.logo').on('click', function() {
+		window.location.href = '/BitCoding/main.bit';
+	})
 	$('.profile-container').on('mouseover', function() {
 		console.log("gg");
 		clearTimeout(hideTimeout); // 숨기기 딜레이 취소
@@ -34,10 +36,7 @@ $(document).ready(function() {
 	$(".ranking-column").hide();  // 모든 랭킹 컬럼 숨기기
 	$(".posts-likes").show();     // posts-likes 컬럼만 표시
 
-	
-
-
-
+	$('#myPage').on('click', myPage);
 	$('#logout').on('click', logout);
 });
 
@@ -52,6 +51,23 @@ function logout() {
 			if (res == "true") {
 				console.log("로그아웃");
 				window.location.href = '/BitCoding/home.bit';
+			}
+		},
+	});
+}
+
+function myPage() {
+	console.log("들어옴");
+	$.ajax({
+		url: 'pagemy.bit',// 요청 URL주소
+		type: 'get',// GET POST
+		data: {
+		},
+		success: function(res) {
+
+			if (res == "true") {
+				console.log("마이페이지 이동");
+				window.location.href = '/BitCoding/pageprofile.bit';
 			}
 		},
 	});

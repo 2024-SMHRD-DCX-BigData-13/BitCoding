@@ -16,7 +16,7 @@ public class checkLikeController implements iController {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String post_id = request.getParameter("post_id");
+		int post_id = Integer.parseInt(request.getParameter("post_id"));
 		String user_id = request.getParameter("user_id");
 
 		Likes like = new Likes(post_id, user_id);

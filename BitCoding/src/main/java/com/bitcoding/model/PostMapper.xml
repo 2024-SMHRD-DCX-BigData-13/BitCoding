@@ -19,7 +19,8 @@
 		#{profile},
 		#{category},
 		#{post_tag},
-		#{mem_type}
+		#{mem_type},
+		#{post_like}
 		)
 	</insert>
 
@@ -39,14 +40,11 @@
 	</delete>
 	
 	<!-- 회원정보수정 -->
-	<update id="updatePost" parameterType="com.bitcoding.model.Post">
+	<update id="updateLike" parameterType="com.bitcoding.model.Post">
 		update posts
 		set
-		password =
-		#{password},
-		nick = #{nick},
-		phoneNumber = #{phoneNumber}
-		where email =
-		#{email}
+		post_like = #{post_like}
+		where post_idx =
+		#{post_idx}
 	</update>
 </mapper>

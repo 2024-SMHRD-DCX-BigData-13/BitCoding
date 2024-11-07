@@ -23,4 +23,5 @@ public class Post {
 	private String category;
 	private String post_tag;
 	private String mem_type;
+	private int post_like;
 }

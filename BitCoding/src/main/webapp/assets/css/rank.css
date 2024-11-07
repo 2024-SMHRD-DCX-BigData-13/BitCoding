@@ -18,6 +18,7 @@ body {
 	color: #333;
 	padding-top: 85px;
 	line-height: 1.6;
+	overflow-y: scroll;
 }
 /* 헤더 스타일 */
 header {
