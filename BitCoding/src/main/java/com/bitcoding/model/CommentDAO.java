@@ -32,4 +32,15 @@ public class CommentDAO {
 
 		return result;
 	}
+	
+	// 3. 댓글 삭제
+	public int delete(Comment cmt) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("cmt_delete", cmt);
+
+		session.close();
+
+		return cnt;
+	}
 }

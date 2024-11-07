@@ -7,6 +7,10 @@ $(document).ready(function() {
 	$(document).on('click', '.category-button', function() {
 		selectCategory(this, $(this).data('category'));
 	});
+
+	// 게시물 수정 삭제
+	$('.postbox').on('click', '.edit-button', editPost);
+	$('.postbox').on('click', '.delete-button', deletePost);
 	// 이미지 업로드 시 미리보기
 	$('#image-upload').on('change', function(event) {
 		const file = event.target.files[0];
@@ -153,10 +157,6 @@ function toggleComments() {
 }
 // 게시물 동적 생성 로직
 function addPost(imageDataUrl) {
-
-	const userIcon = user_info.profile;
-	const encodedFileName = encodeURIComponent(userIcon);
-
 	// FormData 객체 생성
 	const formData = new FormData();
 	formData.append('author', user_info.nickname);
@@ -168,20 +168,6 @@ function addPost(imageDataUrl) {
 	formData.append('email', user_info.email);
 	formData.append('image', imageDataUrl);
 
-	// 일반 객체 생성 (HTML에 데이터 적용하기 위함)
-	const postData = {
-		author: user_info.nickname,
-		category: $('select[name="np_category"]').val(),
-		tf: $('select[name="np_tf"]').val(),
-		title: $('input[name="np_title"]').val(),
-		content: $('textarea[name="np_content"]').val(),
-		tags: $('input[name="np_tag"]').val(),
-		image: imageDataUrl,
-		profile: encodedFileName
-	};
-
-	// 여기에 게시물 생성 함수
-	getPost(0, postData.profile, postData.category, postData.author, postData.tf, postData.title, postData.content, postData.image, postData.tags, new Date().toLocaleDateString());
 	// DB에 게시물 저장
 	// post_idx, post_title, post_content, post_file, create_at, email, nick, post_type, profile, category, post_tag
 	$.ajax({
@@ -205,7 +191,7 @@ function addPost(imageDataUrl) {
 	$('#tags').val(''); // 태그 초기화
 
 	// 게시물 작성시 서버에 있는 게시물 고유키값을 가져오기 위해 다시 초기화
-	prepare();
+	location.reload();
 }
 function inputComment(inputField, commentContainer, postId) {
 	const newCommentText = $(inputField).val();
@@ -229,20 +215,20 @@ function inputComment(inputField, commentContainer, postId) {
             `;
 		$(commentContainer).append(newComment).show();
 		updateCommentCount($(commentContainer).closest('.comment-section'));
-		
+
 		$.ajax({
-		url: 'createComment.bit', // 서블릿 URL
-		type: 'post',  // HTTP 요청 방식
-		data: {
-			'post_id': postId,
-			'cmt_content': newCommentText
-		},
-		success: function(res) {
-			if (res == 'true') {
-				console.log('DB 댓글 생성 성공')
+			url: 'createComment.bit', // 서블릿 URL
+			type: 'post',  // HTTP 요청 방식
+			data: {
+				'post_id': postId,
+				'cmt_content': newCommentText
+			},
+			success: function(res) {
+				if (res == 'true') {
+					console.log('DB 댓글 생성 성공')
+				}
 			}
-		}
-	});
+		});
 		$(inputField).val("");
 	}
 }
@@ -263,8 +249,9 @@ function getData() {
 	});
 }
 function prepare() {
+	$(".postbox").empty();
 	getData();
-
+    console.log('prepare진입');
 	$.ajax({
 		url: 'getPost.bit', // 서블릿 URL
 		type: 'GET',  // HTTP 요청 방식
@@ -273,6 +260,7 @@ function prepare() {
 			// 서블릿에서 받은 데이터를 사용
 			if (data) {
 				data.forEach(item => {
+					console.log(item.post_idx);
 					getPost(item.post_idx, item.profile, item.category, item.nick, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at);
 				});
 			}
@@ -348,7 +336,7 @@ function getComment(post_idx, profile, nick, content) {
 }
 
 function loadComments() {
-		$.ajax({
+	$.ajax({
 		url: 'getComment.bit', // 서블릿 URL
 		type: 'GET',  // HTTP 요청 방식
 		dataType: 'json', // 응답 데이터 형식
@@ -359,6 +347,34 @@ function loadComments() {
 					/*post_idx, profile, nick, content*/
 					getComment(item.post_idx, item.profile, item.nick, item.cmt_content);
 				});
+			}
+		}
+	});
+}
+
+function editPost() {
+
+}
+
+function deletePost() {
+	console.log('딜리트0들어옴');
+	const post = $(this).closest(".post"); // 현재 게시물 컨테이너 찾기
+	const postId = post.data("id"); // data-id 값 가져오기
+	console.log('id: ', postId);
+	$.ajax({
+		url: 'deletePost.bit', // 서블릿 URLF
+		type: 'post',  // HTTP 요청 방식
+		data: {
+			'id' : postId
+		},
+		success: function(res) {
+			// 서블릿에서 받은 데이터를 사용
+			if(res){
+				console.log('게시물 삭제 완료');
+				prepare();
+			}
+			else{
+				console.log('게시물 삭제 실패');
 			}
 		}
 	});

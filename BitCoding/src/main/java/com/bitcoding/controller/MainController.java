@@ -32,6 +32,7 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/getComment.bit", new GetCommentController());
 		pageHandler.put("/createPost.bit", new CreatePostController());
 		pageHandler.put("/createComment.bit", new CreateCommentController());
+		pageHandler.put("/deletePost.bit", new DeletePostController());
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)

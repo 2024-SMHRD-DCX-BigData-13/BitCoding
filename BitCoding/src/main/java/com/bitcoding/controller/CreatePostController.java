@@ -46,12 +46,10 @@ public class CreatePostController implements iController {
 		String category = multi.getParameter("category");
 		String post_tag = multi.getParameter("tags");
 		
-		System.out.println("post_file :"+post_file);
-		System.out.println("profile :"+profile);
-        
-
+		
 		Post data = new Post(0, post_title, post_content, post_file, null, email, nick, post_type, profile, category, post_tag);
-
+		data.setPost_file(data.getPost_file() != null ? data.getPost_file() : "");
+		
 		PostDAO dao = new PostDAO();
 		
 		PrintWriter out = response.getWriter();

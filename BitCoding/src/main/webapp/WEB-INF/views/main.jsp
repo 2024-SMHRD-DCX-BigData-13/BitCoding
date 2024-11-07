@@ -80,7 +80,7 @@
 	</div>
 	<form id="post-form">
 		<label for="category">Category</label>
-		<select id="category" name = "np_category">
+		<select id="category" name = "np_category" required>
 			<option value="연애">❤️ 연애</option>
 			<option value="취업/진로">💼 취업/진로</option>
 			<option value="가족">👨‍👩‍👦 가족</option>
@@ -88,17 +88,17 @@
 			<option value="학업/고시">📚 학업/고시</option>
 		</select>
 		<label for="tf">T/F</label>
-		<select id="tf" name = "np_tf">
+		<select id="tf" name = "np_tf" required>
 			<option value="Thinking">Thinking</option>
 			<option value="Feeling">Feeling</option>
 			<option value="ALL">Thinking&Feeling</option>
 		</select>
 
 		<label for="title">Title</label>
-		<input type="text" id="title" name = "np_title" placeholder="제목을 입력하세요">
+		<input type="text" id="title" name = "np_title" placeholder="제목을 입력하세요" required>
 
 		<label for="content">Content</label>
-		<textarea id="content" placeholder="내용을 입력하세요" name = "np_content"></textarea>
+		<textarea id="content" placeholder="내용을 입력하세요" name = "np_content" required></textarea>
 
 		<!-- 이미지 업로드 및 미리보기 -->
 		<label for="image-upload">Image Upload</label>
@@ -108,7 +108,7 @@
 			<button type="button" id="remove-image">Delete</button>
 		</div>
 
-		<label for="tags">Tags (separated by #):</label>
+		<label for="tags" required>Tags (separated by #):</label>
 		<input type="text" id="tags" name = "np_tag"placeholder="#태그를 입력하세요">
 
 		<button type="submit" class="submit-btn">게시글 작성</button>
