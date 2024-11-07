@@ -21,7 +21,7 @@
 					<span id="thinkingText">Thinking?</span> <span id="feelingText">Feeling!</span>
 				</h1>
 				<div class="header-links">
-					<a href="#">랭킹</a> <a href="#">자유게시판</a>
+					<a href="#" class="active">랭킹</a> <a href="#">자유게시판</a>
 				</div>
 			</div>
 			<div class="header-right">
@@ -63,117 +63,118 @@
 		<button class="tab-button" data-tab="comments-likes">Comment
 			Likes</button>
 	</div>
-	<!-- 랭킹 섹션 -->
+	<div class="content-wrapper">
+		<!-- 랭킹 섹션 -->
 
-	<div class="ranking-container">
-		<!-- 통합 카테고리 - Post Likes 관련 콘텐츠 -->
-		<div class="ranking-column posts-likes">
-			<div class="category-title">
-				<span class="tf-all-title">T/F All</span>
+		<div class="ranking-container">
+			<!-- 통합 카테고리 - Post Likes 관련 콘텐츠 -->
+			<div class="ranking-column posts-likes">
+				<div class="category-title">
+					<span class="tf-all-title">T/F All</span>
+				</div>
+				<div class="top-ranking">고민상담</div>
+				<div class="top-ranking-info">좋아요 1,234회 | 작성자: QWER</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">고민상담</a> <span class="likes">좋아요
+							1,234회</span> <span class="rank-changeup">▲ 4</span></li>
+					<li><span>2</span> <a href="#">학업상담</a> <span class="likes">좋아요
+							950회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>3</span> <a href="#">연애상담</a> <span class="likes">좋아요
+							560회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>4</span> <a href="#">라라상담</a> <span class="likes">좋아요
+							460회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>5</span> <a href="#">라라상담</a> <span class="likes">좋아요
+							360회</span> <span class="rank-changedown">▼ 1</span></li>
+				</ul>
 			</div>
-			<div class="top-ranking">고민상담</div>
-			<div class="top-ranking-info">좋아요 1,234회 | 작성자: QWER</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">고민상담</a> <span class="likes">좋아요
-						1,234회</span> <span class="rank-changeup">▲ 4</span></li>
-				<li><span>2</span> <a href="#">학업상담</a> <span class="likes">좋아요
-						950회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>3</span> <a href="#">연애상담</a> <span class="likes">좋아요
-						560회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>4</span> <a href="#">라라상담</a> <span class="likes">좋아요
-						460회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>5</span> <a href="#">라라상담</a> <span class="likes">좋아요
-						360회</span> <span class="rank-changedown">▼ 1</span></li>
-			</ul>
-		</div>
 
-		<!-- Thinking 카테고리 - Post Likes 관련 콘텐츠 -->
-		<div class="ranking-column posts-likes">
-			<div class="category-title">
-				<span class="thinking-title">Thinking</span>
+			<!-- Thinking 카테고리 - Post Likes 관련 콘텐츠 -->
+			<div class="ranking-column posts-likes">
+				<div class="category-title">
+					<span class="thinking-title">Thinking</span>
+				</div>
+				<div class="top-ranking">고민상담</div>
+				<div class="top-ranking-info">좋아요 1,234회 | 작성자: QWER</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">고민상담</a> <span class="likes">좋아요
+							1,234회</span> <span class="rank-changeup">▲ 2</span></li>
+					<li><span>2</span> <a href="#">연애상담</a><span class="likes">좋아요
+							560회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>3</span> <a href="#">취업상담</a><span class="likes">좋아요
+							240회</span> <span class="rank-changedown">▼ 1</span></li>
+				</ul>
 			</div>
-			<div class="top-ranking">고민상담</div>
-			<div class="top-ranking-info">좋아요 1,234회 | 작성자: QWER</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">고민상담</a> <span class="likes">좋아요
-						1,234회</span> <span class="rank-changeup">▲ 2</span></li>
-				<li><span>2</span> <a href="#">연애상담</a><span class="likes">좋아요
-						560회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>3</span> <a href="#">취업상담</a><span class="likes">좋아요
-						240회</span> <span class="rank-changedown">▼ 1</span></li>
-			</ul>
-		</div>
 
-		<!-- Feeling 카테고리 - Post Likes 관련 콘텐츠 -->
-		<div class="ranking-column posts-likes">
-			<div class="category-title">
-				<span class="feeling-title">Feeling</span>
+			<!-- Feeling 카테고리 - Post Likes 관련 콘텐츠 -->
+			<div class="ranking-column posts-likes">
+				<div class="category-title">
+					<span class="feeling-title">Feeling</span>
+				</div>
+				<div class="top-ranking">학업상담</div>
+				<div class="top-ranking-info">좋아요 950회 | 작성자: 윈터</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">학업상담</a> <span class="likes">좋아요
+							950회</span> <span>-</span></li>
+					<li><span>2</span> <a href="#">Post1</a><span class="likes">좋아요
+							460회</span> <span class="rank-changeup">▲ 1</span></li>
+					<li><span>3</span> <a href="#">Post2</a><span class="likes">좋아요
+							340회</span> <span class="rank-changedown">▼ 1</span></li>
+				</ul>
 			</div>
-			<div class="top-ranking">학업상담</div>
-			<div class="top-ranking-info">좋아요 950회 | 작성자: 윈터</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">학업상담</a> <span class="likes">좋아요
-						950회</span> <span>-</span></li>
-				<li><span>2</span> <a href="#">Post1</a><span class="likes">좋아요
-						460회</span> <span class="rank-changeup">▲ 1</span></li>
-				<li><span>3</span> <a href="#">Post2</a><span class="likes">좋아요
-						340회</span> <span class="rank-changedown">▼ 1</span></li>
-			</ul>
-		</div>
 
-		<!-- 통합 카테고리 - Comment Likes 관련 콘텐츠 -->
-		<div class="ranking-column comments-likes">
-			<div class="category-title">
-				<span class="tf-all-title">T/F All</span>
+			<!-- 통합 카테고리 - Comment Likes 관련 콘텐츠 -->
+			<div class="ranking-column comments-likes">
+				<div class="category-title">
+					<span class="tf-all-title">T/F All</span>
+				</div>
+				<!-- 통합 1위로 Feeling 카테고리에서 가장 좋아요 수가 높은 댓글 '굿'이 표시됩니다. -->
+				<div class="top-ranking">굿</div>
+				<div class="top-ranking-info">좋아요 1,200회 | 작성자: User789</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">굿</a> <span class="likes">좋아요
+							1,200회</span> <span class="rank-changeup">▲ 2</span></li>
+					<li><span>2</span> <a href="#">응원해요</a> <span class="likes">좋아요
+							982회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>3</span> <a href="#">화이팅</a> <span class="likes">좋아요
+							760회</span> <span>-</span></li>
+				</ul>
 			</div>
-			<!-- 통합 1위로 Feeling 카테고리에서 가장 좋아요 수가 높은 댓글 '굿'이 표시됩니다. -->
-			<div class="top-ranking">굿</div>
-			<div class="top-ranking-info">좋아요 1,200회 | 작성자: User789</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">굿</a> <span class="likes">좋아요
-						1,200회</span> <span class="rank-changeup">▲ 2</span></li>
-				<li><span>2</span> <a href="#">응원해요</a> <span class="likes">좋아요
-						982회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>3</span> <a href="#">화이팅</a> <span class="likes">좋아요
-						760회</span> <span>-</span></li>
-			</ul>
-		</div>
 
-		<!-- Thinking 카테고리 - Comment Likes 관련 콘텐츠 -->
-		<div class="ranking-column comments-likes">
-			<div class="category-title">
-				<span class="thinking-title">Thinking</span>
+			<!-- Thinking 카테고리 - Comment Likes 관련 콘텐츠 -->
+			<div class="ranking-column comments-likes">
+				<div class="category-title">
+					<span class="thinking-title">Thinking</span>
+				</div>
+				<div class="top-ranking">응원해요</div>
+				<div class="top-ranking-info">좋아요 982회 | 작성자: User456</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">응원해요</a> <span class="likes">좋아요
+							982회</span> <span class="rank-changeup">▲ 1</span></li>
+					<li><span>2</span> <a href="#">화이팅</a> <span class="likes">좋아요
+							760회</span> <span class="rank-changedown">▼ 1</span></li>
+					<li><span>3</span> <a href="#">으샤으샤</a> <span class="likes">좋아요
+							550회</span> <span>-</span></li>
+				</ul>
 			</div>
-			<div class="top-ranking">응원해요</div>
-			<div class="top-ranking-info">좋아요 982회 | 작성자: User456</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">응원해요</a> <span class="likes">좋아요
-						982회</span> <span class="rank-changeup">▲ 1</span></li>
-				<li><span>2</span> <a href="#">화이팅</a> <span class="likes">좋아요
-						760회</span> <span class="rank-changedown">▼ 1</span></li>
-				<li><span>3</span> <a href="#">으샤으샤</a> <span class="likes">좋아요
-						550회</span> <span>-</span></li>
-			</ul>
-		</div>
 
-		<!-- Feeling 카테고리 - Comment Likes 관련 콘텐츠 -->
-		<div class="ranking-column comments-likes">
-			<div class="category-title">
-				<span class="feeling-title">Feeling</span>
+			<!-- Feeling 카테고리 - Comment Likes 관련 콘텐츠 -->
+			<div class="ranking-column comments-likes">
+				<div class="category-title">
+					<span class="feeling-title">Feeling</span>
+				</div>
+				<div class="top-ranking">굿</div>
+				<div class="top-ranking-info">좋아요 1,200회 | 작성자: User789</div>
+				<ul class="ranking-list">
+					<li><span>1</span> <a href="#">굿</a> <span class="likes">좋아요
+							1,200회</span> <span class="rank-changeup">▲ 2</span></li>
+					<li><span>2</span> <a href="#">좋아요</a> <span class="likes">좋아요
+							1,000회</span> <span>-</span></li>
+					<li><span>3</span> <a href="#">힘내</a> <span class="likes">좋아요
+							900회</span> <span class="rank-changedown">▼ 1</span></li>
+				</ul>
 			</div>
-			<div class="top-ranking">굿</div>
-			<div class="top-ranking-info">좋아요 1,200회 | 작성자: User789</div>
-			<ul class="ranking-list">
-				<li><span>1</span> <a href="#">굿</a> <span class="likes">좋아요
-						1,200회</span> <span class="rank-changeup">▲ 2</span></li>
-				<li><span>2</span> <a href="#">좋아요</a> <span class="likes">좋아요
-						1,000회</span> <span>-</span></li>
-				<li><span>3</span> <a href="#">힘내</a> <span class="likes">좋아요
-						900회</span> <span class="rank-changedown">▼ 1</span></li>
-			</ul>
 		</div>
 	</div>
-
 
 
 	<!-- footer ! -->
