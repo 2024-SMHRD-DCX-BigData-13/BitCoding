@@ -34,16 +34,7 @@ $(document).ready(function() {
 	$(".ranking-column").hide();  // 모든 랭킹 컬럼 숨기기
 	$(".posts-likes").show();     // posts-likes 컬럼만 표시
 
-	$(".tab-button").click(function() {
-		// 모든 버튼에서 active 클래스 제거
-		$(".tab-button").removeClass("active").find(".heart-icon").remove();
-
-		// 클릭된 버튼에 active 클래스 추가 및 하트 이모티콘 표시
-		$(this).addClass("active");
-
-		// 하트 이모티콘 추가
-		$(this).append('<span class="heart-icon">❤️</span>');
-	});
+	
 
 
 
