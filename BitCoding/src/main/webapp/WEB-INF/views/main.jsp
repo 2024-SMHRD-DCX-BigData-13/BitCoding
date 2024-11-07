@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOF</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/post.js"></script>
     <link rel="stylesheet" href="assets/css/main.css">
@@ -38,7 +39,7 @@
                 </a>
                 <div class="profile-container">
                     <a href="#" class="profile-icon" id="profileImage" aria-label="프로필">
-                        <img src="assets/images/profile.jpg" alt="Profile">
+                        <img src="assets/images/profiles/${member.profile}" alt="Profile">
                     </a>
                     <div class="dropdown-menu" id="dropdownMenu">
                         <button class="dropdown-item">마이페이지</button>
@@ -51,7 +52,7 @@
     <div class="container">
         <main>
             <div class="share-thoughts-button">
-                <img src="assets/images/profile.jpg" alt="프로필 아이콘" class="profile-icon">
+                <img src="assets/images/profiles/${member.profile}" alt="프로필 아이콘" class="profile-icon">
                 <span class="button-text">나누고 싶은 생각이 있으신가요?</span>
                 <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M21.7 7.3l-5-5a1 1 0 00-1.4 0L2 15.6V20a1 1 0 001 1h4.4L21.7 8.7a1 1 0 000-1.4zm-14.8 12H4v-2.9l10.3-10.3 2.9 2.9L6.9 19.3z" />
@@ -109,7 +110,7 @@
 		</div>
 
 		<label for="tags" required>Tags (separated by #):</label>
-		<input type="text" id="tags" name = "np_tag"placeholder="#태그를 입력하세요">
+		<input type="text" id="tags" name = "np_tag"placeholder="#태그를 입력하세요" value = "#">
 
 		<button type="submit" class="submit-btn">게시글 작성</button>
 	</form>
@@ -121,7 +122,7 @@
             <ol class="top10-list">
                 <li>
                     <img src="assets/images/gold.png" alt="금메달" class="trophy-icon">
-                    <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
+                    <img src="assets/images/profiles/${member.profile}" alt="프로필" class="profile-img">
                     <div class="content">
                         <p class="author">조용현 <span class="author-tf">Feeling</span></p>
                         <a href="#">도구를 넘어선 개발자의 역량: "Next.js 꼭 써야할까?"</a>
@@ -129,7 +130,7 @@
                 </li>
                 <li>
                      <img src="assets/images/silver.png" alt="은메달" class="trophy-icon">
-                    <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
+                    <img src="assets/images/profiles/${member.profile}" alt="프로필" class="profile-img">
                     <div class="content">
                         <p class="author">최지한 <span class="author-tf-blue">Thinking</span></p>
                         <a href="#">도구를 넘어선 개발자의 역량: "Next.js 꼭 써야할까?"</a>
@@ -137,7 +138,7 @@
                 </li>
                 <li>
                      <img src="assets/images/bronze.png" alt="동메달" class="trophy-icon">
-                    <img src="assets/images/profile.jpg" alt="프로필" class="profile-img">
+                    <img src="assets/images/profiles/${member.profile}" alt="프로필" class="profile-img">
                     <div class="content">
                         <p class="author">윤이솔 <span class="author-tf">Feeling</span></p>
                         <a href="#">도구를 넘어선 개발자의 역량: "Next.js 꼭 써야할까?"</a>

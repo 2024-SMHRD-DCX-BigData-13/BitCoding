@@ -45,7 +45,7 @@ public class JoinDBController implements iController {
         
 
 		Member data = new Member(email, password, name, nickname, birth, phoneNumber, gender, tf, null, filename);
-		String profileValue = (data.getProfile() != null) ? data.getProfile() : "";
+		String profileValue = (data.getProfile() != null) ? data.getProfile() : "nomal.webp";
 		data.setProfile(profileValue);
 		MemberDAO dao = new MemberDAO();
 

@@ -33,6 +33,8 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/createPost.bit", new CreatePostController());
 		pageHandler.put("/createComment.bit", new CreateCommentController());
 		pageHandler.put("/deletePost.bit", new DeletePostController());
+		pageHandler.put("/updatePost.bit", new UpdatePostController());
+		pageHandler.put("/checkLike.bit", new checkLikeController());
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)

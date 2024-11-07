@@ -172,10 +172,30 @@ $(document).ready(function() {
 			// 파일 데이터 추가 (프로필 사진)       
 			const file = $('#profilePicture')[0].files[0];
 			if (file) {
+				// 유저가 이미지를 선택한 경우
 				formData.append('file', file);
-			}
-			else {
-				formData.append('file', null);
+			} else {
+				// 유저가 이미지를 선택하지 않은 경우, 기본 이미지를 추가
+				const filePath = "/assets/images/nomal.webp";
+
+				fetch(filePath)
+					.then(response => {
+						if (response.ok) {
+							// 파일이 존재하는 경우 Blob 객체로 변환
+							return response.blob();
+						} else {
+							throw new Error('기본 이미지 파일이 존재하지 않음');
+						}
+					})
+					.then(blob => {
+						// Blob 객체를 File 객체로 변환
+						const defaultFile = new File([blob], "nomal.webp", { type: blob.type });
+						formData.append('file', defaultFile);
+						console.log('기본 이미지를 formData에 추가했습니다.');
+					})
+					.catch(error => {
+						console.error('Error:', error.message);
+					});
 			}
 
 			$(".modal-backdrop").fadeIn(300);

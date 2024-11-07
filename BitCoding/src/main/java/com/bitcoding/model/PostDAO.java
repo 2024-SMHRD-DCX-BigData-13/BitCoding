@@ -16,7 +16,7 @@ public class PostDAO {
 	public int create(Post post) {
 		SqlSession session = server.openSession(true);
 
-		int cnt = session.insert("create", post);
+		int cnt = session.insert("createPost", post);
 
 		session.close();
 

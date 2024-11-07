@@ -45,9 +45,10 @@ public class CreatePostController implements iController {
 		String profile = member.getProfile();
 		String category = multi.getParameter("category");
 		String post_tag = multi.getParameter("tags");
+		String mem_type = member.getMem_type();
 		
 		
-		Post data = new Post(0, post_title, post_content, post_file, null, email, nick, post_type, profile, category, post_tag);
+		Post data = new Post(0, post_title, post_content, post_file, null, email, nick, post_type, profile, category, post_tag, mem_type);
 		data.setPost_file(data.getPost_file() != null ? data.getPost_file() : "");
 		
 		PostDAO dao = new PostDAO();

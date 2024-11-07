@@ -9,7 +9,14 @@ $(document).ready(function() {
 	});
 
 	// 게시물 수정 삭제
-	$('.postbox').on('click', '.edit-button', editPost);
+	$('.postbox').on('click', '.edit-button', function() {
+		Swal.fire({
+			title: 'information',
+			text: '구현예정입니다.',
+			icon: 'info',
+			confirmButtonText: '확인'
+		});
+	});
 	$('.postbox').on('click', '.delete-button', deletePost);
 	// 이미지 업로드 시 미리보기
 	$('#image-upload').on('change', function(event) {
@@ -55,21 +62,10 @@ $(document).ready(function() {
 		$('.modal-overlay').removeClass('active');
 	});
 
-	// 공감 및 위로 버튼 기능 (동적 요소에 대한 이벤트 위임)
+	// 게시물 좋아요 버튼 (동적 요소에 대한 이벤트 위임)
 	$(document).on('click', '.increase-count-button', function() {
-		const countType = $(this).data('count-type');
-		const $countSpan = $(this).find(`.${countType}-count`);
-		let currentCount = parseInt($countSpan.text(), 10);
-		if ($(this).hasClass('active')) {
-			$('.like-icon')
-			$countSpan.text(currentCount - 1);
-			$(this).removeClass('active');
-			$(this).find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
-		} else {
-			$countSpan.text(currentCount + 1);
-			$(this).addClass('active');
-			$(this).find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
-		}
+		const like = $(this);
+		postLike(like);
 	});
 
 	// 좋아요 버튼 클릭 시 색상 변경
@@ -80,6 +76,12 @@ $(document).ready(function() {
 	// 메시지 버튼 클릭 시 색상 변경
 	$(document).on("click", ".chat-button", function() {
 		$(this).toggleClass("active"); // .active 클래스 토글
+		Swal.fire({
+			title: 'Success!!',
+			text: '채팅 신청이 완료되었습니다!',
+			icon: 'success',
+			confirmButtonText: '확인'
+		});
 	});
 
 
@@ -245,13 +247,14 @@ function getData() {
 			user_info.nickname = data.nick;
 			user_info.gender = data.gender;
 			user_info.profile = data.profile;
+			user_info.tf = data.mem_type;
 		}
 	});
 }
 function prepare() {
 	$(".postbox").empty();
 	getData();
-    console.log('prepare진입');
+	console.log('prepare진입');
 	$.ajax({
 		url: 'getPost.bit', // 서블릿 URL
 		type: 'GET',  // HTTP 요청 방식
@@ -261,7 +264,7 @@ function prepare() {
 			if (data) {
 				data.forEach(item => {
 					console.log(item.post_idx);
-					getPost(item.post_idx, item.profile, item.category, item.nick, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at);
+					getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at);
 				});
 			}
 			// 게시물 로딩이 완료된 후 댓글 로딩
@@ -269,7 +272,7 @@ function prepare() {
 		}
 	});
 }
-function getPost(idx, profile, category, author, tf, title, content, postimage, tags, date) {
+function getPost(idx, profile, category, author, user_type, tf, title, content, postimage, tags, date) {
 	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
 	const newPostHTML = `
         <div class="post" data-category="${category}" data-id =${idx}>
@@ -277,7 +280,7 @@ function getPost(idx, profile, category, author, tf, title, content, postimage, 
                 <img src="assets/images/profiles/${profile}" alt="Profile" class="profile-image">
                 <div class="post-info">
                     <div class="post-author">${author}</div>
-                    <div class="post-role">${tf}</div>
+                    <div class="post-role">${user_type}</div>
                     <div class="post-date">작성일: ${date}</div>
                 </div>
                 <div class="post-actions2">
@@ -287,7 +290,7 @@ function getPost(idx, profile, category, author, tf, title, content, postimage, 
             </div>
             <div class="post-title">${title}</div>
             <div class="post-content">${content}</div>
-            <img class="post-image" src="${postimage}" alt="">
+            <img class="post-image" src="assets/images/profiles/${postimage}" alt="">
             <div class="post-tags"><span>#${category}&nbsp;</span><span>#${tf}&nbsp;</span>${tags}</div>
             <div class="comment-section">
                 <div class="reaction-container">
@@ -304,9 +307,26 @@ function getPost(idx, profile, category, author, tf, title, content, postimage, 
             </div>
         </div>
     `;
-
 	// `postbox`에 새로운 게시물 추가
 	$(".postbox").append(newPostHTML);
+	const lastPost = $(".postbox .post").last();
+	// 작성자와 현재 유저 정보 비교 후 버튼 숨기기
+	if (author !== user_info.nickname) {
+
+		lastPost.find(".edit-button, .delete-button").css("display", "none");
+	}
+	if (author !== user_info.nickname && tf !== user_info.tf) {
+
+		// 해당 게시물의 댓글 입력창 숨기기
+		lastPost.find(".comment-form").css("display", "none");
+
+		// 안내 문구 추가
+		lastPost.find(".comment-section").append(`
+        <div class="comment-notice" style="color: #1E90FF; font-weight:bold">
+            댓글을 작성할 권한이 없습니다.
+        </div>
+    `);
+	}
 }
 
 function getComment(post_idx, profile, nick, content) {
@@ -348,12 +368,33 @@ function loadComments() {
 					getComment(item.post_idx, item.profile, item.nick, item.cmt_content);
 				});
 			}
+			$('.comments').hide();
 		}
 	});
 }
 
 function editPost() {
-
+	/*	console.log('에디트0들어옴');
+		const post = $(this).closest(".post"); // 현재 게시물 컨테이너 찾기
+		const postId = post.data("id"); // data-id 값 가져오기
+		console.log('id: ', postId);
+		$.ajax({
+			url: 'updatePost.bit', // 서블릿 URLF
+			type: 'post',  // HTTP 요청 방식
+			data: {
+				'id': postId
+			},
+			success: function(res) {
+				// 서블릿에서 받은 데이터를 사용
+				if (res) {
+					console.log('게시물 수정 완료');
+					prepare();
+				}
+				else {
+					console.log('게시물 수정 실패');
+				}
+			}
+		});*/
 }
 
 function deletePost() {
@@ -365,16 +406,46 @@ function deletePost() {
 		url: 'deletePost.bit', // 서블릿 URLF
 		type: 'post',  // HTTP 요청 방식
 		data: {
-			'id' : postId
+			'id': postId
 		},
 		success: function(res) {
 			// 서블릿에서 받은 데이터를 사용
-			if(res){
+			if (res) {
 				console.log('게시물 삭제 완료');
 				prepare();
 			}
-			else{
+			else {
 				console.log('게시물 삭제 실패');
+			}
+		}
+	});
+}
+
+function postLike(like) {
+	const countType = like.data('count-type'); // 예: like
+	const $countSpan = like.find(`.${countType}-count`); // 예: like-count
+	let currentCount = parseInt($countSpan.text(), 10); // 현재 좋아요 수 가져오기
+
+	// `post`라는 클래스의 부모 요소에서 `data-id` 속성 가져오기
+	const postId = like.closest('.post').data('id');
+	$.ajax({
+		url: 'checkLike.bit', // 서블릿 URL
+		type: 'GET',  // HTTP 요청 방식
+		data: {
+			'post_id': postId,
+			'user_id': user_info.email
+		},
+		success: function(data) {
+			// 서블릿에서 받은 데이터를 사용
+			if (data == 'true') {
+				$countSpan.text(currentCount - 1); // 좋아요 수 감소
+				like.removeClass('active'); // 활성화 클래스 제거
+				like.find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
+			}
+			else {
+				$countSpan.text(currentCount + 1); // 좋아요 수 증가
+				like.addClass('active'); // 활성화 클래스 추가
+				like.find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
 			}
 		}
 	});
