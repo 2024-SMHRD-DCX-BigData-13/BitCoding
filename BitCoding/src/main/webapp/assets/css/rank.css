@@ -292,7 +292,7 @@ header {
 	font-weight: bold;
 	margin-right: 10px;
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s ease, transform 0.2s ease; /* 크기와 배경색 변화 */
+	transition: background-color 0.3s ease; /* 크기와 배경색 변화 */
 	
 }
 
@@ -490,7 +490,6 @@ header {
 	}
 	.ranking-column { max-width: 100%; }
 }
-
 /* footer 라인 ------------------------------------------------------------------------------------------------------------*/
 .footer {
 	width: 100%;

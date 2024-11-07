@@ -441,11 +441,29 @@ function postLike(like) {
 				$countSpan.text(currentCount - 1); // 좋아요 수 감소
 				like.removeClass('active'); // 활성화 클래스 제거
 				like.find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
+
+				$.ajax({
+					url: 'deleteLike.bit', // 서블릿 URL
+					type: 'GET',  // HTTP 요청 방식
+					data: {
+						'post_id': postId,
+						'user_id': user_info.email
+					}
+				});
 			}
 			else {
 				$countSpan.text(currentCount + 1); // 좋아요 수 증가
 				like.addClass('active'); // 활성화 클래스 추가
 				like.find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
+				
+				$.ajax({
+					url: 'createLike.bit', // 서블릿 URL
+					type: 'GET',  // HTTP 요청 방식
+					data: {
+						'post_id': postId,
+						'user_id': user_info.email
+					}
+				});
 			}
 		}
 	});

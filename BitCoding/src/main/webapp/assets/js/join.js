@@ -267,11 +267,11 @@ $(document).ready(function() {
 
 		// T와 F 점수를 비교하여 결과 표시
 		if (T_score > F_score) {
-			formData.append('tf', 'T');
+			formData.append('tf', 'Thinking');
 		} else if (F_score > T_score) {
-			formData.append('tf', 'F');
+			formData.append('tf', 'Feeeling');
 		} else {
-			formData.append('tf', 'F');
+			formData.append('tf', 'Feeeling');
 		}
 	}
 

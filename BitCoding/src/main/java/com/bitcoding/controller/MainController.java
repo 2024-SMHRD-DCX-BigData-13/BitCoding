@@ -35,6 +35,8 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/deletePost.bit", new DeletePostController());
 		pageHandler.put("/updatePost.bit", new UpdatePostController());
 		pageHandler.put("/checkLike.bit", new checkLikeController());
+		pageHandler.put("/deleteLike.bit", new DeleteLikeController());
+		pageHandler.put("/createLike.bit", new CreateLikeController());
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
