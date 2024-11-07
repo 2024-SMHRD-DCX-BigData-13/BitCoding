@@ -45,7 +45,8 @@ public class JoinDBController implements iController {
         
 
 		Member data = new Member(email, password, name, nickname, birth, phoneNumber, gender, tf, null, filename);
-
+		String profileValue = (data.getProfile() != null) ? data.getProfile() : "";
+		data.setProfile(profileValue);
 		MemberDAO dao = new MemberDAO();
 
 		response.setContentType("text/html; charset=utf-8");

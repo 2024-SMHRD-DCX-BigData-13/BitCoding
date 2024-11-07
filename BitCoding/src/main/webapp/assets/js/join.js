@@ -175,7 +175,7 @@ $(document).ready(function() {
 				formData.append('file', file);
 			}
 			else {
-				formData.append('file', 'assets/images/profiles/profile.jpg');
+				formData.append('file', null);
 			}
 
 			$(".modal-backdrop").fadeIn(300);
