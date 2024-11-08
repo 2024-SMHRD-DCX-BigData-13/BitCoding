@@ -43,4 +43,15 @@ public class CommentDAO {
 
 		return cnt;
 	}
+	
+	// 4. 좋아요버튼 채팅버튼 업데이트
+	public int cmt_update_reaction(Comment cmt){
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("cmt_update_reaction", cmt);
+
+		session.close();
+
+		return cnt;
+	}
 }

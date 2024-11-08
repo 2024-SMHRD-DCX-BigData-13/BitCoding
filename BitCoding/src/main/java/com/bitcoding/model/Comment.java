@@ -18,6 +18,6 @@ public class Comment {
 	private String email;
 	private String nick;
 	private String profile;
-	private String like;
-	private String chat;
+	private String co_like;
+	private String co_chat;
 }

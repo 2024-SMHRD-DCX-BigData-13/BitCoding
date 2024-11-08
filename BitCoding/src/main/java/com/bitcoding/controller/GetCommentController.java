@@ -23,11 +23,16 @@ public class GetCommentController implements iController {
 
 		CommentDAO dao = new CommentDAO();
 		List<Comment> list = dao.searchall();
-
+		String jsonResponse = "";
 		// Gson 객체를 사용해 JSON 변환
-		Gson gson = new Gson();
-		String jsonResponse = gson.toJson(list);
-
+				Gson gson = new Gson();
+		if(list == null) {
+			jsonResponse = gson.toJson("{}");
+		}else {
+			jsonResponse = gson.toJson(list);
+		}
+		
+		System.out.println("여기서 오류가남");
 		// JSON 응답 전송
 		PrintWriter out = response.getWriter();
 		out.print(jsonResponse);

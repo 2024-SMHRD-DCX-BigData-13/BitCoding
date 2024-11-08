@@ -1,3 +1,4 @@
+/* jshint esversion : 6 */
 let user_info = {};
 let user_like = {};
 let isCheck = true;
@@ -74,18 +75,14 @@ $(document).ready(function() {
 
 	// 좋아요 버튼 클릭 시 색상 변경
 	$(document).on("click", ".like-button", function() {
-		$(this).toggleClass("active"); // .active 클래스 토글
+		const btn = $(this);
+		checkCmt(btn);
 	});
 
 	// 메시지 버튼 클릭 시 색상 변경
 	$(document).on("click", ".chat-button", function() {
-		$(this).toggleClass("active"); // .active 클래스 토글
-		Swal.fire({
-			title: 'Success!!',
-			text: '채팅 신청이 완료되었습니다!',
-			icon: 'success',
-			confirmButtonText: '확인'
-		});
+		const btn = $(this);
+		checkCmt(btn);
 	});
 
 
@@ -201,46 +198,46 @@ function addPost(imageDataUrl) {
 }
 function inputComment(inputField, commentContainer, postId) {
 	const newCommentText = $(inputField).val();
-	const chatIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 3c-4.96 0-9 3.77-9 8.39 0 2.1.84 4.01 2.21 5.5-1.44 3.15-2.03 3.66-2.03 3.66-.15.13-.2.34-.12.51.08.17.26.28.46.28 1.04 0 4.35-1.47 6.31-2.65.86.24 1.76.36 2.7.36 4.96 0 9-3.77 9-8.39S16.96 3 12 3z"></path></svg>`;
-	const likeIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
-	const userNick = user_info.nickname;
-	const userIcon = user_info.profile;
-	const encodedFileName = encodeURIComponent(userIcon);
-	const currentTime = getCurrentFormattedTime();
-	if (newCommentText) {
-		const newComment = `
-                <div class="comment">
-                	<img src="assets/images/profiles/${encodedFileName}" class="comments-img">
-                    <span class="comment-author">${userNick} :&nbsp;</span>
-                    <p class="comment-text">${newCommentText}</p>
-                    
-                    <div class="like-chat-buttons">
-                   		<div class="comment-date">${currentTime}</div>
-                        <button class="chat-button">${chatIcon}</button>
-                        <button class="like-button">${likeIcon}</button>
-                    </div>
-                </div>
-            `;
-		$(commentContainer).append(newComment).show();
-		commentContainer.scrollTop(commentContainer.prop("scrollHeight"));
-		updateCommentCount($(commentContainer).closest('.comment-section'));
 
+	if (newCommentText) {
 		$.ajax({
-			url: 'createComment.bit', // 서블릿 URL
-			type: 'post',  // HTTP 요청 방식
+			url: 'createComment.bit',
+			type: 'post',
 			data: {
 				'post_id': postId,
 				'cmt_content': newCommentText
 			},
 			success: function(res) {
 				if (res == 'true') {
-					console.log('DB 댓글 생성 성공')
+					console.log('DB 댓글 생성 성공');
+
+					// 댓글 영역 초기화 후 새로 로드
+					commentContainer.empty(); // 기존 댓글 제거
+
+					// loadComments가 완료된 후 스크롤 이동
+					loadComments().then(() => {
+						// 로드가 끝난 후 댓글창을 강제로 표시
+						$('.comments').show();
+
+						// 댓글창 토글 버튼 업데이트 (아이콘/텍스트를 '숨기기'로 변경)
+						const toggleButton = commentContainer.closest('.comment-section').find('.comment-toggle');
+						toggleButton.html('🔽Hide');
+
+						// 스크롤을 맨 아래로 이동
+						commentContainer.scrollTop(commentContainer.prop("scrollHeight"));
+					});
 				}
+			},
+			error: function() {
+				alert("댓글 추가에 실패했습니다. 다시 시도해 주세요.");
 			}
 		});
+
+		// 입력 필드 초기화
 		$(inputField).val("");
 	}
 }
+
 
 function getData() {
 	$.ajax({
@@ -278,6 +275,7 @@ function prepare() {
 			}
 			// 게시물 로딩이 완료된 후 댓글 로딩
 			loadComments();
+			$('.comments').hide();
 		}
 	});
 }
@@ -346,7 +344,7 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
 	}
 }
 
-function getComment(post_idx, profile, nick, content, date) {
+function getComment(cmt_idx, post_idx, profile, nick, content, date, like, chat) {
 	// post_idx로 해당 게시물의 commentContainer 찾기
 	const postElement = $(`.post[data-id='${post_idx}']`);
 	const author = postElement.find(".post-author").text().trim(); // .post 내 .post-author에서 텍스트 가져오기
@@ -355,7 +353,7 @@ function getComment(post_idx, profile, nick, content, date) {
 	const likeIcon = `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>`;
 
 	const newComment = $(`
-        <div class="comment">
+        <div class="comment"  data-post = ${post_idx} data-id =${cmt_idx}>
             <img src="assets/images/profiles/${profile}" class="comments-img">
             <span class="comment-author">${nick} :&nbsp;</span>
             <p class="comment-text">${content}</p>
@@ -370,6 +368,22 @@ function getComment(post_idx, profile, nick, content, date) {
 	if (author !== user_info.nickname) {
 		newComment.find(".like-button, .chat-button").css("display", "none");
 	}
+	console.log('댓글생성');
+	console.log(like);
+	console.log(chat);
+	if (like === "true") {
+		newComment.find('button.like-button').addClass('active');
+	}
+	else if (like === "false") {
+		newComment.find("button.like-button").removeClass('active');
+	}
+	if (chat === "true") {
+		console.log("챗 트루");
+		newComment.find("button.chat-button").addClass('active');
+	}
+	else if (chat === "false") {
+		newComment.find("button.chat-button").removeClass('active');
+	}
 
 	const commentContainer = $(`.post[data-id='${post_idx}']`).find(".comments");
 	// 댓글 추가 및 표시
@@ -380,20 +394,25 @@ function getComment(post_idx, profile, nick, content, date) {
 }
 
 function loadComments() {
-	$.ajax({
-		url: 'getComment.bit', // 서블릿 URL
-		type: 'GET',  // HTTP 요청 방식
-		dataType: 'json', // 응답 데이터 형식
-		success: function(data) {
-			// 서블릿에서 받은 데이터를 사용
-			if (data) {
-				data.forEach(item => {
-					/*post_idx, profile, nick, content*/
-					getComment(item.post_idx, item.profile, item.nick, item.cmt_content, item.create_at);
-				});
+	return new Promise((resolve) => {
+		$.ajax({
+			url: 'getComment.bit', // 서블릿 URL
+			type: 'GET',  // HTTP 요청 방식
+			dataType: 'json', // 응답 데이터 형식
+			success: function(data) {
+				// 댓글 로드 및 화면에 추가
+				if (data) {
+					data.forEach(item => {
+						getComment(item.cmt_idx, item.post_idx, item.profile, item.nick, item.cmt_content, item.create_at, item.co_like, item.co_chat);
+						console.log("라이크:", item.co_like);
+						console.log("챗:", item.co_chat);
+					});
+				}
+				$('.comments').hide(); // 조건에 따라 숨김 설정
+
+				resolve(); // 로드 완료 후 Promise를 해결
 			}
-			$('.comments').hide();
-		}
+		});
 	});
 }
 
@@ -443,7 +462,6 @@ function deletePost() {
 		}
 	});
 }
-
 async function postLike(like) {
 	like.prop('disabled', true); // 클릭 방지
 
@@ -596,6 +614,80 @@ function updateUserLike(nick, cnt1, cnt2) {
 			}
 			else {
 				console.log("user_like 업데이트 실패")
+			}
+		}
+	});
+}
+
+function checkCmt(btn) {
+	const commentElement = $(btn).closest('.comment');
+
+	// data-id와 data-post 속성 값을 가져오기
+	// 버튼 클릭이벤트 두개 하나로 묶어서 해도됌 이렇게하면
+	const commentId = commentElement.data('id');
+	const postId = commentElement.data('post');
+
+	const likeBtn = commentElement.find('.like-button');
+	const chatBtn = commentElement.find('.chat-button');
+
+	let likeState;
+	let chatState;
+
+	// 눌린 버튼이 like-button인지 chat-button인지 확인
+	if ($(btn).hasClass('like-button')) {
+		// like 버튼 상태 확인 및 클래스 토글
+		if ($(btn).hasClass('active')) {
+			$(btn).removeClass('active');
+			likeState = "false";
+		} else {
+			$(btn).addClass('active');
+			likeState = "true";
+		}
+		chatState = commentElement.find('.chat-button').hasClass('active') ? "true" : "false";
+	}
+
+	if ($(btn).hasClass('chat-button')) {
+		// chat 버튼 상태 확인 및 클래스 토글
+		if ($(btn).hasClass('active')) {
+			$(btn).removeClass('active');
+			chatState = "false";
+		} else {
+			$(btn).addClass('active');
+			chatState = "true";
+			Swal.fire({
+				title: 'Success!!',
+				text: '채팅 신청이 완료되었습니다!',
+				icon: 'success',
+				confirmButtonText: '확인'
+			});
+		}
+		likeState = commentElement.find('.like-button').hasClass('active') ? "true" : "false";
+	}
+
+	console.log('포스트아이디 : ', postId);
+	console.log('댓글아이디 : ', commentId);
+	console.log('라이크 : ', likeState);
+	console.log('챗 : ', chatState);
+
+	updateCmt(postId, commentId, likeState, chatState)
+}
+
+function updateCmt(post, cmt, like, chat) {
+	$.ajax({
+		url: 'updateCmt.bit', // 서블릿 URL
+		type: 'post',  // HTTP 요청 방식
+		data: {
+			'post_idx': post,
+			'cmt_idx': cmt,
+			'like': like,
+			'chat': chat
+		},
+		success: function(res) {
+			if (res == "true") {
+				console.log('댓글 업데이트 성공');
+			}
+			else {
+				console.log('댓글 업데이트 실패');
 			}
 		}
 	});

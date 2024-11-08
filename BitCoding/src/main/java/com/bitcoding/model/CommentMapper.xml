@@ -13,7 +13,9 @@
 		sysdate,
 		#{email},
 		#{nick},
-		#{profile}
+		#{profile},
+		#{co_like},
+		#{co_chat}
 		)
 	</insert>
 
@@ -32,4 +34,14 @@
 		post_idx
 		= #{post_idx}
 	</delete>
+	
+	<update id="cmt_update_reaction" parameterType="com.bitcoding.model.Comment">
+		update comments
+		set
+		co_like = #{co_like},
+		co_chat = #{co_chat}
+		where 
+		cmt_idx = #{cmt_idx} and
+		post_idx = #{post_idx}
+	</update>
 </mapper>

@@ -43,6 +43,7 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/createUL.bit", new CreateULController());
 		pageHandler.put("/getLikeData.bit", new GetLikeDataController());
 		pageHandler.put("/updateUserLike.bit", new UpdateLikeDataController());
+		pageHandler.put("/updateCmt.bit", new UpdateCmtController());
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
