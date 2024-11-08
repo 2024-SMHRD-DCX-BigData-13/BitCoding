@@ -26,12 +26,18 @@ public class checkLikeController implements iController {
 		String result = dao.search(like);
 
 		PrintWriter out = response.getWriter();
-
-		if (result != null) {
-			out.print("true");
-		} else {
+		
+		if(result != null) {
+			if (result.equals(user_id)) {
+				out.print("true");
+				System.out.println("중복아이디 감지"+post_id+user_id);
+			}
+		}
+		else {
+			System.out.println(user_id+"중복아이디 미감지");
 			out.print("false");
 		}
+		
 		return null;
 	}
 

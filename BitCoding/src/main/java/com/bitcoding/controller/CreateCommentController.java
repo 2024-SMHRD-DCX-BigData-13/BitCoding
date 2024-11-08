@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import com.bitcoding.model.Comment;
 import com.bitcoding.model.CommentDAO;
 import com.bitcoding.model.Member;
-import com.bitcoding.model.PostDAO;
 
 public class CreateCommentController implements iController {
 
@@ -34,7 +33,7 @@ public class CreateCommentController implements iController {
 		String nick = member.getNick();
 		String profile = member.getProfile();
 
-		Comment cmt = new Comment(0, post_idx, cmt_content, null, email, nick, profile);
+		Comment cmt = new Comment(0, post_idx, cmt_content, null, email, nick, profile, "false","false");
 		CommentDAO dao = new CommentDAO();
 
 		PrintWriter out = response.getWriter();

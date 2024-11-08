@@ -21,6 +21,8 @@
 	<select id="cmt_searchall"
 		resultType="com.bitcoding.model.Comment">
 		select * from comments
+		ORDER BY
+		cmt_idx asc
 	</select>
 
 	<!-- 댓글 삭제 -->

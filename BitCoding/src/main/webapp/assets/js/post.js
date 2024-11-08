@@ -1,4 +1,5 @@
 let user_info = {};
+let user_like = {};
 let isCheck = true;
 $(document).ready(function() {
 	// js가 로드되었을때 유저 데이터 및 게시물 정보 받기
@@ -284,10 +285,10 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
 	let color;
 	console.log(user_type)
 	if (user_type === "Feeling") {
-		color = 'color: #f56b6b;'
+		color = 'color: #f56b6b;';
 	}
 	else {
-		color = 'color: #1E90FF;'
+		color = 'color: #1E90FF;';
 	}
 	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
 	const newPostHTML = `
@@ -312,7 +313,7 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
                 <div class="reaction-container">
                     <button class="comment-toggle">💬Comments<span class="comment-count"></span></button>
                     <div class="reaction-buttons">
-                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = like-icon>${icon}</span><span class="like-count">${count}</span></span>
+                        <span class="reaction-button increase-count-button" data-count-type="like"><span class = "like-icon">${icon}</span><span class="like-count">${count}</span></span>
                     </div>
                 </div>
                 <div class="comments"></div>
@@ -419,7 +420,6 @@ function editPost() {
 			}
 		});*/
 }
-
 function deletePost() {
 	console.log('딜리트0들어옴');
 	const post = $(this).closest(".post"); // 현재 게시물 컨테이너 찾기
@@ -443,7 +443,8 @@ function deletePost() {
 		}
 	});
 }
-function postLike(like) {
+
+async function postLike(like) {
 	like.prop('disabled', true); // 클릭 방지
 
 	const countType = like.data('count-type');
@@ -451,51 +452,64 @@ function postLike(like) {
 	let currentCount = parseInt($countSpan.text(), 10);
 
 	const postId = like.closest('.post').data('id');
-	console.log('클릭이벤트 진입', isCheck, "현상태");
-	prepare();
-	if (!isCheck) { // 데이터가 있을 때
-		let sendCount = currentCount - 1;
-		$countSpan.text(currentCount - 1); // 좋아요 수 증가
-		console.log('마이너스');
-		$.ajax({
-			url: 'deleteLike.bit',
-			type: 'GET',
-			data: {
-				'post_id': postId,
-				'user_id': user_info.email,
-				'post_like': sendCount
-			},
-			success: function(res) {
-				if (res == "true") {
-					like.removeClass('active');
-					like.find('.like-icon').css('color', 'gray');
-					like.prop('disabled', false);
-					isCheck = true; // 상태 변경
-				}
-			}
-		});
-	} else { // 데이터가 없을 때
-		let sendCount = currentCount + 1;
-		$countSpan.text(currentCount + 1); // 좋아요 수 증가
-		console.log('플러스');
-		$.ajax({
-			url: 'createLike.bit',
-			type: 'GET',
-			data: {
-				'post_id': postId,
-				'user_id': user_info.email,
-				'post_like': sendCount
-			},
-			success: function(res) {
-				if (res == "true") {
-					like.addClass('active');
-					like.find('.like-icon').css('color', 'red');
-					like.prop('disabled', false);
-					isCheck = false; // 상태 변경
-				}
+	const postAuthor = $(`.post[data-id="${postId}"]`).find('.post-author').text();
 
-			}
-		});
+	try {
+		// getLikeData 완료될 때까지 대기
+		await getLikeData(postAuthor);
+
+		let current_po_like = user_like.po_like; // 데이터 로드 후 사용 가능
+		console.log('클릭이벤트 진입', isCheck, "현상태");
+
+		if (like.hasClass('active')) {
+			let sendCount = currentCount - 1;
+			$countSpan.text(sendCount); // 좋아요 수 감소
+			current_po_like -= 1;
+			console.log('마이너스');
+			$.ajax({
+				url: 'deleteLike.bit',
+				type: 'GET',
+				data: {
+					'post_id': postId,
+					'user_id': user_info.email,
+					'post_like': sendCount
+				},
+				success: function(res) {
+					if (res == "true") {
+						like.removeClass('active');
+						like.find('.like-icon').css('color', 'gray');
+						like.prop('disabled', false);
+						isCheck = true; // 상태 변경
+						updateUserLike(postAuthor, current_po_like, user_like.co_like);
+					}
+				}
+			});
+		} else { // 좋아요 추가할 때
+			let sendCount = currentCount + 1;
+			$countSpan.text(sendCount); // 좋아요 수 증가
+			current_po_like += 1;
+			console.log('플러스');
+			$.ajax({
+				url: 'createLike.bit',
+				type: 'GET',
+				data: {
+					'post_id': postId,
+					'user_id': user_info.email,
+					'post_like': sendCount
+				},
+				success: function(res) {
+					if (res == "true") {
+						like.addClass('active');
+						like.find('.like-icon').css('color', 'red');
+						like.prop('disabled', false);
+						isCheck = false; // 상태 변경
+						updateUserLike(postAuthor, current_po_like, user_like.co_like);
+					}
+				}
+			});
+		}
+	} catch (error) {
+		console.error('getLikeData 실패:', error);
 	}
 }
 function updateLike(postId) {
@@ -512,13 +526,11 @@ function updateLike(postId) {
 		success: function(data) {
 			if (data == "true") {
 				$button.find('.like-icon').css('color', 'red'); // 아이콘 색상 빨간색으로 변경
-				isCheck = false;
-				console.log(isCheck, "로 변경");
+				$button.addClass('active');
 			}
 			else {
 				$button.find('.like-icon').css('color', 'gray'); // 아이콘 색상 회색으로 변경
-				isCheck = true;
-				console.log(isCheck, "로 변경");
+				$button.removeClass('active');
 			}
 		}
 	});
@@ -533,6 +545,58 @@ function getCurrentFormattedTime() {
 	const hours = String(now.getHours()).padStart(2, '0');
 	const minutes = String(now.getMinutes()).padStart(2, '0');
 	const seconds = String(now.getSeconds()).padStart(2, '0');
-
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+function getLikeData(nick) {
+	return new Promise((resolve, reject) => {
+		console.log('겟데이터 들어옴');
+		console.log(nick + ' 닉값입니다.');
+
+		$.ajax({
+			url: 'getLikeData.bit', // 서블릿 URL
+			type: 'post',  // HTTP 요청 방식
+			data: { 'user_id': nick },
+			success: function(data) {
+				const like = data;
+				user_like.user_id = like.user_id;
+				user_like.po_like = like.po_like;
+				user_like.co_like = like.co_like;
+
+				console.log(user_like.user_id, "데이터 가져옴");
+				console.log(user_like.po_like, "데이터 가져옴");
+				console.log(user_like.co_like, "데이터 가져옴");
+
+				resolve(); // 데이터 로드 완료 후 Promise 성공 처리
+			},
+			error: function(status, error) {
+				console.error('AJAX 요청 실패:', status, error);
+				reject(error); // 에러 발생 시 Promise 실패 처리
+			}
+		});
+	});
+}
+
+function updateUserLike(nick, cnt1, cnt2) {
+	console.log("닉값", nick);
+	console.log("po값", cnt1);
+	console.log("co값", cnt2);
+
+	$.ajax({
+		url: 'updateUserLike.bit', // 서블릿 URL
+		type: 'post',  // HTTP 요청 방식
+		data: {
+			'user_id': nick,
+			'po_like': cnt1,
+			'co_like': cnt2
+		},
+		success: function(res) {
+			if (res === "true") {
+				console.log("user_like 업데이트 성공")
+			}
+			else {
+				console.log("user_like 업데이트 실패")
+			}
+		}
+	});
 }

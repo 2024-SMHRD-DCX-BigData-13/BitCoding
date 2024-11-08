@@ -20,6 +20,6 @@
 	<!-- 좋아요 삭제 -->
 	<delete id="like_delete" parameterType="com.bitcoding.model.Likes">
 		delete from likes
-		where post_id = #{post_id} and user_id = #{user_id}
+		where post_id = #{post_id}
 	</delete>
 </mapper>

@@ -209,6 +209,7 @@ function calculateTFScore() {
 	}
 }
 function sendData(event) {
+	const nick = formData.get('nickname');
 	$.ajax({
 		url: 'joindb.bit',// 요청 URL주소
 		type: 'post',// GET POST
@@ -219,6 +220,16 @@ function sendData(event) {
 			// 요청이 성공해서, 응답이 이루어진 후에 실행되는 함수
 			// 응답 받은 데이터가 자동으로 res에 담김 
 			if (res == "true") {
+				$.ajax({
+					url: 'createUL.bit',
+					type: 'post',
+					data: {
+						"user_id": nick
+					},
+					success: function(){
+						
+					}
+				});
 				window.location.href = "/BitCoding/home.bit"
 				console.log("성공");
 			}

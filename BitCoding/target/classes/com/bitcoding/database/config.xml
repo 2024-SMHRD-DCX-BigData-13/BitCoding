@@ -24,5 +24,6 @@
 		<mapper resource="com/bitcoding/model/PostMapper.xml" />
 		<mapper resource="com/bitcoding/model/CommentMapper.xml" />
 		<mapper resource="com/bitcoding/model/LikeMapper.xml" />
+		<mapper resource="com/bitcoding/model/UserLikeMapper.xml" />
 	</mappers>
 </configuration>
