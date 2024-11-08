@@ -24,15 +24,9 @@
 				</h1>
 			</div>
 			<div class="header-right">
+				<button class="login-btn">로그인</button>
 
-
-				<a href="#" class="login-btn"> <span></span> <span></span> <span></span>
-					<span></span> 로그인
-				</a> <a href="#" class="signup-btn" id="gojoin"> <span></span> <span></span>
-					<span></span> <span></span> 회원가입
-				</a>
-
-
+				<button class="signup-btn" id="gojoin">회원가입</button>
 			</div>
 		</div>
 	</header>
