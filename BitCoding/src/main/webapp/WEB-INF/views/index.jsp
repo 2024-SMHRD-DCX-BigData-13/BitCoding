@@ -24,24 +24,45 @@
 				</h1>
 			</div>
 			<div class="header-right">
-				<button class="login-btn">로그인</button>
-				<button class="signup-btn" id = "gojoin">회원가입</button>
+
+
+				<a href="#" class="login-btn"> <span></span> <span></span> <span></span>
+					<span></span> 로그인
+				</a> <a href="#" class="signup-btn" id="gojoin"> <span></span> <span></span>
+					<span></span> <span></span> 회원가입
+				</a>
+
+
 			</div>
 		</div>
 	</header>
 
 	<!-- 메인 섹션 -->
 	<section class="hero-section">
+		<div class="hero-slides">
+			<!-- 슬라이드 이미지 1 -->
+			<div class="hero-slide"
+				style="background-image: url('/BitCoding/assets/images/yonghyun.jpg');"></div>
+			<!-- 슬라이드 이미지 2 -->
+			<div class="hero-slide"
+				style="background-image: url('/BitCoding/assets/images/isol.jpg');"></div>
+			<!-- 슬라이드 이미지 3 -->
+			<div class="hero-slide"
+				style="background-image: url('/BitCoding/assets/images/jihan.jpg');"></div>
+			<!-- 더 추가할 이미지가 있다면 추가 -->
+		</div>
+
 		<div class="hero-content">
 			<p class="sub-text">익명으로 나누는 진심 어린 대화와 따뜻한 공감의 공간</p>
 			<h2 class="main-title">
 				혼자가 아닌 우리,<br>함께 고민을 나누는 시간
 			</h2>
 			<div class="button-container">
-				<button class="kakao-btn">
+				<button class="kakao-btn" onclick="pageMoveJoin()">
 					<i class="fas fa-comment"></i> 카카오로 3초만에 가입하기
 				</button>
-				<button class="email-btn">이메일로 가입하기</button>
+				<button class="email-btn" onclick="pageMoveLogin()">이메일로
+					가입하기</button>
 			</div>
 		</div>
 	</section>

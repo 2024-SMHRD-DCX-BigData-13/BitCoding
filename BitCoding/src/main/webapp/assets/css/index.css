@@ -1,5 +1,5 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 /* Reset */
 * {
     margin: 0;
@@ -121,16 +121,138 @@ header {
     transition: background-color 0.3s;
 }
 
-.login-btn {
-    background-color: #f8f9fa;
-    color: #333;
+/* 공통 네온 버튼 스타일 */
+a {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #03e9f4;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    overflow: hidden;
+    transition: color 0.4s, background 0.4s;
+    border: 2px solid #03e9f4;
+    border-radius: 5px;
+    margin-right: 20px;
 }
 
-.signup-btn {
-    background-color: #f8f9fa;;
-    color : #333; 
-    
+/* 텍스트 네온 효과 */
+a {
+    text-shadow: 0 0 5px #03e9f4, 0 0 10px #03e9f4, 0 0 15px #03e9f4, 0 0 20px #03e9f4;
 }
+
+/* 마우스 올렸을 때 텍스트와 배경색 전환 */
+a:hover {
+    color: #050801;
+    background: #03e9f4;
+    text-shadow: none;
+}
+
+/* 네온 효과용 가상 요소 */
+a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #03e9f4;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: -1;
+    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
+    border-radius: 5px;
+}
+
+/* 마우스 올렸을 때 가상 요소 네온 효과 표시 */
+a:hover::before {
+    opacity: 1;
+}
+
+/* 네온 애니메이션을 위한 span */
+a span {
+    position: absolute;
+    display: block;
+}
+
+/* 네온 라인 애니메이션 */
+a span:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: animate1 1s linear infinite;
+}
+
+@keyframes animate1 {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 100%;
+    }
+}
+
+a span:nth-child(2) {
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: animate2 1s linear infinite;
+    animation-delay: 0.25s;
+}
+
+@keyframes animate2 {
+    0% {
+        top: -100%;
+    }
+    50%, 100% {
+        top: 100%;
+    }
+}
+
+a span:nth-child(3) {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: animate3 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+@keyframes animate3 {
+    0% {
+        right: -100%;
+    }
+    50%, 100% {
+        right: 100%;
+    }
+}
+
+a span:nth-child(4) {
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: animate4 1s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes animate4 {
+    0% {
+        bottom: -100%;
+    }
+    50%, 100% {
+        bottom: 100%;
+    }
+}
+
+
 
 .header-right .signup-btn:hover, .header-right .login-btn:hover {
     background-color: #555;
@@ -139,37 +261,55 @@ header {
 
 /* Hero Section 스타일 */
 .hero-section {
-    background-image: url('/BitCoding/assets/images/background.jpg'); /* 배경 이미지 추가 */
-    background-size: cover;
-    background-position: center;
-    height: 80vh;
+    background-image: url('/BitCoding/assets/images/background.jpg');
+    background-size: contain;         /* 이미지를 축소하여 전체가 보이도록 함 */
+    background-repeat: no-repeat;     /* 이미지가 반복되지 않도록 설정 */
+    background-position: center 40%;      /* 이미지를 중앙에 위치시킴 */
+    height: 80vh;                     /* 섹션 높이를 화면의 80%로 설정 */
     display: flex;
     align-items: center;
-    padding-left: 50px; /* 왼쪽 정렬을 위한 패딩 추가 */
     color: #fff;
-    text-align: left; /* 텍스트 왼쪽 정렬 */
     position: relative;
+    overflow: hidden;
 }
 
-/* 반투명 오버레이 */
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+/* 슬라이드 컨테이너 */
+.hero-slides {
+    display: flex;
+    width: 100%; /* 슬라이드가 여러 개일 경우의 너비 */
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* 반투명 오버레이 */
-    z-index: 1;
+    transition:transform 1s ease;
+    animation: slideAnimation 9s infinite; /* 자동 슬라이드 애니메이션 */
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2; /* 오버레이 위에 표시되도록 설정 */
-    max-width: 600px;
-    padding: 20px;
-    margin-left: 200px;
+/* 각 슬라이드 */
+.hero-slide {
+    min-width: 100%;
+    height: 100%;
+    background-size: cover; /* 세로만 꽉 차도록 설정 */
+    background-position: center;
+    background-repeat: no-repeat; /* 가로로 반복 */
 }
+
+/* 슬라이드 내용 */
+.hero-content {
+    position: absolute;
+    z-index: 2;
+    padding: 50px;
+    /*background: rgba(0, 0, 0, 0.4); /* 텍스트 가독성을 위한 반투명 배경 */
+    max-width: 600px;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+}
+
+/* 슬라이드 애니메이션 */
+@keyframes slideAnimation {
+    0%, 20% { transform: translateX(0); }
+    40%, 60% { transform: translateX(-100%); }
+    80%, 100% { transform: translateX(-200%); }
+}
+
 
 /* 텍스트 스타일 조정 */
 .sub-text {
