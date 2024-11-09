@@ -21,6 +21,11 @@
 		select * from user_like
 		order by co_like desc
 	</select>
+	
+	<!-- 그냥 전체 데이터 -->
+	<select id="user_like_all" resultType="com.bitcoding.model.UserLike">
+		select * from user_like
+	</select>
 
 	<!-- user_like 생성 (회원가입 할 때 최초 생성) -->
 	<insert id="user_like_create" parameterType="com.bitcoding.model.UserLike">

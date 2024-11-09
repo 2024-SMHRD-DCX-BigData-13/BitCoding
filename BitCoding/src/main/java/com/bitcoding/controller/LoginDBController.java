@@ -1,6 +1,7 @@
 package com.bitcoding.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,11 @@ public class LoginDBController implements iController {
 		
 		System.out.println("로그인");
 		request.setCharacterEncoding("UTF-8");
-		String email = request.getParameter("login_email");
-		String password = request.getParameter("login_password");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		System.out.println("이메일"+email);
+		System.out.println("비밀번호"+password);
 		
 		if (email == null) email = "";
 	    if (password == null) password = "";
@@ -35,14 +39,15 @@ public class LoginDBController implements iController {
 
 		 HttpSession session = request.getSession();
 		 
+		 PrintWriter out = response.getWriter();
 		if(result != null ) {
 			System.out.println("로그인 성공");
 			session.setAttribute("member", result);
-			return "redirect:/main.bit";
+			out.print("true");
 		}else {
 			System.out.println("로그인 실패");
-			return "login";
+			out.print("false");
 		}
+		return null;
 	}
-
 }

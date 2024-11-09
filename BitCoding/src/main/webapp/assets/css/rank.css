@@ -64,9 +64,9 @@ header {
 }
 
 #thinkingText {
-	color: #1E90FF !important; /* Thinking? 텍스트 색상 */
+	color: #6C63FF !important; /* Thinking? 텍스트 색상 */
 	margin-right: 5px;
-	font-size: 28px;
+	font-size: 33px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	transition: transform 0.2s ease;
 	font-family: 'DynaPuff', sans-serif;
@@ -74,8 +74,8 @@ header {
 }
 
 #feelingText {
-	color: #f56b6b !important; /* Feeling! 텍스트 색상 */
-	font-size: 28px;
+	color: #FF5C5C !important; /* Feeling! 텍스트 색상 */
+	font-size: 33px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	transition: transform 0.2s ease;
 	font-family: 'DynaPuff', sans-serif;
@@ -85,6 +85,20 @@ header {
 #thinkingText:hover, #feelingText:hover {
 	transform: scale(1.1);
 }
+.myprofile {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.user_info_type {
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+.user_info_nick {
+	font-weight: bold;
+}
 
 /* 클릭 시에도 배경색 변화 없음 */
 .logo:active {
@@ -92,27 +106,27 @@ header {
 }
 /* 랭킹 자유게시판 */
 .header-links a {
+	position: relative;
     color: #555;
-    font-size: 15px;
+    font-size: 16px;
     text-decoration: none;
-    padding: 8px 15px;
+ 	top:3px;
+ 	padding-right: 15px;
     transition: color 0.3s, font-weight 0.3s, text-shadow 0.3s;
-    display: inline-block;
-    margin-right: 10px;
     font-family: 'Noto Sans KR', sans-serif;
     font-variation-settings: "wght" 500;
 }
 
 /* 활성화된 탭 스타일 - 글자만 강조 */
 .header-links a.active {
-    color: #1E90FF; /* 강조된 텍스트 색상 */
+    color: #6C63FF; /* 강조된 텍스트 색상 */
     font-weight: 600; /* 조금 더 두꺼운 글씨체 */
     text-shadow: 1px 1px 2px rgba(30, 144, 255, 0.3); /* 가벼운 텍스트 그림자 */
 }
 
 /* 비활성화된 탭 hover 효과 */
 .header-links a:hover:not(.active) {
-    color: #1E90FF; /* 텍스트 색상 변경 */
+    color: #6C63FF; /* 텍스트 색상 변경 */
     text-shadow: 1px 1px 1px rgba(30, 144, 255, 0.2); /* 호버 시 텍스트에 살짝 그림자 추가 */
 }
 
@@ -151,7 +165,7 @@ header {
 	display: none;
 	position: absolute;
 	top: 50px;
-	right: 0;
+	right: -80px;
 	background-color: #fff;
 	border-radius: 8px;
 	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
@@ -305,14 +319,14 @@ header {
 
 /* 활성화 상태에서 크기와 색상 유지 */
 .tab-button.active {
-	background: linear-gradient(45deg, #007bff, #1e90ff); /* 활성화된 버튼 그라데이션 */
+	background: #6C63FF; /* 활성화된 버튼 그라데이션 */
 	color: #fff;
 	transform: scale(1.1); /* 버튼 크기 유지 */
    
 }
 
 .tab-button:hover {
-	background: linear-gradient(45deg, #444, #666);
+	background: #6C63FF;
 	transform: scale(1.1); /* 호버 시 크기 유지 */
 }
 
@@ -341,10 +355,9 @@ header {
 }
 /* 카테고리 제목 스타일 */
 .category-title {
-	font-size: 30px; /* 30px로 설정 */
+	font-size: 40px; /* 30px로 설정 */
 	color: inherit;
 	font-weight: bold;
-	margin-bottom: 10px;
 	font-family: 'DynaPuff', sans-serif;
     font-variation-settings: "wght" 500;
 }
@@ -354,11 +367,11 @@ header {
 }
 
 .thinking-title {
-	color: #1E90FF; /* 파란색 */
+	color: #6C63FF; /* 파란색 */
 }
 
 .feeling-title {
-	color: #f56b6b; /* 밝은 빨간색 */
+	color: #FF5C5C; /* 밝은 빨간색 */
 }
 
 /* 1등 게시물 스타일 */
@@ -381,58 +394,57 @@ header {
     font-size: 25px;
     color: black;
     font-weight: bold;
-    padding: 10px;
     border-radius: 8px;
     animation: pulse 1.5s infinite; /* 반짝이는 애니메이션 */
+    margin-right: 40px;
 }
 
 /* 1등 게시물 추가 정보 스타일 */
 .top-ranking-info {
-	font-size: 14px; /* 작은 글씨로 정보 표시 */
-	color: #666; /* 보조적인 색상 */
-	margin-bottom: 10px; /* 아래 요소와 간격 */
-	font-style: italic; /* 기울임으로 부드러운 느낌 */
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
 }
 
-/* 순위 리스트 */
+/* 랭킹 리스트 스타일 */
 .ranking-list {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    border-top: 1px solid #ddd;
 }
 
-.ranking-list li {
-	display: grid;
-	grid-template-columns: 30px 1fr 100px 50px; /* 각 열의 너비를 적절히 설정 */
-	align-items: center;
-	padding: 8px 0; /* 항목 간 간격 추가 */
-	gap: 10px; /* 각 열 사이 간격 */
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    color: #555;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.2s;
 }
-/*list a 태그 밑줄제거*/
-.ranking-list a {
-    text-decoration: none; /* 밑줄 제거 */
-    color: #5a5a5a; /* 링크 색상 설정 */
-    font-weight: bold;
+.ranking-item:hover {
+    transform: translateY(-3px);
 }
-
 
 .rank {
-	text-align: center;
-	color: #333;
+    font-weight: bold;
+    color: #333;
+    width: 20px;
+    text-align: center;
 }
 
-.title {
-	text-align: left;
-	color: black;
-	text-decoration: none;
-	white-space: nowrap; /* 긴 제목이 넘어가지 않도록 설정 */
+.nick {
+    flex-grow: 1;
+    text-align: left;
+    color: #333;
 }
 
 .likes {
-	text-align: right;
-	color: #555;
-	white-space: nowrap; /* "좋아요"와 "회"가 줄바꿈되지 않도록 설정 */
-	margin-right: 5px; /* 순위 변동과의 간격 추가 */
+    color: #6C63FF;
 }
 
 .rank-change {
@@ -462,7 +474,7 @@ header {
 }
 
 .ranking-list li:nth-child(1) {
-    background-color: #f8f9fa; /* 1등 항목에 배경 색상 추가 */
+    background-color: #e8f0ff; /* 1등 항목에 배경 색상 추가 */
     font-weight: bold;
 }
 
@@ -500,9 +512,10 @@ header {
 	text-align: center;
 	border-top: 0.5px solid #ccc;
 	height: 10vh;
-	position: sticky; /* 푸터를 하단에 고정 */
+	position: fixed;
 	bottom: 0;
 	left: 0;
+	right: 0;
 	padding: 15px;
 	font-size: 12px;
 	color: #a0a5b0;
@@ -515,3 +528,35 @@ header {
 	padding: 20px 0; /* 내용과 푸터 사이에 여백 추가 */
 	padding-bottom: 10vh; /* 푸터 아래 내용이 가려지지 않도록 설정 */
 }
+
+/* 로딩 화면 스타일 */
+#loading-screen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.9); /* 약간의 투명도 있는 배경 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+/* 로딩 애니메이션 스타일 */
+.loader {
+	width: 50px;
+	height: 50px;
+	border: 6px solid #ccc;
+	border-top-color: #1E90FF;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+/* 로딩 애니메이션 */
+@keyframes spin { 0% {
+	transform: rotate(0deg);
+}
+
+100%
+{transform:rotate(360deg);}}

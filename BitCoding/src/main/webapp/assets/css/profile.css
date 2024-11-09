@@ -1,8 +1,14 @@
 @import
 	url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
 	;
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+@import
+	url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	;
 
 /* Reset */
 * {
@@ -44,7 +50,6 @@ header {
 	left: 0;
 	width: 100%; /* 화면 전체 너비를 차지 */
 	z-index: 1000; /* 다른 요소 위에 표시 */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 하단 그림자 추가 */
 }
 
 .header-center {
@@ -75,26 +80,44 @@ header {
 }
 
 #thinkingText {
-	color: #1E90FF !important; /* Thinking? 텍스트 색상 */
+	color: #6C63FF !important; /* Thinking? 텍스트 색상 */
 	margin-right: 5px;
-	font-size: 28px;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+	font-size: 33px;
 	transition: transform 0.2s ease;
 	font-family: 'DynaPuff', sans-serif;
-    font-variation-settings: "wght" 500;
+	font-variation-settings: "wght" 500;
 }
 
 #feelingText {
-	color: #f56b6b !important; /* Feeling! 텍스트 색상 */
-	font-size: 28px;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+	color: #FF5C5C !important; /* Feeling! 텍스트 색상 */
+	font-size: 33px;
 	transition: transform 0.2s ease;
 	font-family: 'DynaPuff', sans-serif;
-    font-variation-settings: "wght" 500;
+	font-variation-settings: "wght" 500;
 }
 
 #thinkingText:hover, #feelingText:hover {
 	transform: scale(1.1);
+}
+
+.myprofile {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.user_info_type {
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+.user_info_nick {
+	font-weight: bold;
+}
+
+.postbox {
+	width: 100%;
+	height: 100%;
 }
 
 /* 클릭 시에도 배경색 변화 없음 */
@@ -105,16 +128,20 @@ header {
 .header-links a {
 	position: relative;
 	color: #555;
-	font-size: 15px;
+	font-size: 16px;
 	text-decoration: none;
 	top: 3px;
 	padding-right: 15px;
-    font-family: 'Noto Sans KR', sans-serif; /* 폰트 적용 */
-    font-variation-settings: "wght" 500; /* 가변 폰트 두께 설정 */
+	font-family: 'Noto Sans KR', sans-serif; /* 폰트 적용 */
+	font-variation-settings: "wght" 500; /* 가변 폰트 두께 설정 */
 }
 
 .header-links a:hover {
-	color: #0073e6;
+	color: #6C63FF;
+}
+
+.header-links a:active {
+	color: #6C63FF;
 }
 
 .header-right {
@@ -150,10 +177,9 @@ header {
 	display: none;
 	position: absolute;
 	top: 50px;
-	right: 0;
+	right: -80px;
 	background-color: #fff;
 	border-radius: 8px;
-	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
 	z-index: 10;
 	min-width: 120px;
 }
@@ -235,8 +261,8 @@ header {
 	padding-bottom: 10vh; /* 푸터와 겹치지 않도록 아래쪽 여백 추가 */
 	box-sizing: border-box;
 	font-family: 'DynaPuff', sans-serif;
-    font-weight: 500; /* 원하는 굵기로 설정 */
-    font-variation-settings: "wght" 500;
+	font-weight: 500; /* 원하는 굵기로 설정 */
+	font-variation-settings: "wght" 500;
 }
 
 /* 왼쪽 섹션 */
@@ -245,7 +271,6 @@ header {
 	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
 	padding: 20px;
 	border-radius: 8px;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* 연한 그림자 */
 	background-color: #fff;
 	min-width: 300px; /* 최소 너비 설정으로 너무 작아지지 않도록 방지 */
 }
@@ -257,53 +282,106 @@ header {
 	padding-bottom: 00px;
 }
 
+/* 전체 게시물 컨테이너 */
 .post {
-	padding: 15px;
-	border-bottom: 1px solid #e0e0e0; /* 게시물 사이 구분선 */
+	width: 100%;
+	max-width: 600px;
+	padding: 20px;
+	background-color: #fff;
+	font-family: Arial, sans-serif;
+	position: relative;
+	border-bottom: 1px solid #ddd; /* 구분선을 위한 하단 테두리 */
+    padding-bottom: 20px; /* 구분선과 콘텐츠 간의 여백 */
 }
 
-.post:last-child {
-	border-bottom: none; /* 마지막 게시물에는 구분선 제거 */
-}
-.post img {
-    width: 100%;            /* 이미지가 부모 요소의 너비를 가득 채움 */
-    max-width: 200px;       /* 최대 너비를 400px로 제한 */
-    height: auto;           /* 이미지의 비율을 유지하면서 크기를 조정 */
-    display: block;         /* 이미지를 블록 요소로 설정하여 아래 여백이 생기지 않도록 */
-    margin-bottom: 10px;    /* 이미지와 텍스트 사이에 여백 추가 */
-    border-radius: 8px;     /* 이미지 모서리를 둥글게 처리 */
-    object-fit: cover;      /* 이미지가 잘려도 중앙을 유지 */
-}
-
-.post h3 {
-	font-size: 18px;
-	color: #0073e6;
-}
-
-.post p {
+/* 작성일 텍스트 스타일 */
+.post-date {
 	font-size: 14px;
+	color: #666;
+	font-weight: normal;
+	position: absolute;
+	top: 15px;
+	left: 0;
+}
+
+/* 게시물 제목 스타일 */	
+.post-title {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+/* 게시물 내용 스타일 */
+.post-content {
+	font-size: 16px;
+	line-height: 1.6;
 	color: #555;
+	margin-bottom: 20px;
+	text-align: left;
 }
 
-/* 댓글 섹션 */
-.comments-section {
-	margin-top: 30px;
-}
-
-.comment {
-	padding: 10px;
-	border-bottom: 1px solid #e0e0e0; /* 댓글 사이 구분선 */
+/* 게시물 이미지 스타일 */
+.post-image {
+	width: 60%;
+	height: auto;
+	border-radius: 8px;
 	margin-bottom: 15px;
+	object-fit: cover;
 }
 
-.comment:last-child {
-	border-bottom: none; /* 마지막 댓글에 구분선 제거 */
-}
-
-.comment p {
+/* 태그 및 좋아요 컨테이너 스타일 */
+.post-tags {
 	font-size: 14px;
-	color: #555;
+	color: #0073e6;
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between; /* 태그와 좋아요를 양쪽 끝으로 */
+	align-items: center;
 }
+
+/* 태그 스타일 */
+.post-tags .tags {
+	display: flex;
+	gap: 10px;
+}
+
+.post-tags span {
+	font-weight: bold;
+	color: #333;
+	margin-right: 5px;
+}
+/* 좋아요 아이콘과 카운트 컨테이너 */
+.reaction-container {
+    display: flex;
+    align-items: center;
+    margin-right:40px;
+}
+/* 좋아요 아이콘과 카운트 */
+.reaction-container {
+	display: flex;
+	align-items: center;
+}
+
+/* 좋아요 아이콘 스타일 */
+.like-icon {
+	font-size: 18px;
+    fill: #e74c3c; /* 붉은색 */
+    margin-right: 2px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+/* 좋아요 카운트 스타일 */
+.like-count {
+	font-size: 20px;
+	color: #555;
+	font-weight: bold;
+	margin-bottom: 7px;
+}
+
+
 
 /* 오른쪽 섹션 - 개인정보 */
 .right-section {
@@ -311,7 +389,6 @@ header {
 	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
 	padding: 20px;
 	border-left: 1px solid #ddd; /* 왼쪽에 구분선 추가 */
-	box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.05); /* 오른쪽에 부드러운 그림자 */
 	background-color: #fff;
 	min-width: 250px; /* 최소 너비 설정 */
 }
@@ -321,86 +398,86 @@ header {
 	color: #333;
 	margin-bottom: 15px;
 	font-weight: 700;
-	text-algin:left;
+	text-algin: left;
 }
 
 /* 개인정보 필드 */
 .user-info {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
 }
 
 .info-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    font-size: 18px;
-    color: #555;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	font-size: 18px;
+	color: #555;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e0e0e0;
+	margin-bottom: 10px;
 }
 
 .label-text {
-    font-weight: bold;
-    color: #333;
+	font-weight: bold;
+	color: #333;
 }
 
 .label-value {
-    font-weight: normal;
-    color: #555;
+	font-weight: normal;
+	color: #555;
 }
 
 /* Input field styling */
 .user-info input {
-    width: 100%;
-    max-width: 450px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
-    margin-bottom:20px;
+	width: 100%;
+	max-width: 450px;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	text-align: center;
+	transition: border-color 0.2s;
+	box-sizing: border-box;
+	margin-bottom: 20px;
 }
 
 .user-info input:focus {
-    border-color: #0073e6;
-    outline: none;
+	border-color: #0073e6;
+	outline: none;
 }
 
 .last-label {
-    border-bottom: none;
-    margin-bottom: 0;
+	border-bottom: none;
+	margin-bottom: 0;
 }
 /*  비밀번호 변경버튼! 
 기본적으로 toggle-content를 숨김 */
 .toggle-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease; /* 슬라이드 애니메이션 */
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.4s ease; /* 슬라이드 애니메이션 */
 }
 
 /* 활성화 시 max-height을 크게 설정하여 보여줌 */
 .pwchange.active .toggle-content {
-    max-height: 500px; /* 충분히 큰 값으로 설정하여 내용이 모두 보이도록 */
+	max-height: 500px; /* 충분히 큰 값으로 설정하여 내용이 모두 보이도록 */
 }
 
 .toggle-header {
-    cursor: pointer;
-    font-size: 18px;
-    color: #0073e6;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 10px;
-    transition: color 0.3s;
+	cursor: pointer;
+	font-size: 18px;
+	color: #0073e6;
+	font-weight: bold;
+	display: inline-block;
+	margin-bottom: 10px;
+	transition: color 0.3s;
 }
 
 .toggle-header:hover {
-    color: #005bb5;
+	color: #005bb5;
 }
 /* 버튼 스타일 */
 .buttons {
@@ -408,8 +485,6 @@ header {
 	justify-content: center;
 	gap: 10px;
 	margin-top: 20px;
-	box-shadow: none !important;
-	
 }
 
 .update-button, .delete-button {
@@ -420,7 +495,7 @@ header {
 	cursor: pointer;
 	transition: background-color 0.3s;
 	color: white;
-	border:none !important;
+	border: none !important;
 }
 
 .update-button {
@@ -442,8 +517,6 @@ header {
 /* 나의 랭킹 섹션 */
 .ranking-section {
 	margin-top: 30px;
-
-	
 	border-top: 1px solid #ddd; /* 구분선 추가 */
 	padding-top: 20px;
 }
@@ -452,7 +525,7 @@ header {
 	font-weight: 600;
 	color: #333;
 	margin-bottom: 10px;
-	text-algin:left;
+	text-algin: left;
 }
 
 .ranking-section p {
@@ -462,7 +535,7 @@ header {
 }
 
 .ranking-section strong {
-	margin-top:15px;
+	margin-top: 15px;
 	color: #1e90ff;
 	font-weight: bold;
 }

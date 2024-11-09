@@ -33,6 +33,17 @@ public class UserLikeDAO {
 		return result;
 	}
 	
+	// 그냥 전체 랭킹
+	public List<UserLike> user_like_all() {
+		SqlSession session = server.openSession(true);
+
+		List<UserLike> result = session.selectList("user_like_all");
+
+		session.close();
+		
+		return result;
+	}
+	
 	// 3. 생성
 	public int user_like_create(UserLike ul) {
 		SqlSession session = server.openSession(true);

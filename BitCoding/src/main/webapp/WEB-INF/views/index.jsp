@@ -24,9 +24,9 @@
 				</h1>
 			</div>
 			<div class="header-right">
-				<button class="login-btn">로그인</button>
+				<a class="login-btn">로그인</a>
 
-				<button class="signup-btn" id="gojoin">회원가입</button>
+				<a class="signup-btn" id="gojoin">회원가입</a>
 			</div>
 		</div>
 	</header>
@@ -43,6 +43,9 @@
 			<!-- 슬라이드 이미지 3 -->
 			<div class="hero-slide"
 				style="background-image: url('/BitCoding/assets/images/jihan.jpg');"></div>
+			<!-- 슬라이드 이미지 1 -->
+			<div class="hero-slide"
+				style="background-image: url('/BitCoding/assets/images/yonghyun.jpg');"></div>
 			<!-- 더 추가할 이미지가 있다면 추가 -->
 		</div>
 
@@ -52,10 +55,10 @@
 				혼자가 아닌 우리,<br>함께 고민을 나누는 시간
 			</h2>
 			<div class="button-container">
-				<button class="kakao-btn" onclick="pageMoveJoin()">
+				<button class="kakao-btn">
 					<i class="fas fa-comment"></i> 카카오로 3초만에 가입하기
 				</button>
-				<button class="email-btn" onclick="pageMoveLogin()">이메일로
+				<button class="email-btn">이메일로
 					가입하기</button>
 			</div>
 		</div>

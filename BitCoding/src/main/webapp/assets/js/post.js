@@ -4,6 +4,7 @@ let user_like = {};
 let isCheck = true;
 let searchOp = "구분";
 let searchKey = "";
+let isSearch;
 $(document).ready(function() {
 	// js가 로드되었을때 유저 데이터 및 게시물 정보 받기
 	prepare();
@@ -28,6 +29,10 @@ $(document).ready(function() {
 		if ($(event.target).is($modalCustom)) {
 			$modalCustom.hide();
 		}
+	});
+	$(document).on("click", ".go-to-post-link", function(event) {
+		let target = this;
+		findPost(event, target);
 	});
 
 	// 검색 버튼 클릭 이벤트
@@ -79,7 +84,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.comment-toggle', toggleComments);
-	$(document).on('click', '.category-button', function() {
+	$(document).on('click', '.category-item', function() {
 		selectCategory(this, $(this).data('category'));
 	});
 
@@ -191,11 +196,11 @@ $(document).ready(function() {
 });
 
 function selectCategory(button, category) {
-	const categoryButtons = $('.category-button');
+	const categoryItems = $('.category-item');
 	const posts = $('.post');
 
-	// 모든 카테고리 버튼의 active 클래스 초기화
-	categoryButtons.removeClass('active');
+	// 모든 카테고리 항목의 active 클래스 초기화
+	categoryItems.removeClass('active');
 	$(button).addClass('active');
 
 	// 선택된 카테고리에 따라 게시글 표시/숨김 처리
@@ -324,68 +329,93 @@ function getData() {
 			user_info.gender = data.gender;
 			user_info.profile = data.profile;
 			user_info.tf = data.mem_type;
-		}
-	});
-}
-function prepare() {
-	$(".postbox").empty();
-	getData();
-	console.log('prepare진입');
-	$.ajax({
-		url: 'getPost.bit', // 서블릿 URL
-		type: 'GET',  // HTTP 요청 방식
-		dataType: 'json', // 응답 데이터 형식
-		success: function(data) {
-			// 서블릿에서 받은 데이터를 사용
-			if (data) {
-				data.forEach(item => {
-					let shouldLoadComments = false;
-					// 검색 기준이 '제목'인 경우
-					if (searchOp === "제목" && item.post_title.includes(searchKey)) {
-						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-						updateLike(item.post_idx);
-						shouldLoadComments = true;
-					}
-					// 검색 기준이 '작성자'인 경우
-					else if (searchOp === "작성자" && item.nick.includes(searchKey)) {
-						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-						updateLike(item.post_idx);
-						shouldLoadComments = true;
-						console.log("작성자 선택", item.nick, "일치");
-					}
-					// 검색 기준이 '구분'일 경우 모든 게시물을 가져옴
-					else if (searchOp === "구분") {
-						console.log("전체조회");
-						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-						updateLike(item.post_idx);
-						shouldLoadComments = true;
-					}
-
-					// 조건에 맞는 게시물에 대해서만 댓글 로딩
-					if (shouldLoadComments) {
-						loadComments(item.post_idx);
-						$('.comments').hide();
-					}
-
-				});
+			
+			if(user_info.tf == "Feeling"){
+				$(".user_info_type").css("color", "#FF5C5C");
+			}
+			else{
+				$(".user_info_type").css("color", "#6C63FF");
 			}
 		}
 	});
+}
+function prepare(callback) {
+    $(".postbox").empty();
+    getData();
+    postRank();
+    console.log('prepare 진입');
+
+    $.ajax({
+        url: 'getPost.bit', // 서블릿 URL
+        type: 'GET', // HTTP 요청 방식
+        dataType: 'json', // 응답 데이터 형식
+        success: function(data) {
+            // 서블릿에서 받은 데이터를 사용
+            if (data) {
+                data.forEach(item => {
+                    let shouldLoadComments = false;
+
+                    // 검색 기준이 '제목'인 경우
+                    if (searchOp === "제목" && item.post_title.includes(searchKey)) {
+                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+                        updateLike(item.post_idx);
+                        shouldLoadComments = true;
+                        isSearch = true;
+                    }
+                    // 검색 기준이 '작성자'인 경우
+                    else if (searchOp === "작성자" && item.nick.includes(searchKey)) {
+                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+                        updateLike(item.post_idx);
+                        shouldLoadComments = true;
+                        isSearch = true;
+                        console.log("작성자 선택", item.nick, "일치");
+                    }
+                    // 검색 기준이 '구분'일 경우 모든 게시물을 가져옴
+                    else if (searchOp === "구분") {
+                        console.log("전체조회");
+                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+                        updateLike(item.post_idx);
+                        shouldLoadComments = true;
+                        isCheck = false;
+                    }
+
+                    // 조건에 맞는 게시물에 대해서만 댓글 로딩
+                    if (shouldLoadComments) {
+                        loadComments(item.post_idx);
+                        $('.comments').hide();
+                    }
+                });
+            }
+
+            // AJAX 작업이 완료된 후 콜백 호출
+            if (typeof callback === "function") {
+                callback();
+            }
+        },
+        error: function(error) {
+            console.error("AJAX 호출 오류:", error);
+
+            // 오류가 발생했을 때도 콜백이 있다면 호출
+            if (typeof callback === "function") {
+                callback();
+            }
+        }
+    });
 }
 function getPost(idx, profile, category, author, user_type, tf, title, content, postimage, tags, date, count) {
 	let color;
 	console.log(user_type)
 	if (user_type === "Feeling") {
-		color = 'color: #f56b6b;';
+		color = 'color: #FF5C5C;';
 	}
 	else {
-		color = 'color: #1E90FF;';
+		color = 'color: #6C63FF;';
 	}
 	const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
 	const newPostHTML = `
         <div class="post" data-category="${category}" data-id =${idx}>
             <div class="post-header">
-                <img src="assets/images/profiles/${profile}" alt="Profile" class="profile-image">
+                <img src="assets/images/profiles/${profile}" alt="Profile" class="profile-image" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
                 <div class="post-info">
                     <div class="post-author">${author}</div>
                     <div class="post-role" style = "${color}">${user_type}</div>
@@ -398,7 +428,7 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
             </div>
             <div class="post-title">${title}</div>
             <div class="post-content">${content}</div>
-            <img class="post-image" src="assets/images/profiles/${postimage}" alt="">
+            <img class="post-image" src="assets/images/profiles/${postimage}" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
             <div class="post-tags"><span style="font-weight: bold;">#${category}&nbsp;</span><span style="font-weight: bold;">#${tf}&nbsp;</span>${tags}</div>
             <div class="comment-section">
                 <div class="reaction-container">
@@ -447,7 +477,7 @@ function getComment(cmt_idx, post_idx, profile, nick, content, date, like, chat)
 
 	const newComment = $(`
         <div class="comment"  data-post = ${post_idx} data-id =${cmt_idx}>
-            <img src="assets/images/profiles/${profile}" class="comments-img">
+            <img src="assets/images/profiles/${profile}" class="comments-img" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
             <span class="comment-author">${nick} :&nbsp;</span>
             <p class="comment-text">${content}</p>
             <div class="like-chat-buttons">
@@ -797,4 +827,75 @@ function updateCmt(post, cmt, like, chat) {
 			}
 		}
 	});
+}
+function postRank() {
+	const medals = ["gold.png", "silver.png", "bronze.png"];
+	$.ajax({
+		url: 'getPostRank.bit', // 서블릿 URL
+		type: 'GET',  // HTTP 요청 방식
+		dataType: 'json', // 응답 데이터 형식
+		success: function(data) {
+			$(".top10-list").empty();
+			// 서블릿에서 받은 데이터를 사용
+			if (data) {
+				data.forEach((item, index) => {
+					let rankImage;
+					rankImage = medals[index] || ""; // index가 0, 1, 2일 때 해당 메달 이미지 설정
+					getRank(rankImage, item.profile, item.nick, item.mem_type, item.post_title, item.post_idx); // 인덱스를 추가로 전달
+				});
+			}
+		}
+	});
+}
+
+function getRank(rankImage, profile, nick, mem_type, content, link) {
+	let color;
+	if (mem_type === "Feeling") {
+		color = 'color: #FF5C5C;';
+	}
+	else {
+		color = 'color: #6C63FF;';
+	}
+	const newPostHTML = `
+        <li><img src="assets/images/${rankImage}" class="trophy-icon">
+        <img src="assets/images/profiles/${profile}" class="profile-img" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
+         <div class="content"><p class="author">${nick} <span class="author-tf" style ="${color}">${mem_type}</span></p><a href="${link}" class="go-to-post-link">${content}</a>
+         </div>
+      </li>
+    `;
+	$(".top10-list").append(newPostHTML);
+}
+function findPost(event, target) {
+    event.preventDefault();
+
+    // href 속성에서 data-id 값을 추출
+    const targetId = $(target).attr("href").replace("#", "");
+    console.log("타겟아이디", targetId);
+
+    // 스크롤 이동 함수 정의
+    function scrollToTarget() {
+        const $targetElement = $(`.post[data-id="${targetId}"]`);
+        if ($targetElement.length) {
+            $("html, body").animate({
+                scrollTop: $targetElement.offset().top - 90
+            }, 800);
+        } else {
+            alert("해당 게시물을 찾을 수 없습니다.");
+        }
+    }
+
+    // prepare가 필요 없는 경우 바로 스크롤 이동
+    if ($(`.post[data-id="${targetId}"]`).length) {
+        scrollToTarget();
+    } else {
+        // prepare가 필요한 경우, 완료 후 콜백으로 스크롤 이동
+        if (isSearch) {
+            searchOp = "구분";
+            isSearch = false;
+            prepare(() => {
+                // prepare가 완료된 후 약간의 지연을 두고 스크롤 실행
+                setTimeout(scrollToTarget, 200); // 200ms 지연
+            });
+        }
+    }
 }

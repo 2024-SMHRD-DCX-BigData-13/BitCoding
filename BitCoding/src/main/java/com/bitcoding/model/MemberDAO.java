@@ -65,6 +65,17 @@ public class MemberDAO {
 
 		return result;
 	}
+	
+	// 5. 이메일 중복 체크
+	public Member checkNick(String nick) {
+		SqlSession session = server.openSession(true);
+
+		Member result = session.selectOne("checkNick", nick);
+
+		session.close();
+
+		return result;
+	}
 
 	// 6. 전체 정보 조회
 	public List<Member> search() {

@@ -134,6 +134,58 @@ $(document).ready(function() {
 			}
 		});
 	}
+
+	// 닉네임 중복 체크
+	const nickInput = $('#nick_check');
+	nickInput.on("input", nickError);
+
+	function nickError() {
+		$.ajax({
+			url: 'checkNick.bit',
+			type: 'post',
+			data: {
+				'nick': nickInput.val()
+			},
+			success: function(res) {
+				const p = $('#checkNick')
+				console.log("결과값",res);
+				if (res === "true") {
+					// $('선택자').html('HTML코드') : 내부 코드 덮어쓰기
+					// $('선택자').html.css('속성명', '속성값') : 스타일 속성 값 조정
+					p.html('사용가능한 닉네임 입니다.')
+						.css({
+							'color': '#00cc84', // 녹색
+							'font-size': '13px',
+							'margin': '0',
+							'padding': '0',
+							'font-weight': 'bold'
+						})
+
+				}
+				else if (res === "false") {
+					p.html('사용 불가능한 닉네임 입니다.')
+						.css({
+							'color': '#e53e3e', // 붉은색
+							'font-size': '13px',
+							'margin': '0',
+							'padding': '0',
+							'font-weight': 'bold'
+						});
+				}
+				else {
+					p.html('사용 불가능한 닉네임 입니다.')
+						.css({
+							'color': '#e53e3e', // 붉은색
+							'font-size': '13px',
+							'margin': '0',
+							'padding': '0',
+							'font-weight': 'bold'
+						});
+				}
+			}
+		});
+	}
+
 	const questions = [
 		"나는 결정을 내릴 때 논리적이고 객관적인 판단을 중시한다.",     // T
 		"나는 타인의 감정을 고려하여 결정을 내린다.",                 // F
@@ -226,8 +278,8 @@ function sendData(event) {
 					data: {
 						"user_id": nick
 					},
-					success: function(){
-						
+					success: function() {
+
 					}
 				});
 				window.location.href = "/BitCoding/home.bit"
@@ -247,7 +299,7 @@ function sendData(event) {
 
 /* 첫 페이지 제출이 완료 됐을 때*/
 function setData(event) {
-	if ($('#result').text() === '사용가능한 이메일 입니다.') {
+	if ($('#result').text() === '사용가능한 이메일 입니다.' && $('resultNick').text() === '사용가능한 닉네임 입니다.') {
 		isCheck = false;
 		formData.append('email', $('input[name="join_email"]').val());
 		formData.append('name', $('input[name="join_name"]').val());
@@ -291,12 +343,29 @@ function setData(event) {
 	else if ($('#result').text() === '중복된 이메일 입니다.') {
 		showShakeEffect();
 		event.preventDefault();
-		console.log('중복된 아이디가 감지되었습니다.');
+		Swal.fire({
+			title: '전달 실패',
+			text: '이메일 또는 닉네임이 올바르지 않습니다.',
+			icon: 'error',
+			confirmButtonText: '확인',
+			confirmButtonColor: '#d33' // 확인 버튼 색상 (선택 사항)
+		});
 	}
 	else {
-		showShakeEffect();
+		console.log("리절트닉");
+		showShakeEffectNick();
 		event.preventDefault();
-		console.log('옳바른 양식이 아닙니다.');
+		Swal.fire({
+			title: '전달 실패',
+			text: '이메일 또는 닉네임이 올바르지 않습니다.',
+			icon: 'error',
+			confirmButtonText: '확인',
+			confirmButtonColor: '#d33' // 확인 버튼 색상 (선택 사항)
+		});
+	}
+
+	if ($('resultNick').text() === '사용 불가능한 닉네임 입니다.') {
+		
 	}
 }
 function showShakeEffect() {
@@ -307,6 +376,17 @@ function showShakeEffect() {
 	// 애니메이션이 끝난 후 떨림 효과 클래스 제거
 	setTimeout(() => {
 		messageElement.addClass('shake');
+	}, 100); // 애니메이션 지속 시간과 동일하게 설정
+}
+
+function showShakeEffectNick() {
+	const messageElement = $('#checkNick');
+	// 떨림 효과 클래스 추가
+	messageElement.removeClass('shakes');
+
+	// 애니메이션이 끝난 후 떨림 효과 클래스 제거
+	setTimeout(() => {
+		messageElement.addClass('shakes');
 	}, 100); // 애니메이션 지속 시간과 동일하게 설정
 }
 function check(event) {

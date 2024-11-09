@@ -54,6 +54,12 @@
 	<select id="search" resultType="com.bitcoding.model.Member">
 		select * from members
 	</select>
+	
+		<!-- 닉네임 중복 체크 -->
+	<select id="checkNick" resultType="com.bitcoding.model.Member">
+		select * from members where nick =
+		#{nick}
+	</select>
 </mapper>
 
 

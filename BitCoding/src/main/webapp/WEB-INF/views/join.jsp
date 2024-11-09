@@ -55,7 +55,8 @@
                             <label for="password">비밀번호</label>
                             <input type="password" name="join_password" required>
                             <label for="nick">닉네임</label>
-                            <input type="text" name="join_nick" placeholder="닉네임" required>
+                            <input type="text" name="join_nick" id = "nick_check" placeholder="닉네임" required>
+                            <span id="checkNick"></span>
                             <label for="gender">성별</label>
                             <select name="join_gender" required>
                                 <option value="">성별 선택</option>

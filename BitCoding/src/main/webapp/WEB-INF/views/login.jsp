@@ -28,7 +28,7 @@
 					<h1>로그인</h1>
 
 					<div id="email-form" class="email-form">
-						<form id="login-form" action = "logindb.bit" method = "post">
+						<form id="login-form">
 							<label for="email">이메일</label> <input type="email"
 								id="email_check" name="login_email"
 								placeholder="example@gmail.com" required> 

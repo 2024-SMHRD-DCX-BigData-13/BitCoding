@@ -25,27 +25,25 @@
 				</div>
 			</div>
 			<div class="header-right">
-				<a href="#" class="icon search-icon" aria-label="검색"> <svg
-						xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-						fill="currentColor" viewBox="0 0 24 24">
-                        <path
-							d="M10 2a8 8 0 105.292 14.292l5.707 5.707 1.414-1.414-5.707-5.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
-                    </svg>
-				</a> <a href="#" class="icon notification-icon" aria-label="알림"> <svg
+			<div class="myprofile">
+				<div class="profile-container">
+					<a href="#" class="profile-icon" id="profileImage" aria-label="프로필">
+						<img src="assets/images/profiles/${member.profile}" alt="Profile">
+					</a>
+					<div class="dropdown-menu" id="dropdownMenu">
+						<button class="dropdown-item" id="logout">로그아웃</button>
+					</div>
+					</div>
+						<span class="user_info_nick"> ${member.nick}</span> <span
+						class="user_info_type">${member.mem_type}</span>
+				</div>
+	 					<a href="#" class="icon notification-icon" aria-label="알림"> <svg
 						xmlns="http://www.w3.org/2000/svg" width="40" height="40"
 						fill="currentColor" viewBox="0 0 24 24">
                         <path
 							d="M12 2a7 7 0 00-7 7v5H4v2h16v-2h-1v-5a7 7 0 00-7-7zm-3 16h6a3 3 0 01-6 0z" />
                     </svg>
 				</a>
-				<div class="profile-container">
-					<a href="#" class="profile-icon" id="profileImage" aria-label="프로필">
-						<img src="assets/images/profile.jpg" alt="Profile">
-					</a>
-					<div class="dropdown-menu" id="dropdownMenu">
-						<button class="dropdown-item" id="logout">로그아웃</button>
-					</div>
-				</div>
 			</div>
 		</div>
 	</header>
@@ -54,39 +52,8 @@
 		<!-- 왼쪽: 게시물 및 댓글 피드 -->
 		<section class="left-section">
 			<h2>Post 📌</h2>
-			<div class="feed">
-				<article class="post">
-					<h3>윈터!</h3>
-					<img src="assets/images/example.jpg" alt="Example Image">
-					<p>이곳에 게시물 내용이 표시됩니다...</p>
-				</article>
-				<article class="post">
-					<h3>게시물 제목 2</h3>
-					<p>이곳에 게시물 내용이 표시됩니다...</p>
-				</article>
+			<div class="postbox">
 				<!-- 게시물 추가 -->
-			</div>
-			<!-- 댓글 섹션 -->
-			<div class="comments-section">
-				<h2>Comment 💬</h2>
-				<div class="comments">
-					<div class="comment">
-						<p>
-							<strong>댓글 :</strong> 저도 이 부분이 정말 좋았어요!
-						</p>
-					</div>
-					<div class="comment">
-						<p>
-							<strong>댓글 :</strong> 유익한 정보 감사합니다.
-						</p>
-					</div>
-					<div class="comment">
-						<p>
-							<strong>댓글 :</strong> 유익한 정보 감사합니다.
-						</p>
-					</div>
-					<!-- 댓글 추가 가능 -->
-				</div>
 			</div>
 		</section>
 
@@ -94,12 +61,12 @@
 		<section class="right-section">
 			<h2>Infomation 🔒</h2>
 			<form class="user-info">
-				<label class="info-label"> <span class="label-text">ID</span>
-					<span class="label-value">dydgus2510</span>
-				</label> <label class="info-label"> <span class="label-text">NICK</span>
-					<span class="label-value">Quiet현</span>
-				</label> <label class="info-label"> <span class="label-text">T/F</span>
-					<span class="label-value">F</span>
+				<label class="info-label"> <span class="label-text">NICK</span>
+					<span class="label-value">${member.nick}</span>
+				</label> <label class="info-label"> <span class="label-text">TYPE</span>
+					<span class="label-value">${member.mem_type}</span>
+				</label> <label class="info-label"> <span class="label-text">CREATEAT</span>
+					<span class="label-value">${member.create_at}</span>
 				</label>
 				<!-- Toggleable section -->
 				<div class="pwchange">
