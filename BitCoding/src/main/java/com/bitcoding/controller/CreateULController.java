@@ -16,6 +16,7 @@ public class CreateULController implements iController {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String user_id = request.getParameter("user_id");
+		System.out.println("회원가입 닉네임전달"+user_id);
 
 		UserLike ul = new UserLike(user_id, 0, 0);
 		UserLikeDAO dao = new UserLikeDAO();

@@ -2,9 +2,81 @@
 let user_info = {};
 let user_like = {};
 let isCheck = true;
+let searchOp = "구분";
+let searchKey = "";
 $(document).ready(function() {
 	// js가 로드되었을때 유저 데이터 및 게시물 정보 받기
 	prepare();
+
+	// 모달 열기 및 닫기 기능
+	const $modalCustom = $("#searchModalCustom");
+	const $openModalButtonCustom = $("#search");
+	const $closeModalButtonCustom = $(".close-modal-button-custom");
+
+	// 모달 열기
+	$openModalButtonCustom.on("click", function() {
+		$modalCustom.show();
+	});
+
+	// 모달 닫기
+	$closeModalButtonCustom.on("click", function() {
+		$modalCustom.hide();
+	});
+
+	// 모달 외부 클릭 시 닫기
+	$(window).on("click", function(event) {
+		if ($(event.target).is($modalCustom)) {
+			$modalCustom.hide();
+		}
+	});
+
+	// 검색 버튼 클릭 이벤트
+	$("#searchButtonCustom").on("click", function() {
+		const searchOption = $("#searchOptionCustom").val();
+		const searchKeyword = $("#searchInputCustom").val();
+
+		if (!searchOption || searchOption === "구분") {
+			Swal.fire({
+				title: 'Warning',
+				text: '검색 기준을 선택하세요.',
+				icon: 'warning',
+				confirmButtonText: '확인',
+				willOpen: function() {
+					$('body').css('overflow', 'auto'); // 스크롤 유지
+				},
+				willClose: function() {
+					$('body').css('overflow', ''); // 스크롤 설정 초기화
+				}
+			});
+			return;
+		}
+
+		if (!searchKeyword) {
+			Swal.fire({
+				title: 'Warning',
+				text: '검색 기준을 선택하세요.',
+				icon: 'warning',
+				confirmButtonText: '확인',
+				willOpen: function() {
+					$('body').css('overflow', 'auto'); // 스크롤 유지
+				},
+				willClose: function() {
+					$('body').css('overflow', ''); // 스크롤 설정 초기화
+				}
+			});
+			return;
+		}
+		// 포스트에 접근해서 작성자 제목 두가지 정보를 가져와야함
+		// 검색 요청 처리 로직 (예: 서버로 전송)
+		searchOp = searchOption;
+		searchKey = searchKeyword;
+		$modalCustom.hide();
+		console.log(searchOp, "전달완료");
+		console.log(searchKey, "전달완료");
+		$("#searchOptionCustom").val('구분');
+		$("#searchInputCustom").val('');
+		prepare();
+	});
 
 	$(document).on('click', '.comment-toggle', toggleComments);
 	$(document).on('click', '.category-button', function() {
@@ -215,7 +287,7 @@ function inputComment(inputField, commentContainer, postId) {
 					commentContainer.empty(); // 기존 댓글 제거
 
 					// loadComments가 완료된 후 스크롤 이동
-					loadComments().then(() => {
+					loadComments(postId).then(() => {
 						// 로드가 끝난 후 댓글창을 강제로 표시
 						$('.comments').show();
 
@@ -267,15 +339,36 @@ function prepare() {
 			// 서블릿에서 받은 데이터를 사용
 			if (data) {
 				data.forEach(item => {
-					console.log(item.post_idx);
-					getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-					updateLike(item.post_idx);
-					console.log(item.post_idx, "전달완료");
+					let shouldLoadComments = false;
+					// 검색 기준이 '제목'인 경우
+					if (searchOp === "제목" && item.post_title.includes(searchKey)) {
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+					}
+					// 검색 기준이 '작성자'인 경우
+					else if (searchOp === "작성자" && item.nick.includes(searchKey)) {
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+						console.log("작성자 선택", item.nick, "일치");
+					}
+					// 검색 기준이 '구분'일 경우 모든 게시물을 가져옴
+					else if (searchOp === "구분") {
+						console.log("전체조회");
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+					}
+
+					// 조건에 맞는 게시물에 대해서만 댓글 로딩
+					if (shouldLoadComments) {
+						loadComments(item.post_idx);
+						$('.comments').hide();
+					}
+
 				});
 			}
-			// 게시물 로딩이 완료된 후 댓글 로딩
-			loadComments();
-			$('.comments').hide();
 		}
 	});
 }
@@ -393,7 +486,7 @@ function getComment(cmt_idx, post_idx, profile, nick, content, date, like, chat)
 	updateCommentCount($(commentContainer).closest('.comment-section'));
 }
 
-function loadComments() {
+function loadComments(targetPostIdx = null) {
 	return new Promise((resolve) => {
 		$.ajax({
 			url: 'getComment.bit', // 서블릿 URL
@@ -403,9 +496,12 @@ function loadComments() {
 				// 댓글 로드 및 화면에 추가
 				if (data) {
 					data.forEach(item => {
-						getComment(item.cmt_idx, item.post_idx, item.profile, item.nick, item.cmt_content, item.create_at, item.co_like, item.co_chat);
-						console.log("라이크:", item.co_like);
-						console.log("챗:", item.co_chat);
+						// targetPostIdx가 null이 아니면 특정 게시물의 댓글만 로드
+						if (targetPostIdx === null || item.post_idx === targetPostIdx) {
+							getComment(item.cmt_idx, item.post_idx, item.profile, item.nick, item.cmt_content, item.create_at, item.co_like, item.co_chat);
+							console.log("라이크:", item.co_like);
+							console.log("챗:", item.co_chat);
+						}
 					});
 				}
 				$('.comments').hide(); // 조건에 따라 숨김 설정
@@ -599,7 +695,7 @@ function updateUserLike(nick, cnt1, cnt2) {
 	console.log("닉값", nick);
 	console.log("po값", cnt1);
 	console.log("co값", cnt2);
-
+	// 댓글일땐 댓글주인
 	$.ajax({
 		url: 'updateUserLike.bit', // 서블릿 URL
 		type: 'post',  // HTTP 요청 방식
@@ -619,31 +715,41 @@ function updateUserLike(nick, cnt1, cnt2) {
 	});
 }
 
-function checkCmt(btn) {
+async function checkCmt(btn) {
 	const commentElement = $(btn).closest('.comment');
 
 	// data-id와 data-post 속성 값을 가져오기
 	// 버튼 클릭이벤트 두개 하나로 묶어서 해도됌 이렇게하면
+	const author = commentElement.find('.comment-author').text().replace(/\s*:\s*/, "");
+	console.log(author);
 	const commentId = commentElement.data('id');
 	const postId = commentElement.data('post');
 
-	const likeBtn = commentElement.find('.like-button');
-	const chatBtn = commentElement.find('.chat-button');
-
 	let likeState;
 	let chatState;
+	try {
+		// getLikeData 완료될 때까지 대기
+		await getLikeData(author);
 
-	// 눌린 버튼이 like-button인지 chat-button인지 확인
-	if ($(btn).hasClass('like-button')) {
-		// like 버튼 상태 확인 및 클래스 토글
-		if ($(btn).hasClass('active')) {
-			$(btn).removeClass('active');
-			likeState = "false";
-		} else {
-			$(btn).addClass('active');
-			likeState = "true";
+		let co_like = user_like.co_like;
+		// 눌린 버튼이 like-button인지 chat-button인지 확인
+		if ($(btn).hasClass('like-button')) {
+			// like 버튼 상태 확인 및 클래스 토글
+			if ($(btn).hasClass('active')) {
+				$(btn).removeClass('active');
+				co_like--;
+				likeState = "false";
+			} else {
+				$(btn).addClass('active');
+				co_like++;
+				likeState = "true";
+			}
+			chatState = commentElement.find('.chat-button').hasClass('active') ? "true" : "false";
+			updateUserLike(author, user_like.po_like, co_like);
 		}
-		chatState = commentElement.find('.chat-button').hasClass('active') ? "true" : "false";
+	}
+	catch (error) {
+		console.error('getLikeData 실패:', error);
 	}
 
 	if ($(btn).hasClass('chat-button')) {

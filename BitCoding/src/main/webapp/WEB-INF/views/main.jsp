@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="header-right">
-                <a href="#" class="icon search-icon" aria-label="검색">
+                <a href="#" class="icon search-icon" id = "search" aria-label="검색">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M10 2a8 8 0 105.292 14.292l5.707 5.707 1.414-1.414-5.707-5.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
                     </svg>
@@ -147,6 +147,22 @@
                 <!-- 추가 항목 -->
             </ol>
         </div>
+<!-- 검색 모달 창 -->
+<div id="searchModalCustom" class="modal-custom">
+  <div class="modal-content-custom">
+    <span class="close-modal-button-custom">&times;</span>
+    <h2>검색</h2>
+    <div class="custom-search-bar">
+      <select id="searchOptionCustom" class="custom-dropdown">
+        <option value="구분">구분</option>
+        <option value="제목">제목</option>
+        <option value="작성자">작성자</option>
+      </select>
+      <input type="text" id="searchInputCustom" class="custom-input" placeholder="검색어를 입력하세요">
+      <button id="searchButtonCustom" class="custom-search-btn">검색</button>
+    </div>
+  </div>
+</div>
     </div>
 </body>
 </html>

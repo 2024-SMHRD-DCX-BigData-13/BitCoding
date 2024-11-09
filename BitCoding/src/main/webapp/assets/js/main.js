@@ -16,6 +16,7 @@ $(document).ready(function() {
 	});
 	$('#myPage').on('click', myPage);
 	$('#logout').on('click', logout);
+	
 });
 function logout() {
 	$.ajax({
