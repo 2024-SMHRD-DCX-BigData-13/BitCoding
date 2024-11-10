@@ -54,4 +54,14 @@ public class CommentDAO {
 
 		return cnt;
 	}
+	
+	public int cmt_delete_mem(Comment cmt) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("cmt_delete_mem", cmt);
+
+		session.close();
+
+		return cnt;
+	}
 }

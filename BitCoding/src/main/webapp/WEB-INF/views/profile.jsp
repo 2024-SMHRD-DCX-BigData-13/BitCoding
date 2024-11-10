@@ -9,6 +9,7 @@
 <title>TOF</title>
 <link rel="stylesheet" href="assets/css/profile.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/profile.js"></script>
 </head>
 <body>
@@ -34,7 +35,7 @@
 						<button class="dropdown-item" id="logout">로그아웃</button>
 					</div>
 					</div>
-						<span class="user_info_nick"> ${member.nick}</span> <span
+						<span class="user_info_nick">${member.nick}</span> <span
 						class="user_info_type">${member.mem_type}</span>
 				</div>
 	 					<a href="#" class="icon notification-icon" aria-label="알림"> <svg
@@ -74,11 +75,15 @@
 					<!-- 클릭 가능한 제목 -->
 					<div class="toggle-content">
 						<!-- 슬라이드로 보여줄 내용 -->
-						<label> <input type="password" placeholder="현재 비밀번호 입력">
-						</label> <label> <input type="password" placeholder="새 비밀번호 입력">
-						</label> <label class="last-label"> <input type="password"
-							placeholder="새 비밀번호 확인">
+						<label>
+						<input type="password" name = "nowPw" id = "nowPw" placeholder="현재 비밀번호 입력">
+						</label><label> 
+						<input type="password" name = "newPw" id = "newPw" placeholder="새 비밀번호 입력">
+						</label> 
+						<label class="last-label"> 
+						<input type="password" name = "newPwCheck" id = "newPwCheck" placeholder="새 비밀번호 확인">
 						</label>
+						<span id = "result"></span>
 						<div class="buttons">
 							<button type="submit" class="update-button">회원정보 수정</button>
 							<button type="button" class="delete-button">회원탈퇴</button>
@@ -89,14 +94,28 @@
 
 			<div class="ranking-section">
 				<h2>Ranking 👑</h2>
+				<div class = "post-rank">
 				<p>
-					좋아요 수 : <strong>20</strong>
+					게시물 좋아요 : <strong class = "post-like">20</strong>
 				</p>
 				<p>
-					상위 : <strong>15%</strong>
+					상위 : <strong class = "post-percent">15%</strong>
 				</p>
 				<div class="progress-bar">
-					<div class="progress" style="width: 15%;">상위 15%</div>
+					<div class="progress"></div>
+				</div>
+				<div class = "divider"></div>
+				</div>
+				<div class = "comment-rank">
+				<p>
+					댓글 좋아요 : <strong class = "comment-like">20</strong>
+				</p>
+				<p>
+					상위 : <strong class = "comment-percent">15%</strong>
+				</p>
+				<div class="progress-bar">
+					<div class="progress"></div>
+				</div>
 				</div>
 			</div>
 		</section>

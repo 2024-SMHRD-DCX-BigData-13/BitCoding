@@ -45,6 +45,17 @@ public class PostDAO {
 		return cnt;
 	}
 	
+	// 3. 게시물 삭제
+	public int po_delete_mem(Post post) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("po_delete_mem", post);
+
+		session.close();
+
+		return cnt;
+	}
+	
 	public int updateLike(Post post) {
 		SqlSession session = server.openSession(true);
 

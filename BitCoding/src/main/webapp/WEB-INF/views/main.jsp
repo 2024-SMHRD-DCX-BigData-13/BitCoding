@@ -26,7 +26,7 @@
 						id="feelingText" class="clickable-text">Feeling!</span>
 				</div>
 				<div class="header-links">
-					<a href="pageRanking.bit">랭킹</a> <a href="#">자유게시판</a>
+					<a href="pageRanking.bit">랭킹</a> <a href="#" id = "freeboard">자유게시판</a>
 				</div>
 			</div>
 			<div class="header-right">

@@ -44,4 +44,10 @@
 		cmt_idx = #{cmt_idx} and
 		post_idx = #{post_idx}
 	</update>
+	<!-- 회원탈퇴 시 전체삭제 -->
+	<delete id="cmt_delete_mem" parameterType="com.bitcoding.model.Comment">
+		delete from comments
+		where
+		email=#{email}
+	</delete>
 </mapper>

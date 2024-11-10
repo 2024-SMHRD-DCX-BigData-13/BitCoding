@@ -55,6 +55,16 @@ public class UserLikeDAO {
 		return cnt;
 	}
 	
+	public int ul_delete_mem(UserLike ul) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("ul_delete_mem", ul);
+
+		session.close();
+
+		return cnt;
+	}
+	
 	
 	// 4. 상태업데이트
 	public int user_like_update(UserLike ul) {

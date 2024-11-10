@@ -47,4 +47,12 @@
 		where post_idx =
 		#{post_idx}
 	</update>
+	
+		<!-- 게시물 삭제 -->
+	<delete id="po_delete_mem" parameterType="com.bitcoding.model.Post">
+		delete from posts
+		where
+		email
+		= #{email}
+	</delete>
 </mapper>

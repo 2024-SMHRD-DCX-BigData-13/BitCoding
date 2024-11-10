@@ -299,7 +299,10 @@ function sendData(event) {
 
 /* 첫 페이지 제출이 완료 됐을 때*/
 function setData(event) {
-	if ($('#result').text() === '사용가능한 이메일 입니다.' && $('resultNick').text() === '사용가능한 닉네임 입니다.') {
+	console.log($('#result').text());
+	console.log($('#checkNick').text());
+	if ($('#result').text() === '사용가능한 이메일 입니다.' && $('#checkNick').text() === '사용가능한 닉네임 입니다.') {
+		console.log("맞잖아");
 		isCheck = false;
 		formData.append('email', $('input[name="join_email"]').val());
 		formData.append('name', $('input[name="join_name"]').val());
@@ -364,7 +367,7 @@ function setData(event) {
 		});
 	}
 
-	if ($('resultNick').text() === '사용 불가능한 닉네임 입니다.') {
+	if ($('#checkNick').text() === '사용 불가능한 닉네임 입니다.') {
 		
 	}
 }

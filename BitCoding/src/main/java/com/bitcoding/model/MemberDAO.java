@@ -45,10 +45,10 @@ public class MemberDAO {
 	}
 
 	// 4. 회원정보수정
-	public int update(Member member) {
+	public int updateInfo(Member member) {
 		SqlSession session = server.openSession(true);
 
-		int cnt = session.update("update", member);
+		int cnt = session.update("updateInfo", member);
 
 		session.close();
 

@@ -42,4 +42,14 @@ public class LikesDAO {
 
 		return cnt;
 	}
+	// 4. 회원가입 전체 삭제
+	public int like_delete_mem(Likes like) {
+		SqlSession session = server.openSession(true);
+
+		int cnt = session.delete("like_delete_mem", like);
+
+		session.close();
+
+		return cnt;
+	}
 }

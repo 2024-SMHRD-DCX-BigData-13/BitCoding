@@ -22,4 +22,10 @@
 		delete from likes
 		where post_id = #{post_id}
 	</delete>
+	
+	<!-- 회원탈퇴 전체삭제 -->
+	<delete id="like_delete_mem" parameterType="com.bitcoding.model.Likes">
+		delete from likes
+		where user_id = #{user_id}
+	</delete>
 </mapper>

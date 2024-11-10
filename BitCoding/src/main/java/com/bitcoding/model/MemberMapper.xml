@@ -34,13 +34,11 @@
 	</select>
 
 	<!-- 회원정보수정 -->
-	<update id="update" parameterType="com.bitcoding.model.Member">
+	<update id="updateInfo" parameterType="com.bitcoding.model.Member">
 		update members
 		set
-		password =
-		#{password},
-		nick = #{nick},
-		phoneNumber = #{phoneNumber}
+		pw =
+		#{pw}
 		where email = #{email}
 	</update>
 

@@ -13,7 +13,18 @@ $(document).ready(function() {
 	const $modalCustom = $("#searchModalCustom");
 	const $openModalButtonCustom = $("#search");
 	const $closeModalButtonCustom = $(".close-modal-button-custom");
-
+	
+	$('#freeboard').on('click', function(){
+		Swal.fire({
+			title: 'information',
+			text: '구현예정입니다.',
+			icon: 'info',
+			confirmButtonText: '확인',
+			didOpen: function() {
+				$('body').css('overflow-y', 'scroll'); // 스크롤바 강제 유지
+			}
+		});
+	});
 	// 모달 열기
 	$openModalButtonCustom.on("click", function() {
 		$modalCustom.show();

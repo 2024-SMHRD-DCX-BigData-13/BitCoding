@@ -19,8 +19,9 @@ public class GetLikeDataController implements iController {
 		System.out.println("서블릿들어옴");
 		response.setContentType("application/json");
 		request.setCharacterEncoding("UTF-8");
+
 		String user_id = request.getParameter("user_id");
-		
+
 		UserLike ul = new UserLike(user_id, 0, 0);
 		UserLikeDAO dao = new UserLikeDAO();
 		UserLike data = dao.user_like_get(ul);

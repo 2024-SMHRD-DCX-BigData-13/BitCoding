@@ -46,4 +46,9 @@
 		where user_id =
 		#{user_id}
 	</update>
+	
+	<delete id="ul_delete_mem" parameterType="com.bitcoding.model.UserLike">
+		delete from user_like
+		where user_id = #{user_id}
+	</delete>
 </mapper>

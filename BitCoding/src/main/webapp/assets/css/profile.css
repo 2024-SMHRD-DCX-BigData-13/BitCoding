@@ -16,22 +16,30 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-/* 반응웹 */
-@media ( max-width : 768px) {
+
+@media ( max-width : 1200px) {
 	.main-container {
-		flex-direction: column; /* 세로로 배치 */
-		padding: 0 10px;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 100px; /* 상단 간격 조정 */
+		gap: 20px;
 	}
 	.left-section, .right-section {
-		min-width: auto; /* 최소 너비 제한 제거 */
-		width: 100%; /* 100% 너비로 확장 */
+		position: static; /* 좁은 화면에서는 고정하지 않음 */
+		width: 90%;
+		height: auto;
+		margin-top: 20px;
+		border: none; /* 테두리를 제거 */
+	}
+	.footer {
+		position: static; /* 좁은 화면에서는 푸터도 고정하지 않음 */
 	}
 }
 
 body {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh; /* 전체 뷰포트 높이를 사용 */
+	min-height: 100%; /* 전체 뷰포트 높이를 사용 */
 	background-color: #ffffff;
 	font-family: 'Noto Sans KR', sans-serif;
 	color: #333;
@@ -253,26 +261,27 @@ header {
 /* 메인 컨테이너 */
 .main-container {
 	display: flex;
+	justify-content: center; /* 섹션들이 가운데로 모이도록 설정 */
+	align-items: stretch; /* 섹션들이 세로 전체를 차지하도록 설정 */
 	width: 100%;
 	max-width: 1200px;
-	margin: 20px auto;
-	gap: 20px;
-	padding: 0 20px; /* 좌우 여백 추가 */
-	padding-bottom: 10vh; /* 푸터와 겹치지 않도록 아래쪽 여백 추가 */
+	margin: 0 auto;
+	padding: 0 40px; /* 양쪽 여백 추가 */
 	box-sizing: border-box;
-	font-family: 'DynaPuff', sans-serif;
-	font-weight: 500; /* 원하는 굵기로 설정 */
-	font-variation-settings: "wght" 500;
+	gap: 0; /* 왼쪽과 오른쪽 섹션 사이의 간격 제거 */
+	padding-top: 30px; /* 헤더와의 간격 유지 */
+	position: relative;
 }
-
+/* 왼쪽 섹션 */
 /* 왼쪽 섹션 */
 .left-section {
-	flex: 3;
-	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
+	width: 60%; /* 화면 너비의 절반 사용 */
 	padding: 20px;
-	border-radius: 8px;
+	border-right: 1px solid #ddd;
 	background-color: #fff;
-	min-width: 300px; /* 최소 너비 설정으로 너무 작아지지 않도록 방지 */
+	box-sizing: border-box;
+	overflow: auto; /* 내부 스크롤이 필요할 때 사용할 수 있도록 설정 */
+	height: calc(100vh - 150px - 10vh); /* 헤더와 푸터를 제외한 세로 전체를 차지하도록 설정 */
 }
 
 .left-section h2 {
@@ -284,33 +293,36 @@ header {
 
 /* 전체 게시물 컨테이너 */
 .post {
-	width: 100%;
-	max-width: 600px;
+	min-width: 100%;
+	max-width: 400px;
 	padding: 20px;
 	background-color: #fff;
 	font-family: Arial, sans-serif;
 	position: relative;
 	border-bottom: 1px solid #ddd; /* 구분선을 위한 하단 테두리 */
-    padding-bottom: 20px; /* 구분선과 콘텐츠 간의 여백 */
+	padding-bottom: 20px; /* 구분선과 콘텐츠 간의 여백 */
+	margin-top: 20px;
 }
 
+.postbox {
+	width: 100%;
+}
 /* 작성일 텍스트 스타일 */
 .post-date {
 	font-size: 14px;
 	color: #666;
 	font-weight: normal;
 	position: absolute;
-	top: 15px;
-	left: 0;
+	top: 5px;
+	left: 30;
 }
 
-/* 게시물 제목 스타일 */	
+/* 게시물 제목 스타일 */
 .post-title {
 	font-size: 24px;
 	font-weight: bold;
 	color: #333;
 	text-align: left;
-	margin-bottom: 20px;
 }
 
 /* 게시물 내용 스타일 */
@@ -354,9 +366,9 @@ header {
 }
 /* 좋아요 아이콘과 카운트 컨테이너 */
 .reaction-container {
-    display: flex;
-    align-items: center;
-    margin-right:40px;
+	display: flex;
+	align-items: center;
+	margin-right: 40px;
 }
 /* 좋아요 아이콘과 카운트 */
 .reaction-container {
@@ -367,10 +379,10 @@ header {
 /* 좋아요 아이콘 스타일 */
 .like-icon {
 	font-size: 18px;
-    fill: #e74c3c; /* 붉은색 */
-    margin-right: 2px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+	fill: #e74c3c; /* 붉은색 */
+	margin-right: 2px;
+	cursor: pointer;
+	transition: transform 0.2s ease;
 }
 
 /* 좋아요 카운트 스타일 */
@@ -381,16 +393,15 @@ header {
 	margin-bottom: 7px;
 }
 
-
-
-/* 오른쪽 섹션 - 개인정보 */
+/* 오른쪽 섹션 */
 .right-section {
-	flex: 2;
-	flex-basis: 0; /* 비율에 따라 유연하게 확장 */
+	width: 40%; /* 화면 너비의 절반 사용 */
 	padding: 20px;
-	border-left: 1px solid #ddd; /* 왼쪽에 구분선 추가 */
+	border-left: 1px solid #ddd;
 	background-color: #fff;
-	min-width: 250px; /* 최소 너비 설정 */
+	box-sizing: border-box;
+	overflow: auto; /* 내부 스크롤이 필요할 때 사용할 수 있도록 설정 */
+	height: calc(100vh - 150px - 10vh); /* 헤더와 푸터를 제외한 세로 전체를 차지하도록 설정 */
 }
 
 .right-section h2 {
@@ -398,7 +409,7 @@ header {
 	color: #333;
 	margin-bottom: 15px;
 	font-weight: 700;
-	text-algin: left;
+	text-align: left;
 }
 
 /* 개인정보 필드 */
@@ -426,7 +437,7 @@ header {
 }
 
 .label-value {
-	font-weight: normal;
+	font-weight: bold;
 	color: #555;
 }
 
@@ -469,7 +480,7 @@ header {
 .toggle-header {
 	cursor: pointer;
 	font-size: 18px;
-	color: #0073e6;
+	color: #333;
 	font-weight: bold;
 	display: inline-block;
 	margin-bottom: 10px;
@@ -477,7 +488,7 @@ header {
 }
 
 .toggle-header:hover {
-	color: #005bb5;
+	color: #222;
 }
 /* 버튼 스타일 */
 .buttons {
@@ -531,12 +542,16 @@ header {
 .ranking-section p {
 	font-size: 16px;
 	color: #555;
-	margin-bottom: 15px;
 }
 
-.ranking-section strong {
+.post-rank strong {
 	margin-top: 15px;
-	color: #1e90ff;
+	color: #6C63FF;
+	font-weight: bold;
+}
+.comment-rank strong {
+	margin-top: 15px;
+	color: #FF5C5C;
 	font-weight: bold;
 }
 /* 진행 바 스타일 */
@@ -548,13 +563,31 @@ header {
 	margin-top: 10px;
 }
 
-.progress {
-	height: 20px;
-	background-color: #1e90ff;
-	text-align: center;
+.comment-rank .progress {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	background-color: #FF5C5C;
 	color: #fff;
 	line-height: 20px;
-	font-size: 14px;
+	padding-left: 5px;
+	font-size: clamp(11px, 1.5vw, 13px); /* 폰트 크기를 12px ~ 14px 사이에서 조절 */
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.post-rank .progress {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	background-color: #6C63FF;
+	color: #fff;
+	line-height: 20px;
+	padding-left: 5px;
+	font-size: clamp(11px, 1.5vw, 13px); /* 폰트 크기를 12px ~ 14px 사이에서 조절 */
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 /* 푸터 스타일 */
@@ -564,16 +597,22 @@ header {
 	text-align: center;
 	border-top: 0.5px solid #ccc;
 	height: 10vh;
-	position: sticky; /* 푸터를 하단에 고정 */
+	position: fixed; /* 푸터를 하단에 고정 */
 	bottom: 0;
 	left: 0;
 	padding: 15px;
 	font-size: 12px;
 	color: #a0a5b0;
 	line-height: 1.6;
-	z-index: 10;
+	z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
 }
 
 .content-wrapper {
 	padding-bottom: 10vh; /* 푸터 아래 내용이 가려지지 않도록 설정 */
+}
+
+.divider {
+	border-bottom: 2px solid #ccc; /* 구분선 두께와 색상 설정 */
+	padding-bottom: 10px; /* 구분선 위쪽 여백 */
+	margin-bottom: 20px; /* 구분선 아래쪽 여백 */
 }

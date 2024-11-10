@@ -47,6 +47,8 @@ public class MainController extends HttpServlet {
 		pageHandler.put("/getPostRank.bit", new GetPostRankController());
 		pageHandler.put("/getLikeALL.bit", new GetLikeALLController());
 		pageHandler.put("/checkNick.bit", new CheckNickController());
+		pageHandler.put("/updateInfo.bit", new UpdateUserInfo());
+		pageHandler.put("/deleteMem.bit", new DeleteALLController());
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
