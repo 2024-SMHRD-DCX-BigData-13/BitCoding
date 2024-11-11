@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bitcoding.model.Comment;
 import com.bitcoding.model.CommentDAO;
-import com.bitcoding.model.UserLike;
-import com.bitcoding.model.UserLikeDAO;
 
 public class UpdateCmtController implements iController {
 

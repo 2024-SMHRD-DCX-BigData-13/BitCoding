@@ -9,6 +9,8 @@ $(document).ready(function() {
 			modal.removeClass('active').fadeOut();
 		} else {
 			modal.addClass('active').fadeIn();
+			$('.side-chat-content').show(); // 채팅 내용 보이기
+			$('.side-chat-title').text("TF CHAT"); // 선택한 채팅방 이름 표시
 		}
 	});
 

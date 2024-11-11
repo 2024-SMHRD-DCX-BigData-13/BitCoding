@@ -34,7 +34,7 @@
 					<div class="profile-container">
 						<a href="#" class="profile-icon" id="profileImage"
 							aria-label="프로필"> <img
-							src="assets/images/profiles/${member.profile}" alt="Profile">
+							src="assets/images/profiles/${member.profile}" alt="Profile" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
 						</a>
 						<div class="dropdown-menu" id="dropdownMenu">
 							<button class="dropdown-item" id="myPage">마이페이지</button>
@@ -66,7 +66,7 @@
 		<main>
 			<div class="share-thoughts-button">
 				<img src="assets/images/profiles/${member.profile}" alt="프로필 아이콘"
-					class="profile-icon"> <span class="button-text">나누고 싶은
+					class="profile-icon" onerror="this.onerror=null; this.src='assets/images/nomal.webp';"> <span class="button-text">나누고 싶은
 					생각이 있으신가요?</span>
 				<svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" width="16"
 					height="16" fill="currentColor" viewBox="0 0 24 24">
@@ -158,32 +158,10 @@
     </button>
 <!-- 채팅 모달 -->
 <div class="side-chat-modal" id="side-chatModal">
-    <!-- 채팅 목록 -->
-    <div class="side-chat-list">
-        <h2>채팅</h2>
-        <ul>
-            <li class="side-chat-item" onclick="sideOpenChat('채팅방 1')">
-                <img src=""class="side-profile-img" onerror="this.onerror=null; this.src='assets/images/nomal.webp';">
-                <div class="side-chat-info">
-                    <p class="side-chat-name">&nbsp;&nbsp;&nbsp;핵심프로젝트</p>
-                    <p class="side-chat-preview">또 고생하셨네요...</p>
-                </div>
-                <span class="side-chat-time">오후 12:45</span>
-            </li>
-            <!-- 추가 채팅방 목록 -->
-        </ul>
-    </div>
-
     <!-- 채팅 내용 (초기에는 숨김) -->
      <div class="side-chat-content">
         <div class="side-chat-header">
             <h2 class="side-chat-title">스마트인재개발원 박태현</h2>
-            <button class="side-back-button">
-        <!-- 뒤로 가기 아이콘 -->
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 6L9 12L15 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </button>
         </div>
         <div class="side-messages">
             <div class="side-message side-received">

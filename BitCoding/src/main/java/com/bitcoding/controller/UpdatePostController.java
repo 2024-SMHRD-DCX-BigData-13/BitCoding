@@ -1,16 +1,12 @@
 package com.bitcoding.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bitcoding.model.Comment;
-import com.bitcoding.model.CommentDAO;
-import com.bitcoding.model.Post;
-import com.bitcoding.model.PostDAO;
 
 public class UpdatePostController implements iController {
 

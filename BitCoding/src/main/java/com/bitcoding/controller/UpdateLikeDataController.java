@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bitcoding.model.UserLike;
 import com.bitcoding.model.UserLikeDAO;
-import com.google.gson.Gson;
 
 public class UpdateLikeDataController implements iController {
 

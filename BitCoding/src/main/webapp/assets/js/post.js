@@ -13,8 +13,8 @@ $(document).ready(function() {
 	const $modalCustom = $("#searchModalCustom");
 	const $openModalButtonCustom = $("#search");
 	const $closeModalButtonCustom = $(".close-modal-button-custom");
-	
-	$('#freeboard').on('click', function(){
+
+	$('#freeboard').on('click', function() {
 		Swal.fire({
 			title: 'information',
 			text: '구현예정입니다.',
@@ -340,78 +340,78 @@ function getData() {
 			user_info.gender = data.gender;
 			user_info.profile = data.profile;
 			user_info.tf = data.mem_type;
-			
-			if(user_info.tf == "Feeling"){
+
+			if (user_info.tf == "Feeling") {
 				$(".user_info_type").css("color", "#FF5C5C");
 			}
-			else{
+			else {
 				$(".user_info_type").css("color", "#6C63FF");
 			}
 		}
 	});
 }
 function prepare(callback) {
-    $(".postbox").empty();
-    getData();
-    postRank();
-    console.log('prepare 진입');
+	$(".postbox").empty();
+	getData();
+	postRank();
+	console.log('prepare 진입');
 
-    $.ajax({
-        url: 'getPost.bit', // 서블릿 URL
-        type: 'GET', // HTTP 요청 방식
-        dataType: 'json', // 응답 데이터 형식
-        success: function(data) {
-            // 서블릿에서 받은 데이터를 사용
-            if (data) {
-                data.forEach(item => {
-                    let shouldLoadComments = false;
+	$.ajax({
+		url: 'getPost.bit', // 서블릿 URL
+		type: 'GET', // HTTP 요청 방식
+		dataType: 'json', // 응답 데이터 형식
+		success: function(data) {
+			// 서블릿에서 받은 데이터를 사용
+			if (data) {
+				data.forEach(item => {
+					let shouldLoadComments = false;
 
-                    // 검색 기준이 '제목'인 경우
-                    if (searchOp === "제목" && item.post_title.includes(searchKey)) {
-                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-                        updateLike(item.post_idx);
-                        shouldLoadComments = true;
-                        isSearch = true;
-                    }
-                    // 검색 기준이 '작성자'인 경우
-                    else if (searchOp === "작성자" && item.nick.includes(searchKey)) {
-                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-                        updateLike(item.post_idx);
-                        shouldLoadComments = true;
-                        isSearch = true;
-                        console.log("작성자 선택", item.nick, "일치");
-                    }
-                    // 검색 기준이 '구분'일 경우 모든 게시물을 가져옴
-                    else if (searchOp === "구분") {
-                        console.log("전체조회");
-                        getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
-                        updateLike(item.post_idx);
-                        shouldLoadComments = true;
-                        isCheck = false;
-                    }
+					// 검색 기준이 '제목'인 경우
+					if (searchOp === "제목" && item.post_title.includes(searchKey)) {
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+						isSearch = true;
+					}
+					// 검색 기준이 '작성자'인 경우
+					else if (searchOp === "작성자" && item.nick.includes(searchKey)) {
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+						isSearch = true;
+						console.log("작성자 선택", item.nick, "일치");
+					}
+					// 검색 기준이 '구분'일 경우 모든 게시물을 가져옴
+					else if (searchOp === "구분") {
+						console.log("전체조회");
+						getPost(item.post_idx, item.profile, item.category, item.nick, item.mem_type, item.post_type, item.post_title, item.post_content, item.post_file, item.post_tag, item.create_at, item.post_like);
+						updateLike(item.post_idx);
+						shouldLoadComments = true;
+						isCheck = false;
+					}
 
-                    // 조건에 맞는 게시물에 대해서만 댓글 로딩
-                    if (shouldLoadComments) {
-                        loadComments(item.post_idx);
-                        $('.comments').hide();
-                    }
-                });
-            }
+					// 조건에 맞는 게시물에 대해서만 댓글 로딩
+					if (shouldLoadComments) {
+						loadComments(item.post_idx);
+						$('.comments').hide();
+					}
+				});
+			}
 
-            // AJAX 작업이 완료된 후 콜백 호출
-            if (typeof callback === "function") {
-                callback();
-            }
-        },
-        error: function(error) {
-            console.error("AJAX 호출 오류:", error);
+			// AJAX 작업이 완료된 후 콜백 호출
+			if (typeof callback === "function") {
+				callback();
+			}
+		},
+		error: function(error) {
+			console.error("AJAX 호출 오류:", error);
 
-            // 오류가 발생했을 때도 콜백이 있다면 호출
-            if (typeof callback === "function") {
-                callback();
-            }
-        }
-    });
+			// 오류가 발생했을 때도 콜백이 있다면 호출
+			if (typeof callback === "function") {
+				callback();
+			}
+		}
+	});
 }
 function getPost(idx, profile, category, author, user_type, tf, title, content, postimage, tags, date, count) {
 	let color;
@@ -464,11 +464,19 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
 
 		lastPost.find(".edit-button, .delete-button").css("display", "none");
 	}
-	if (author !== user_info.nickname && tf !== user_info.tf) {
 
+	// 둘다 다를떄만 들어옴
+	if (author === user_info.nickname || tf === user_info.tf) {
+		console.log("요구사항 통과");
+		console.log("author", author);
+		console.log("user_info.nickname", user_info.nickname);
+		console.log("게시물타입", tf);
+		console.log("유저타입", user_info.tf);
+	}
+	else {
+		console.log('개같은인생', author);
 		// 해당 게시물의 댓글 입력창 숨기기
 		lastPost.find(".comment-form").css("display", "none");
-
 		// 안내 문구 추가
 		lastPost.find(".comment-section").append(`
         <div class="comment-notice" style="color: #1E90FF; font-weight:bold">
@@ -877,36 +885,36 @@ function getRank(rankImage, profile, nick, mem_type, content, link) {
 	$(".top10-list").append(newPostHTML);
 }
 function findPost(event, target) {
-    event.preventDefault();
+	event.preventDefault();
 
-    // href 속성에서 data-id 값을 추출
-    const targetId = $(target).attr("href").replace("#", "");
-    console.log("타겟아이디", targetId);
+	// href 속성에서 data-id 값을 추출
+	const targetId = $(target).attr("href").replace("#", "");
+	console.log("타겟아이디", targetId);
 
-    // 스크롤 이동 함수 정의
-    function scrollToTarget() {
-        const $targetElement = $(`.post[data-id="${targetId}"]`);
-        if ($targetElement.length) {
-            $("html, body").animate({
-                scrollTop: $targetElement.offset().top - 90
-            }, 800);
-        } else {
-            alert("해당 게시물을 찾을 수 없습니다.");
-        }
-    }
+	// 스크롤 이동 함수 정의
+	function scrollToTarget() {
+		const $targetElement = $(`.post[data-id="${targetId}"]`);
+		if ($targetElement.length) {
+			$("html, body").animate({
+				scrollTop: $targetElement.offset().top - 90
+			}, 800);
+		} else {
+			alert("해당 게시물을 찾을 수 없습니다.");
+		}
+	}
 
-    // prepare가 필요 없는 경우 바로 스크롤 이동
-    if ($(`.post[data-id="${targetId}"]`).length) {
-        scrollToTarget();
-    } else {
-        // prepare가 필요한 경우, 완료 후 콜백으로 스크롤 이동
-        if (isSearch) {
-            searchOp = "구분";
-            isSearch = false;
-            prepare(() => {
-                // prepare가 완료된 후 약간의 지연을 두고 스크롤 실행
-                setTimeout(scrollToTarget, 200); // 200ms 지연
-            });
-        }
-    }
+	// prepare가 필요 없는 경우 바로 스크롤 이동
+	if ($(`.post[data-id="${targetId}"]`).length) {
+		scrollToTarget();
+	} else {
+		// prepare가 필요한 경우, 완료 후 콜백으로 스크롤 이동
+		if (isSearch) {
+			searchOp = "구분";
+			isSearch = false;
+			prepare(() => {
+				// prepare가 완료된 후 약간의 지연을 두고 스크롤 실행
+				setTimeout(scrollToTarget, 200); // 200ms 지연
+			});
+		}
+	}
 }
