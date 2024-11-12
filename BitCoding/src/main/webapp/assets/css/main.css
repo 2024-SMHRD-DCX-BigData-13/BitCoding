@@ -1185,7 +1185,7 @@ h2 {
 
 /* 메시지 영역 스타일 */
 .side-messages {
-    height:100%;
+    height:75%;
     padding: 10px;
     overflow-y: auto;
     background-color: #f8f8f8;

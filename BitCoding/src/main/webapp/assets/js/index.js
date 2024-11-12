@@ -31,7 +31,7 @@ $(document).ready(function() {
 	}
 
 	// 3초마다 슬라이드 이동
-	setInterval(moveToNextSlide, 8000);
+	setInterval(moveToNextSlide, 4000);
 });
 function pageMoveJoin() {
 	window.location.href = '/BitCoding/join.bit';

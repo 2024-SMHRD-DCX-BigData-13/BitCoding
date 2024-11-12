@@ -11,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/post.js"></script>
+<script src="assets/js/chatbot.js"></script>
 <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -161,27 +162,24 @@
     <!-- 채팅 내용 (초기에는 숨김) -->
      <div class="side-chat-content">
         <div class="side-chat-header">
-            <h2 class="side-chat-title">스마트인재개발원 박태현</h2>
+            <h2 class="side-chat-title"></h2>
         </div>
         <div class="side-messages">
             <div class="side-message side-received">
-                <img src="profile1.jpg" alt="프로필" class="side-profile-img">
+                <!-- <img src="profile1.jpg" alt="프로필" class="side-profile-img"> -->
                 <div class="side-message-content">
-                    <p>12시...넘어서...지승쌤한테와 지말하시는군요</p>
-                    <span class="side-message-time">오후 6:57</span>
+                    <span class="side-message-time"></span>
                 </div>
             </div>
             <div class="side-message side-sent">
                 <div class="side-message-content">
-                    <p>오늘 목표는 무사히 밤새는거야</p>
-                    <p>ㅋㅋㅋㅋㅋㅋㅋㅋㅋ</p>
-                    <span class="side-message-time">오후 6:58</span>
+                    <span class="side-message-time"></span>
                 </div>
             </div>
         </div>
         <div class="side-chat-input">
             <input type="text" placeholder="메시지 입력">
-            <button onclick="sideSendMessage()">보내기</button>
+            <button>보내기</button>
         </div>
     </div>
 </div>
