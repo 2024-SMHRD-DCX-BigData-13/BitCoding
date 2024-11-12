@@ -170,7 +170,3 @@ async function fetchAIResponse(prompt) {
 
 	return '요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.';
 }
-
-
-
-
