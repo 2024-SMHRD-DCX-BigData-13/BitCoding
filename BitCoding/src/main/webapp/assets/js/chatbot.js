@@ -1,4 +1,4 @@
-const apiKey = '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';
+/*const apiKey = '';
 const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
 $(document).ready(function() {
@@ -170,3 +170,4 @@ async function fetchAIResponse(prompt) {
 
 	return '요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.';
 }
+*/

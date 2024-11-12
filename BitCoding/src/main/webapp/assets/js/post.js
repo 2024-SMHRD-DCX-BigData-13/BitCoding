@@ -466,7 +466,7 @@ function getPost(idx, profile, category, author, user_type, tf, title, content, 
 	}
 
 	// 둘다 다를떄만 들어옴
-	if (author === user_info.nickname || tf === user_info.tf) {
+	if (author === user_info.nickname || tf === user_info.tf || tf === "ALL") {
 		console.log("요구사항 통과");
 		console.log("author", author);
 		console.log("user_info.nickname", user_info.nickname);
